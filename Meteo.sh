@@ -313,10 +313,11 @@ echo 'everything is fine!'
 #We have : namefile - region - date1/date2 - argtri - donneet1|ardonneet1 - donneet2|ardonneet2 - donneet3|ardonneet3 - donneep1|ardonneep1 - donneep2|ardonneep2 - donneep3|ardonneep3 - donneew - donneeh - donneem 
 
 if [ -f './Meteotri.c' ] && [ -r './Meteotri.c' ] ; then
-    echo "it is gut"
+
+
 
 else
-    echo "I can't find the file that filter the data"
+    echo "I can't find the data-filter file."
     exit 22
 fi
 
