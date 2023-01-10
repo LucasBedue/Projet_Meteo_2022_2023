@@ -128,6 +128,9 @@ for qu in $* ; do
     fi
     if [ $bool1 -eq 1 ] ; then
         date1="$qu"
+	if [ ] ; then #######################################################################################################################################################################################""
+		
+	fi
         if [ `echo "$date1" | cut -c 5` != '-' ] || [ `echo "$date1" | cut -c 8` != '-' ] ; then
             echo 'Write the date in the format YYYY-MM-DD after the -d'
             exit 7
@@ -168,7 +171,7 @@ for qu in $* ; do
 done
 
 
-if [ $bool1 -ne $bool2 ] || [ $bool2 -ne $bool3 ] || [ $bool1 -ne $bool3 ] ; then
+if [ "$bool1" -ne "$bool2" ] || [ "$bool2" -ne "$bool3" ] || [ "$bool1" -ne "$bool3" ] ; then
     echo 'error on the date, it probably misses something'
     exit 14
 fi
@@ -274,6 +277,8 @@ fi
 
 #Here, we filter the data by using precedent arguments
 #We have : namefile - region - date1/date2 - argtri - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
+
+#./Meteotri.c namefile region date1/date2 argtri donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem
 
 
 
