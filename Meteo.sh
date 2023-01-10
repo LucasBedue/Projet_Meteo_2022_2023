@@ -267,19 +267,17 @@ if [ "$donneet1" = ' ' ] && [ "$donneep1" = ' ' ] && [ "$donneew" = ' ' ] && [ "
     exit 22
 fi
 
-echo 'everything is fine!'
-
-#Here, we filter the data by using precedent arguments
-#We have : namefile - region - date1/date2 - argtri - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
-
 if [ ! -f './Meteotri.c' ] || [ ! -r './Meteotri.c' ] ; then
     echo "I can't find the data-filter file."
     exit 23
 fi
 
-echo "RAS" 
+#Here, we filter the data by using precedent arguments
+#We have : namefile - region - date1/date2 - argtri - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
 
 
+
+echo 'everything is fine!'
 
 
 
