@@ -4,7 +4,6 @@
 #quoi faire et envoie les information a afficher via gnuplot.
 #On lit les parametres, on les retient, on regarde si ils sont correct et si oui, on fait le tri.
 
-
 #on vérifie qu'il y a au moins un argument
 if (( $# == 0 )) ; then
     echo 'You need arguments!'
@@ -43,7 +42,7 @@ for qu in $* ; do
         bool1=1
     fi
 done
-if [ $bool1 -ne 1 ] && [ bool2 -ne 1 ] ; then
+if [ $bool1 -ne 1 ] && [ $bool2 -ne 1 ] ; then
     echo 'There is no file in argument'
     exit 3
 fi
@@ -179,7 +178,7 @@ fi
 bool1=0
 argtri=' '
 for qu in $* ; do
-    if [ ${qu} = '--tab' ] || [ ${qu} = '--avl' ] || [ ${qu} = '--abr' ] ; then
+    if [ "${qu}" = '--tab' ] || [ "${qu}" = '--avl' ] || [ "${qu}" = '--abr' ] ; then
         if [ $bool1 -eq 0 ] ; then
             bool1=1
             argtri="$qu"
@@ -194,134 +193,91 @@ done
 #On regarde si il y a les paramêtre de tri, on tri tout en parcourant
 
 donneet1=' '
-ardonneet1=' '
 donneet2=' '
-ardonneet2=' '
 donneet3=' '
-ardonneet3=' '
-doonnep1=' '
-ardonneep1=' '
-doonnep2=' '
-ardonneep2=' '
-doonnep3=' '
-ardonneep3=' '
+donneep1=' '
+donneep2=' '
+donneep3=' '
 donneew=' '
 donneeh=' '
 donneem=' '
-boolt=0 #Retain if you search a number after a "-t" or "-p" argument. If not respected, consider there aren't any of them.
-boolp=0
-numargdonneet=0 #Look how much arguments with "-?" sign are in arguments.
-numargdonneep=0
     
 for qu in $* ; do
-    if [ $boolt -eq 1 ] ; then
-        if [ ${qu} = '1' ] || [ ${qu} = '2' ] || [ ${qu} = '3' ]; then
-            boolt=0
-            if [ $numargdonneet -eq 1 ] ; then
-                ardonneet1=$qu
-            elif [ $numargdonneet -eq 2 ] ; then
-                ardonneet2=$qu
-            elif [ $numargdonneet -eq 2 ] ; then
-                ardonneet3=$qu
-            fi
-        else
-            boolt=0
-        fi
+
+    if [ "${qu}" = '-t1' ] && [ ! "$donneew" = '-t1' ] ; then
+        donneew="$qu"
+    elif [ "${qu}" = '-t1' ] && [ "$donneew" = '-t1' ] ; then
+        echo "there are too much -t1 argument"
+        exit 18
     fi
-    if [ $boolp -eq 1 ] ; then
-        if [ ${qu} = '1' ] || [ ${qu} = '2' ] || [ ${qu} = '3' ]; then
-            boolp=0
-            if [ $numargdonneep -eq 1 ] ; then
-                ardonneep1=$qu
-            elif [ $numargdonneep -eq 2 ] ; then
-                ardonneep2=$qu
-            elif [ $numargdonneep -eq 2 ] ; then
-                ardonneep3=$qu
-            fi
-        else
-            boolp=0
-        fi
+    if [ "${qu}" = '-t2' ] && [ ! "$donneew" = '-t2' ] ; then
+        donneew="$qu"
+    elif [ "${qu}" = '-t2' ] && [ "$donneew" = '-t2' ] ; then
+        echo "there are too much -t2 argument"
+        exit 24
     fi
-    if [ ${qu} = '-t' ] ; then
-        if [ $numargdonneet -eq 0 ] ; then
-            donneet1=$qu
-            boolt=1
-            numargdonneet=1
-        elif [ $numargdonneet -eq 1 ] ; then
-            donneet2=$qu
-            boolt=1
-            numargdonneet=2
-        elif [ $numargdonneet -eq 2 ] ; then
-            donneet3=$qu
-            boolt=1
-            numargdonneet=3
-        else
-            echo 'There are too much -t argument'
-            exit 18
-        
-        fi
-    
+    if [ "${qu}" = '-t3' ] && [ ! "$donneew" = '-t3' ] ; then
+        donneew="$qu"
+    elif [ "${qu}" = '-t3' ] && [ "$donneew" = '-t3' ] ; then
+        echo "there are too much -t3 argument"
+        exit 25
     fi
-    if [ ${qu} = '-p' ] ; then
-        if [ $numargdonneep -eq 0 ] ; then
-            donneep1=$qu
-            boolp=1
-            numargdonneep=1
-        elif [ $numargdonneep -eq 1 ] ; then
-            donneep2=$qu
-            boolp=1
-            numargdonneep=2
-        elif [ $numargdonneep -eq 2 ] ; then
-            donneep3=$qu
-            boolp=1
-            numargdonneep=3
-        else
-        echo 'There are too much -t argument'
-            exit 18
-        fi
+    if [ "${qu}" = '-p1' ] && [ ! "$donneew" = '-p1' ] ; then
+        donneew="$qu"
+    elif [ "${qu}" = '-p1' ] && [ "$donneew" = '-p1' ] ; then
+        echo "there are too much -p1 argument"
+        exit 26
     fi
-    if [ ${qu} = '-w' ] && [ $donneew != '-w' ] ; then
-        donneew=$qu
-    elif [ ${qu} = '-w' ] && [ $donneew = '-w' ] ; then
-        echo 'there are too much -w argument'
+    if [ "${qu}" = '-p2' ] && [ ! "$donneew" = '-p2' ] ; then
+        donneew="$qu"
+    elif [ "${qu}" = '-p2' ] && [ "$donneew" = '-p2' ] ; then
+        echo "there are too much -p2 argument"
+        exit 27
+    fi
+    if [ "${qu}" = '-p3' ] && [ ! "$donneew" = '-p3' ] ; then
+        donneew="$qu"
+    elif [ "${qu}" = '-p3' ] && [ "$donneew" = '-p3' ] ; then
+        echo "there are too much -p3 argument"
+        exit 28
+    fi
+    if [ "${qu}" = '-w' ] && [ ! "$donneew" = '-w' ] ; then
+        donneew="$qu"
+    elif [ "${qu}" = '-w' ] && [ "$donneew" = '-w' ] ; then
+        echo "there are too much -w argument"
         exit 19
     fi
-    if [ ${qu} = '-h' ] && [ $donneew != '-h' ] ; then
-        donneeh=$qu
-    elif [ ${qu} = '-h' ] && [ $donneew = '-h' ] ; then
-        echo 'there are too much -h argument'
+    if [ "${qu}" = '-h' ] && [ ! "$donneeh" = '-h' ] ; then
+        donneeh="$qu"
+    elif [ "${qu}" = '-h' ] && [ "$donneeh" = '-h' ] ; then
+        echo "there are too much -h argument"
         exit 20
     fi
-    if [ ${qu} = '-m' ] && [ $donneew != '-m' ] ; then
-        donneem=$qu
-    elif [ ${qu} = '-m' ] && [ $donneew = '-m' ] ; then
-        echo 'there are too much -m argument'
+    if [ "${qu}" = '-m' ] && [ ! "$donneem" = '-m' ] ; then
+        donneem="$qu"
+    elif [ "${qu}" = '-m' ] && [ "$donneem" = '-m' ] ; then
+        echo "there are too much -m argument"
         exit 21
     fi
 
 
-
-    if [ donneet1 = ' ' ] && [ donneep1 = ' ' ] && [ donneew = ' ' ] && [ donneeh = ' ' ] && [ donneem = ' ' ] ; then
-        echo 'You need to enter an argument about the type of data you want to analyse'
-        exit 21
-    fi
 done
+
+if [ "$donneet1" = ' ' ] && [ "$donneep1" = ' ' ] && [ "$donneew" = ' ' ] && [ "$donneeh" = ' ' ] && [ "$donneem" = ' ' ] ; then
+    echo 'You need to enter an argument about the type of data you want to analyse'
+    exit 22
+fi
 
 echo 'everything is fine!'
 
 #Here, we filter the data by using precedent arguments
-#We have : namefile - region - date1/date2 - argtri - donneet1|ardonneet1 - donneet2|ardonneet2 - donneet3|ardonneet3 - donneep1|ardonneep1 - donneep2|ardonneep2 - donneep3|ardonneep3 - donneew - donneeh - donneem 
+#We have : namefile - region - date1/date2 - argtri - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
 
-if [ -f './Meteotri.c' ] && [ -r './Meteotri.c' ] ; then
-
-
-
-else
+if [ ! -f './Meteotri.c' ] || [ ! -r './Meteotri.c' ] ; then
     echo "I can't find the data-filter file."
-    exit 22
+    exit 23
 fi
 
-
+echo "RAS" 
 
 
 
