@@ -1,9 +1,39 @@
-#include 'Meteotri.h'
+#include "Meteotri.h"
 
 /////////////////////////////////////////////////////////////////////
 int main(int argc,char **argv){
     srand(0);
+    FILE* f=NULL;
 
+    switch (argv[1]){
+        case '-t1' :
+            f=fopen("./Meteotmpfilesfolder/filet1","w");
+        break
+        case '-t2' :
+
+        break
+        case '-t3' :
+
+        break
+        case '-p1' :
+
+        break
+        case '-p2' :
+
+        break
+        case '-p3' :
+
+        break
+        case '-w' :
+
+        break
+        case '-h' :
+
+        break
+        case '-m' :
+
+        break
+    }
     int value=-1;//le nombre de noeud
     int* pvalue=&value;
     int hauteur=-1;//pour la hauteur de l'arbre

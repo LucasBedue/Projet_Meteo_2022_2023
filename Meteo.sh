@@ -212,39 +212,39 @@ donneem=' '
     
 for qu in $* ; do
 
-    if [ "${qu}" = '-t1' ] && [ ! "$donneew" = '-t1' ] ; then
-        donneew="$qu"
-    elif [ "${qu}" = '-t1' ] && [ "$donneew" = '-t1' ] ; then
+    if [ "${qu}" = '-t1' ] && [ ! "$donneet1" = '-t1' ] ; then
+        donneet1="$qu"
+    elif [ "${qu}" = '-t1' ] && [ "$donneet1" = '-t1' ] ; then
         echo "there are too much -t1 argument"
         exit 27
     fi
-    if [ "${qu}" = '-t2' ] && [ ! "$donneew" = '-t2' ] ; then
-        donneew="$qu"
-    elif [ "${qu}" = '-t2' ] && [ "$donneew" = '-t2' ] ; then
+    if [ "${qu}" = '-t2' ] && [ ! "$donneet2" = '-t2' ] ; then
+        donneet2="$qu"
+    elif [ "${qu}" = '-t2' ] && [ "$donneet2" = '-t2' ] ; then
         echo "there are too much -t2 argument"
         exit 28
     fi
-    if [ "${qu}" = '-t3' ] && [ ! "$donneew" = '-t3' ] ; then
-        donneew="$qu"
-    elif [ "${qu}" = '-t3' ] && [ "$donneew" = '-t3' ] ; then
+    if [ "${qu}" = '-t3' ] && [ ! "$donneet3" = '-t3' ] ; then
+        donneet3="$qu"
+    elif [ "${qu}" = '-t3' ] && [ "$donneet3" = '-t3' ] ; then
         echo "there are too much -t3 argument"
         exit 29
     fi
-    if [ "${qu}" = '-p1' ] && [ ! "$donneew" = '-p1' ] ; then
-        donneew="$qu"
-    elif [ "${qu}" = '-p1' ] && [ "$donneew" = '-p1' ] ; then
+    if [ "${qu}" = '-p1' ] && [ ! "$donneep1" = '-p1' ] ; then
+        donneep1="$qu"
+    elif [ "${qu}" = '-p1' ] && [ "$donneep1" = '-p1' ] ; then
         echo "there are too much -p1 argument"
         exit 30
     fi
-    if [ "${qu}" = '-p2' ] && [ ! "$donneew" = '-p2' ] ; then
-        donneew="$qu"
-    elif [ "${qu}" = '-p2' ] && [ "$donneew" = '-p2' ] ; then
+    if [ "${qu}" = '-p2' ] && [ ! "$donneep2" = '-p2' ] ; then
+        donneep2="$qu"
+    elif [ "${qu}" = '-p2' ] && [ "$donneep2" = '-p2' ] ; then
         echo "there are too much -p2 argument"
         exit 31
     fi
-    if [ "${qu}" = '-p3' ] && [ ! "$donneew" = '-p3' ] ; then
-        donneew="$qu"
-    elif [ "${qu}" = '-p3' ] && [ "$donneew" = '-p3' ] ; then
+    if [ "${qu}" = '-p3' ] && [ ! "$donneep3" = '-p3' ] ; then
+        donneep3="$qu"
+    elif [ "${qu}" = '-p3' ] && [ "$donneep3" = '-p3' ] ; then
         echo "there are too much -p3 argument"
         exit 32
     fi
@@ -283,6 +283,14 @@ if [ "$?" -ne 0 ] ; then
 fi
 
 
+make Meteotmpfiles
+
+if [ "$?" -ne 0 ] ; then
+    echo "There was an error during the process of the Makefile. Maybe a data-sorting file is missing."
+    exit 38
+fi
+
+
 
 
 
@@ -292,54 +300,63 @@ fi
 ./execmeteotri "$donneet1" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
+    make cleanfiles
     exit 38
 fi
 
 ./execmeteotri "$donneet2" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
+    make cleanfiles
     exit 39
 fi
 
 ./execmeteotri "$donneet3" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
+    make cleanfiles
     exit 40
 fi
 
 ./execmeteotri "$donneep1" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
+    make cleanfiles
     exit 41
 fi
 
 ./execmeteotri "$donneep2" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
+    make cleanfiles
     exit 42
 fi
 
 ./execmeteotri "$donneep3" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
+    make cleanfiles
     exit 43
 fi
 
 ./execmeteotri "$donneew" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
+    make cleanfiles
     exit 44
 fi
 
 ./execmeteotri "$donneeh" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
+    make cleanfiles
     exit 45
 fi
 
 ./execmeteotri  "$donneem" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
+    make cleanfiles
     exit 46
 fi
 
@@ -351,7 +368,7 @@ fi
 
 
 echo 'everything is fine!'
-
+make cleanfiles
 
 
 
