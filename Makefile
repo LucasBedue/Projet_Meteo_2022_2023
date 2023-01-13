@@ -10,7 +10,7 @@ execmeteotri: Meteotri.o Meteotrifct.o
 	gcc Meteotri.o Meteotrifct.o -o execmeteotri
 
 Meteotmpfiles:
-	mkdir ./Meteotmpfilesfolder
+	mkdir -p ./Meteotmpfilesfolder
 
 cleanfiles:
 	rm -f -r ./Meteotmpfilesfolder
