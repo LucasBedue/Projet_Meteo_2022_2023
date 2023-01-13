@@ -5,41 +5,85 @@ int main(int argc,char **argv){
     srand(0);
     FILE* f=NULL;
 
-    switch (argv[1]){
-        case '-t1' :
-            f=fopen("./Meteotmpfilesfolder/filet1","w");
-        break
-        case '-t2' :
-
-        break
-        case '-t3' :
-
-        break
-        case '-p1' :
-
-        break
-        case '-p2' :
-
-        break
-        case '-p3' :
-
-        break
-        case '-w' :
-
-        break
-        case '-h' :
-
-        break
-        case '-m' :
-
-        break
+    if(strcmp(argv[1],"-t1")==0){
+            char* pathfiletmp="./Meteotmpfilesfolder/filet1";
+            f=fopen(pathfiletmp,"w");
     }
+    else if(strcmp(argv[1],"-t2")==0){
+        char* pathfiletmp="./Meteotmpfilesfolder/filet2";
+        f=fopen(pathfiletmp,"w");
+    }
+    else if(strcmp(argv[1],"-t3")==0){
+        char* pathfiletmp="./Meteotmpfilesfolder/filet3";
+        f=fopen(pathfiletmp,"w");
+    }
+    else if(strcmp(argv[1],"-p1")==0){
+        char* pathfiletmp="./Meteotmpfilesfolder/filep1";
+        f=fopen(pathfiletmp,"w");
+    }
+    else if(strcmp(argv[1],"-p2")==0){
+        char* pathfiletmp="./Meteotmpfilesfolder/filep2";
+        f=fopen(pathfiletmp,"w");
+    }
+    else if(strcmp(argv[1],"-p3")==0){
+        char* pathfiletmp="./Meteotmpfilesfolder/filep3";
+        f=fopen(pathfiletmp,"w");
+    }
+    else if(strcmp(argv[1],"-w")==0){
+        char* pathfiletmp="./Meteotmpfilesfolder/filew";
+        f=fopen(pathfiletmp,"w");
+    }
+    else if(strcmp(argv[1],"-h")==0){
+        char* pathfiletmp="./Meteotmpfilesfolder/fileh";
+        f=fopen(pathfiletmp,"w");
+    }
+    else if(strcmp(argv[1],"-m")==0){
+        char* pathfiletmp="./Meteotmpfilesfolder/filem";
+        f=fopen(pathfiletmp,"w");
+    }
+    else{
+        printf("We entered in the programm without any sorting parameter.\n");
+        return 0;
+    };
+
+
+    if(f==NULL){
+    printf("Cannot open the tmpfile\n");
+    exit(1);
+    }
+
+    FILE* fcsv=fopen(argv[2],"r");
+    if(fcsv==NULL){
+    printf("Cannot open the csv file\n");
+    exit(1);
+    }
+
     int value=-1;//le nombre de noeud
     int* pvalue=&value;
     int hauteur=-1;//pour la hauteur de l'arbre
     int* phauteur=&hauteur;
     int compt=1;//pour génerer l'arbre
     int* h=malloc(sizeof(int));//sert à l'équilirage
+    Chainon* pArbre=NULL;
+
+
+
+
+    int errfclose=fclose(fcsv);
+    if(errfclose==EOF){
+        printf("Error in the closing of the csv file.\n");
+        exit(2);
+    }
+    errfclose=fclose(f);
+    if(errfclose==EOF){
+        printf("Error in the closing of the tmp file.\n");
+        exit(2);
+    }
+
+    printf("On est passé dans le programme .c !\n");
+
+    return 0;
+
     /*exo2
 
 parcoursInfixe(pArbre);
@@ -61,8 +105,6 @@ else{
 
 
 //Ex3
-
-    Chainon* pArbre=NULL;
 
 /*
 pArbre=insertionAVL(pArbre,10,h);
@@ -209,7 +251,5 @@ switch (peigneGauche(pArbre,-1)){
 
 */
 
-printf("On est passé dans le programme .c !");
 
-    return 0;
 }
