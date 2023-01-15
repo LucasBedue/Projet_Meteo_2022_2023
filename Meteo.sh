@@ -298,72 +298,80 @@ if [ "$?" -ne 0 ] ; then
 fi
 
 
+#Here, we filter the data by using precedent arguments.
+#We have : namefile - region - date1/date2 - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
+if [ ! "$donneet1" = ' ' ] ; then
+    touch ./Meteotmpfilesfolder/filtereddatat1
+    #Then, we order the data by using precedent file.
+    #./execmeteotri -f "./Meteotmpfilesfolder/filtereddatat1" -o "./Meteotmpfilesfolder/ordereddatat1" "$reverse" "$argtri"
+fi
 
 
 
-#Here, we filter the data by using precedent arguments
-#We have : namefile - region - date1/date2 - argtri - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
+
+
+
 
 ./execmeteotri "$donneet1" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
-    make clean
+    #make clean
     exit 38
 fi
 
 ./execmeteotri "$donneet2" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
-    make clean
+    #make clean
     exit 39
 fi
 
 ./execmeteotri "$donneet3" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
-    make clean
+    #make clean
     exit 40
 fi
 
 ./execmeteotri "$donneep1" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
-    make clean
+    #make clean
     exit 41
 fi
 
 ./execmeteotri "$donneep2" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
-    make clean
+    #make clean
     exit 42
 fi
 
 ./execmeteotri "$donneep3" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
-    make clean
+    #make clean
     exit 43
 fi
 
 ./execmeteotri "$donneew" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
-    make clean
+    #make clean
     exit 44
 fi
 
 ./execmeteotri "$donneeh" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
-    make clean
+    #make clean
     exit 45
 fi
 
 ./execmeteotri  "$donneem" "$namefile" "$region" "$argtri" "$date1" "$date2"
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the sorting"
-    make clean
+    #make clean
     exit 46
 fi
 
@@ -375,7 +383,7 @@ fi
 
 
 echo 'everything is fine!'
-make clean
+#make clean
 
 
 
