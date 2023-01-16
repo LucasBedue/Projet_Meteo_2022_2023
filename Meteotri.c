@@ -1,62 +1,22 @@
 #include "Meteotri.h"
 
 /////////////////////////////////////////////////////////////////////
-int main(int argc,char **argv){
+int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/filtereddata--" -o "./Meteotmpfilesfolder/ordereddata--" "$argtri" -r*/
     srand(0);
-    FILE* f=NULL;
-
-    if(strcmp(argv[1],"-t1")==0){
-            char* pathfiletmp="./Meteotmpfilesfolder/filet1";
-            f=fopen(pathfiletmp,"w");
-    }
-    else if(strcmp(argv[1],"-t2")==0){
-        char* pathfiletmp="./Meteotmpfilesfolder/filet2";
-        f=fopen(pathfiletmp,"w");
-    }
-    else if(strcmp(argv[1],"-t3")==0){
-        char* pathfiletmp="./Meteotmpfilesfolder/filet3";
-        f=fopen(pathfiletmp,"w");
-    }
-    else if(strcmp(argv[1],"-p1")==0){
-        char* pathfiletmp="./Meteotmpfilesfolder/filep1";
-        f=fopen(pathfiletmp,"w");
-    }
-    else if(strcmp(argv[1],"-p2")==0){
-        char* pathfiletmp="./Meteotmpfilesfolder/filep2";
-        f=fopen(pathfiletmp,"w");
-    }
-    else if(strcmp(argv[1],"-p3")==0){
-        char* pathfiletmp="./Meteotmpfilesfolder/filep3";
-        f=fopen(pathfiletmp,"w");
-    }
-    else if(strcmp(argv[1],"-w")==0){
-        char* pathfiletmp="./Meteotmpfilesfolder/filew";
-        f=fopen(pathfiletmp,"w");
-    }
-    else if(strcmp(argv[1],"-h")==0){
-        char* pathfiletmp="./Meteotmpfilesfolder/fileh";
-        f=fopen(pathfiletmp,"w");
-    }
-    else if(strcmp(argv[1],"-m")==0){
-        char* pathfiletmp="./Meteotmpfilesfolder/filem";
-        f=fopen(pathfiletmp,"w");
-    }
-    else{
-        printf("We entered in the programm without any sorting parameter.\n");
-        return 0;
+    FILE* fenter=fopen(argv[2],"r");
+    if(fenter==NULL){
+        printf("Error with the file to open, the file to filter\n");
+        exit (2);
+    };
+    FILE* fexit=fopen(argv[4],"w");
+    if(fexit==NULL){
+        printf("Error with the file to create, the file filtered\n");
+        exit (2);
     };
 
 
-    if(f==NULL){
-    printf("Cannot open the tmpfile\n");
-    exit(1);
-    }
 
-    FILE* fcsv=fopen(argv[2],"r");
-    if(fcsv==NULL){
-    printf("Cannot open the csv file\n");
-    exit(1);
-    }
+
 
     int value=-1;//le nombre de noeud
     int* pvalue=&value;
@@ -82,19 +42,17 @@ int main(int argc,char **argv){
 
 
 
-
-
-
-    int errfclose=fclose(fcsv);
+    int errfclose=fclose(fenter);
     if(errfclose==EOF){
-        printf("Error in the closing of the csv file.\n");
-        exit(2);
-    }
-    errfclose=fclose(f);
+        printf("Error with the closing of the fenter file\n");
+        exit (3);
+    };
+    errfclose=fclose(fexit);
     if(errfclose==EOF){
-        printf("Error in the closing of the tmp file.\n");
-        exit(2);
-    }
+        printf("Error with the closing of the fexit file\n");
+        exit (3);
+    };
+
 
     printf("On est passé dans le programme .c !\n");
 

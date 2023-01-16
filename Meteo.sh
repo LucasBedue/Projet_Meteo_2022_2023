@@ -64,6 +64,16 @@ for qu in $* ; do
 
 done
 
+case "$region" in
+    '-F') regionrange='' ;;
+    '-G') regionrange='' ;;
+    '-S') regionrange='' ;;
+    '-A') regionrange='' ;;
+    '-O') regionrange='' ;;
+    '-F') regionrange='' ;;
+    '-Q') regionrange='' ;;
+
+esac
 
 #On regarde si il y a un parametre de date et le retient
 date1=' '
@@ -302,78 +312,107 @@ fi
 #We have : namefile - region - date1/date2 - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
 if [ ! "$donneet1" = ' ' ] ; then
     touch ./Meteotmpfilesfolder/filtereddatat1
+    
+
+
     #Then, we order the data by using precedent file.
-    #./execmeteotri -f "./Meteotmpfilesfolder/filtereddatat1" -o "./Meteotmpfilesfolder/ordereddatat1" "$reverse" "$argtri"
+    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatat1' -o './Meteotmpfilesfolder/ordereddatat1' "$argtri" -nr
+    if [ "$?" -ne 0 ] ; then
+        echo "There was an error during the process of the sorting "
+        #make clean
+        exit 38
+    fi
+fi
+
+if [ ! "$donneet2" = ' ' ] ; then
+    touch ./Meteotmpfilesfolder/filtereddatat2
+    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatat2' -o './Meteotmpfilesfolder/ordereddatat2' "$argtri" -nr
+    if [ "$?" -ne 0 ] ; then
+        echo "There was an error during the process of the sorting "
+        #make clean
+        exit 38
+    fi
+fi
+
+if [ ! "$donneet3" = ' ' ] ; then
+    touch ./Meteotmpfilesfolder/filtereddatat3
+    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatat3' -o './Meteotmpfilesfolder/ordereddatat3' "$argtri" -nr
+    if [ "$?" -ne 0 ] ; then
+        echo "There was an error during the process of the sorting "
+        #make clean
+        exit 38
+    fi
+fi
+
+if [ ! "$donneep1" = ' ' ] ; then
+    touch ./Meteotmpfilesfolder/filtereddatap1
+    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatap1' -o './Meteotmpfilesfolder/ordereddatap1' "$argtri" -nr
+    if [ "$?" -ne 0 ] ; then
+        echo "There was an error during the process of the sorting "
+        #make clean
+        exit 38
+    fi
+fi
+
+if [ ! "$donneep2" = ' ' ] ; then
+    touch ./Meteotmpfilesfolder/filtereddatap2
+    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatap2' -o './Meteotmpfilesfolder/ordereddatap2' "$argtri" -nr
+    if [ "$?" -ne 0 ] ; then
+        echo "There was an error during the process of the sorting "
+        #make clean
+        exit 38
+    fi
+fi
+
+if [ ! "$donneep3" = ' ' ] ; then
+    touch ./Meteotmpfilesfolder/filtereddatap3
+    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatap3' -o './Meteotmpfilesfolder/ordereddatap3' "$argtri" -nr
+    if [ "$?" -ne 0 ] ; then
+        echo "There was an error during the process of the sorting "
+        #make clean
+        exit 38
+    fi
+fi
+
+if [ ! "$donneew" = ' ' ] ; then
+    touch ./Meteotmpfilesfolder/filtereddataw
+    ./execmeteotri -f './Meteotmpfilesfolder/filtereddataw' -o './Meteotmpfilesfolder/ordereddataw' "$argtri" -r
+    if [ "$?" -ne 0 ] ; then
+        echo "There was an error during the process of the sorting "
+        #make clean
+        exit 38
+    fi
+fi
+
+if [ ! "$donneeh" = ' ' ] ; then
+    touch ./Meteotmpfilesfolder/filtereddatah
+    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatah' -o './Meteotmpfilesfolder/ordereddatah' "$argtri" -r
+    if [ "$?" -ne 0 ] ; then
+        echo "There was an error during the process of the sorting "
+        #make clean
+        exit 38
+    fi
+fi
+
+if [ ! "$donneem" = ' ' ] ; then
+    touch ./Meteotmpfilesfolder/filtereddatam
+    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatam' -o './Meteotmpfilesfolder/ordereddatam' "$argtri" -r
+    linetotreat=`cut`
+    #verif lieu
+    #verif date
+    #verif si la station est déja enregistré
+    #remplacement si nécessaire
+    if [  ] ; then
+
+    fi
+    if [ "$?" -ne 0 ] ; then
+        echo "There was an error during the process of the sorting "
+        #make clean
+        exit 38
+    fi
 fi
 
 
-
-
-
-
-
-./execmeteotri "$donneet1" "$namefile" "$region" "$argtri" "$date1" "$date2"
-if [ "$?" -ne 0 ] ; then
-    echo "There was an error during the process of the sorting"
-    #make clean
-    exit 38
-fi
-
-./execmeteotri "$donneet2" "$namefile" "$region" "$argtri" "$date1" "$date2"
-if [ "$?" -ne 0 ] ; then
-    echo "There was an error during the process of the sorting"
-    #make clean
-    exit 39
-fi
-
-./execmeteotri "$donneet3" "$namefile" "$region" "$argtri" "$date1" "$date2"
-if [ "$?" -ne 0 ] ; then
-    echo "There was an error during the process of the sorting"
-    #make clean
-    exit 40
-fi
-
-./execmeteotri "$donneep1" "$namefile" "$region" "$argtri" "$date1" "$date2"
-if [ "$?" -ne 0 ] ; then
-    echo "There was an error during the process of the sorting"
-    #make clean
-    exit 41
-fi
-
-./execmeteotri "$donneep2" "$namefile" "$region" "$argtri" "$date1" "$date2"
-if [ "$?" -ne 0 ] ; then
-    echo "There was an error during the process of the sorting"
-    #make clean
-    exit 42
-fi
-
-./execmeteotri "$donneep3" "$namefile" "$region" "$argtri" "$date1" "$date2"
-if [ "$?" -ne 0 ] ; then
-    echo "There was an error during the process of the sorting"
-    #make clean
-    exit 43
-fi
-
-./execmeteotri "$donneew" "$namefile" "$region" "$argtri" "$date1" "$date2"
-if [ "$?" -ne 0 ] ; then
-    echo "There was an error during the process of the sorting"
-    #make clean
-    exit 44
-fi
-
-./execmeteotri "$donneeh" "$namefile" "$region" "$argtri" "$date1" "$date2"
-if [ "$?" -ne 0 ] ; then
-    echo "There was an error during the process of the sorting"
-    #make clean
-    exit 45
-fi
-
-./execmeteotri  "$donneem" "$namefile" "$region" "$argtri" "$date1" "$date2"
-if [ "$?" -ne 0 ] ; then
-    echo "There was an error during the process of the sorting"
-    #make clean
-    exit 46
-fi
 
 
 
