@@ -64,6 +64,8 @@ for qu in $* ; do
 
 done
 
+#regionrange serve to know wich departement are include
+
 case "$region" in
     '-F') regionrange='' ;;
     '-G') regionrange='' ;;
@@ -307,6 +309,28 @@ if [ "$?" -ne 0 ] ; then
     exit 38
 fi
 
+#We do a file with all the value we can have
+#we filter by date, departement
+if [ ! "$date1" = ' ' ] && [ ! "$date2" = ' ' ] ; then
+    touch ./Meteotmpfilesfolder/firstfile
+    cat "$namefile" | tr 'T' ';' | awk -F ';' '{if($2>="'$date1'" && $2<"'$date2'")print $0;}' > ./Meteotmpfilesfolder/firstfile
+fi
+if [ ! -f './Meteotmpfilesfolder/firstfile' ] ; then
+    touch ./Meteotmpfilesfolder/firstfile
+    cat "$namefile" > ./Meteotmpfilesfolder/firstfile
+fi
+case "$region" in
+    '-F') touch ./Meteotmpfilesfolder/secondfile 
+    cat ./Meteotmpfilesfolder/firstfile | awk -F ';' '{if(`cut -d ';' -f1 | uniq`=)}' > ./Meteotmpfilesfolder/secondfile 
+    ;;
+    '-G') regionrange='' ;;
+    '-S') regionrange='' ;;
+    '-A') regionrange='' ;;
+    '-O') regionrange='' ;;
+    '-F') regionrange='' ;;
+    '-Q') regionrange='' ;;
+
+esac
 
 #Here, we filter the data by using precedent arguments.
 #We have : namefile - region - date1/date2 - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
@@ -395,16 +419,22 @@ if [ ! "$donneeh" = ' ' ] ; then
 fi
 
 if [ ! "$donneem" = ' ' ] ; then
-    touch ./Meteotmpfilesfolder/filtereddatam
-    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatam' -o './Meteotmpfilesfolder/ordereddatam' "$argtri" -r
-    linetotreat=`cut`
+    #touch ./Meteotmpfilesfolder/filtereddatam
+    #cat "$namefile" | cut -d ';' -f1,6 > './Meteotmpfilesfolder/filtereddatam'
+    
+    
+    
     #verif lieu
     #verif date
     #verif si la station est déja enregistré
     #remplacement si nécessaire
-    if [  ] ; then
+    
 
-    fi
+
+
+
+
+    #./execmeteotri -f './Meteotmpfilesfolder/filtereddatam' -o './Meteotmpfilesfolder/ordereddatam' "$argtri" -r
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
         #make clean
