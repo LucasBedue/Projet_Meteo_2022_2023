@@ -27,7 +27,13 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/filtereddata--" -o ".
     Chainon* pArbre=NULL;
 
 
-    
+    if(argv[2]=="./Meteotmpfilesfolder/filtereddatam"){
+        rewind(fenter);
+        Chainon tabdesstation[63];
+        
+
+
+    }
 
 
 

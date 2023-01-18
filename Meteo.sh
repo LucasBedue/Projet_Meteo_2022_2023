@@ -64,18 +64,6 @@ for qu in $* ; do
 
 done
 
-#regionrange serve to know wich departement are include
-
-case "$region" in
-    '-F') regionrange='' ;;
-    '-G') regionrange='' ;;
-    '-S') regionrange='' ;;
-    '-A') regionrange='' ;;
-    '-O') regionrange='' ;;
-    '-F') regionrange='' ;;
-    '-Q') regionrange='' ;;
-
-esac
 
 #On regarde si il y a un parametre de date et le retient
 date1=' '
@@ -317,20 +305,10 @@ if [ ! "$date1" = ' ' ] && [ ! "$date2" = ' ' ] ; then
 fi
 if [ ! -f './Meteotmpfilesfolder/firstfile' ] ; then
     touch ./Meteotmpfilesfolder/firstfile
-    cat "$namefile" > ./Meteotmpfilesfolder/firstfile
+    cat "$namefile" | tr 'T' ';' > ./Meteotmpfilesfolder/firstfile
 fi
-case "$region" in
-    '-F') touch ./Meteotmpfilesfolder/secondfile 
-    cat ./Meteotmpfilesfolder/firstfile | awk -F ';' '{if(`cut -d ';' -f1 | uniq`=)}' > ./Meteotmpfilesfolder/secondfile 
-    ;;
-    '-G') regionrange='' ;;
-    '-S') regionrange='' ;;
-    '-A') regionrange='' ;;
-    '-O') regionrange='' ;;
-    '-F') regionrange='' ;;
-    '-Q') regionrange='' ;;
 
-esac
+#faire le filtre par département
 
 #Here, we filter the data by using precedent arguments.
 #We have : namefile - region - date1/date2 - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
@@ -419,9 +397,9 @@ if [ ! "$donneeh" = ' ' ] ; then
 fi
 
 if [ ! "$donneem" = ' ' ] ; then
-    #touch ./Meteotmpfilesfolder/filtereddatam
-    #cat "$namefile" | cut -d ';' -f1,6 > './Meteotmpfilesfolder/filtereddatam'
-    
+    touch ./Meteotmpfilesfolder/filtereddatam
+    cat ./Meteotmpfilesfolder/firstfile | cut -d ';' -f1,7 | tr ';' ' ' > ./Meteotmpfilesfolder/filtereddatam
+    cat ./Meteotmpfilesfolder/filtereddatam
     
     
     #verif lieu
@@ -434,7 +412,7 @@ if [ ! "$donneem" = ' ' ] ; then
 
 
 
-    #./execmeteotri -f './Meteotmpfilesfolder/filtereddatam' -o './Meteotmpfilesfolder/ordereddatam' "$argtri" -r
+    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatam' -o './Meteotmpfilesfolder/ordereddatam' "$argtri" -r
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
         #make clean
