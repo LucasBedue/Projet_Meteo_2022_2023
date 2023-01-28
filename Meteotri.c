@@ -1,15 +1,15 @@
 #include "Meteotri.h"
 
 /////////////////////////////////////////////////////////////////////
-int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/filtereddata--" -o "./Meteotmpfilesfolder/ordereddata--" "$argtri" -r*/
+int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Meteotmpfilesfolder/ordereddata--" "$argtri" -r*/
     srand(0);
-    FILE* fenter=fopen(argv[2],"r");
-    if(fenter==NULL){
+    FILE* fentree=fopen(argv[2],"r");
+    if(fentree==NULL){
         printf("Error with the file to open, the file to filter\n");
         exit (2);
     };
-    FILE* fexit=fopen(argv[4],"w");
-    if(fexit==NULL){
+    FILE* fsortie=fopen(argv[4],"w");
+    if(fsortie==NULL){
         printf("Error with the file to create, the file filtered\n");
         exit (2);
     };
@@ -27,13 +27,108 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/filtereddata--" -o ".
     Chainon* pArbre=NULL;
 
 
-    if(argv[2]=="./Meteotmpfilesfolder/filtereddatam"){
+    if(argv[4]=="./Meteotmpfilesfolder/ordereddatat1"){
+        
+
+    }
+    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatat2"){
+        
+
+    }
+    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatat3"){
+        
+
+    }
+    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatap1"){
+        
+
+    }
+    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatap2"){
+        
+
+    }
+    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatap3"){
+        
+
+    }
+    else if(argv[4]=="./Meteotmpfilesfolder/ordereddataw"){
+        
+
+    }
+    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatah"){
+        
+
+    }
+    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatam"){}
         rewind(fenter);
-        Chainon tabdesstation[63];
+        if((argv[5]=='--avl')||(argv[5]==' ')){
+            char station[10];
+            char humidité[30];
+            char coordx[30];
+            char coordy[30];
+            int c=getc(fentree);
+            int i=0;
+
+            while(c!=EOF){
+                while((c!='\n')||(c!=';')){
+                    station[i]=c;
+                    i++;
+                };
+                i=0;
+                while((c!='\n')||(c!=';')){
+                };
+                while((c!='\n')||(c!=';')){
+                };
+                while((c!='\n')||(c!=';')){
+                };
+                while((c!='\n')||(c!=';')){
+                };
+                while((c!='\n')||(c!=';')){
+                };
+                while((c!='\n')||(c!=';')){
+                    humidité[i]=c;
+                    i++;
+                };
+                i=0;
+                while((c!='\n')||(c!=';')){
+                };
+                while((c!='\n')||(c!=';')){
+                };
+                while((c!='\n')||(c!=';')){
+                };
+                while((c!='\n')||(c!=';')){
+                    coordx[i]=c;
+                    i++;
+                };
+                i=0;
+                while((c!='\n')||(c!=';')){
+                    coordy[i]=c;
+                    i++;
+                };
+
+
+            }
+
+            /*On regarde si  */
+
+
+
+
+
+        }
+        else if((argv[5]=='--abl')){
+
+        }
+        else if(argv[5]=='--tab'){
+
+        };
+
+
+
         
 
 
-    }
+    };
 
 
 
@@ -46,16 +141,14 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/filtereddata--" -o ".
 
 
 
-
-
-    int errfclose=fclose(fenter);
+    int errfclose=fclose(fentree);
     if(errfclose==EOF){
-        printf("Error with the closing of the fenter file\n");
+        printf("Error with the closing of the fentree file\n");
         exit (3);
     };
-    errfclose=fclose(fexit);
+    errfclose=fclose(fsortie);
     if(errfclose==EOF){
-        printf("Error with the closing of the fexit file\n");
+        printf("Error with the closing of the fsortie file\n");
         exit (3);
     };
 

@@ -5,10 +5,20 @@
 //Pour gerer l'arbre
 typedef struct chainon {
     int val;
+    int station;
+    float temperature;
+    float pression;
+    float humidite;
+    float vent;
+    float altitude;
+    float coordx;
+    float coordy;
     int equilibre;
     struct chainon* fd;
     struct chainon* fg;
-} Chainon;
+}Chainon;
+
+
 
 //Pour gerer le tri en largeur
 typedef struct chainonfile{

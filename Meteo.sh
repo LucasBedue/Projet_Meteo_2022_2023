@@ -299,14 +299,41 @@ fi
 
 #We do a file with all the value we can have
 #we filter by date, departement
+
+
+
 if [ ! "$date1" = ' ' ] && [ ! "$date2" = ' ' ] ; then
-    touch ./Meteotmpfilesfolder/firstfile
-    cat "$namefile" | tr 'T' ';' | awk -F ';' '{if($2>="'$date1'" && $2<"'$date2'")print $0;}' > ./Meteotmpfilesfolder/firstfile
-fi
-if [ ! -f './Meteotmpfilesfolder/firstfile' ] ; then
-    touch ./Meteotmpfilesfolder/firstfile
+    cat "$namefile" | sed -i '1d' | tr 'T' ';' | awk -F ';' '{if($2>="'$date1'" && $2<"'$date2'")print $0;}' > ./Meteotmpfilesfolder/firstfile
+else
     cat "$namefile" | tr 'T' ';' > ./Meteotmpfilesfolder/firstfile
 fi
+
+cat ./Meteotmpfilesfolder/firstfile | awk -F";" '{sub(",",";",$11);print}' OFS=";" > ./Meteotmpfilesfolder/secondfile
+
+
+#case $region in
+#' ')
+#mv ./Meteotmpfilesfolder/firstfile ./Meteotmpfilesfolder/secondfile
+#;;
+#'-F')
+#cat ./Meteotmpfilesfolder/firstfile | awk -F ';' -vlatitudemin='42' -vlatitudemax='51' -vlongitudemin='-5' -vlongitudemax='9' '{if()}'
+#;;
+#'-G')
+#cat ./Meteotmpfilesfolder/firstfile
+#;;
+#'-S')
+#cat ./Meteotmpfilesfolder/firstfile
+#;;
+#'-A')
+#cat ./Meteotmpfilesfolder/firstfile
+#;;
+#'-O')
+#cat ./Meteotmpfilesfolder/firstfile
+#;;
+#'-Q')
+#cat ./Meteotmpfilesfolder/firstfile
+#;;
+#esac
 
 #faire le filtre par département
 
@@ -397,22 +424,16 @@ if [ ! "$donneeh" = ' ' ] ; then
 fi
 
 if [ ! "$donneem" = ' ' ] ; then
-    touch ./Meteotmpfilesfolder/filtereddatam
-    cat ./Meteotmpfilesfolder/firstfile | cut -d ';' -f1,7 | tr ';' ' ' > ./Meteotmpfilesfolder/filtereddatam
-    cat ./Meteotmpfilesfolder/filtereddatam
     
     
-    #verif lieu
-    #verif date
-    #verif si la station est déja enregistré
-    #remplacement si nécessaire
+    
     
 
 
 
 
 
-    ./execmeteotri -f './Meteotmpfilesfolder/filtereddatam' -o './Meteotmpfilesfolder/ordereddatam' "$argtri" -r
+    ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatam' "$argtri" -r
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
         #make clean

@@ -452,7 +452,6 @@ Chainon* recinsertABR(Chainon* pAr,int e){
 Chainon* iteinsertABR(Chainon* pAr,int e){
     Chainon* tmp=pAr;
     while(tmp!=NULL){
-        printf("%d\n",tmp->val);
         if((e<tmp->val)&&(tmp->fg!=NULL)){
             tmp=tmp->fg;
 
