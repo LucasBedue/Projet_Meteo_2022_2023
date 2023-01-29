@@ -184,7 +184,7 @@ fi
 
 #On regarde si il y a un parametre de méthode de tri et le retient
 bool1=0
-argtri=' '
+argtri='_'
 for qu in $* ; do
     if [ "${qu}" = '--tab' ] || [ "${qu}" = '--avl' ] || [ "${qu}" = '--abr' ] ; then
         if [ $bool1 -eq 0 ] ; then
@@ -303,9 +303,9 @@ fi
 
 
 if [ ! "$date1" = ' ' ] && [ ! "$date2" = ' ' ] ; then
-    cat "$namefile" | sed -i '1d' | tr 'T' ';' | awk -F ';' '{if($2>="'$date1'" && $2<"'$date2'")print $0;}' > ./Meteotmpfilesfolder/firstfile
+    cat "$namefile" | sed '1d' | tr 'T' ';' | awk -F ';' '{if($2>="'$date1'" && $2<"'$date2'")print $0;}' > ./Meteotmpfilesfolder/firstfile
 else
-    cat "$namefile" | tr 'T' ';' > ./Meteotmpfilesfolder/firstfile
+    cat "$namefile" | sed '1d' | tr 'T' ';' > ./Meteotmpfilesfolder/firstfile
 fi
 
 cat ./Meteotmpfilesfolder/firstfile | awk -F";" '{sub(",",";",$11);print}' OFS=";" > ./Meteotmpfilesfolder/secondfile
@@ -405,6 +405,7 @@ fi
 
 if [ ! "$donneew" = ' ' ] ; then
     touch ./Meteotmpfilesfolder/filtereddataw
+    #angle et force du vent
     ./execmeteotri -f './Meteotmpfilesfolder/filtereddataw' -o './Meteotmpfilesfolder/ordereddataw' "$argtri" -r
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
@@ -425,13 +426,6 @@ fi
 
 if [ ! "$donneem" = ' ' ] ; then
     
-    
-    
-    
-
-
-
-
 
     ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatam' "$argtri" -r
     if [ "$?" -ne 0 ] ; then
@@ -439,6 +433,10 @@ if [ ! "$donneem" = ' ' ] ; then
         #make clean
         exit 38
     fi
+
+
+
+
 fi
 
 

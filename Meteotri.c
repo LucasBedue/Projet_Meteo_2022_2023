@@ -22,113 +22,153 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
     int* pvalue=&value;
     int hauteur=-1;//pour la hauteur de l'arbre
     int* phauteur=&hauteur;
-    int compt=1;//pour génerer l'arbre
     int* h=malloc(sizeof(int));//sert à l'équilirage
     Chainon* pArbre=NULL;
 
+    printf("%s",argv[4]);
 
-    if(argv[4]=="./Meteotmpfilesfolder/ordereddatat1"){
+    if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatat1")==0){
         
 
     }
-    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatat2"){
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatat2")==0){
         
 
     }
-    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatat3"){
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatat3")==0){
+
+
+    }
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatap1")==0){
         
 
     }
-    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatap1"){
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatap2")==0){
         
 
     }
-    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatap2"){
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatap3")==0){
         
 
     }
-    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatap3"){
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddataw")==0){
         
 
     }
-    else if(argv[4]=="./Meteotmpfilesfolder/ordereddataw"){
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatah")==0){
         
 
     }
-    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatah"){
-        
-
-    }
-    else if(argv[4]=="./Meteotmpfilesfolder/ordereddatam"){}
-        rewind(fenter);
-        if((argv[5]=='--avl')||(argv[5]==' ')){
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatam")==0){
+        rewind(fentree);
+        printf("%s",argv[5]);
+        printf("ok1");
+        if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
+            printf(" ok2 ");
             char station[10];
-            char humidité[30];
+            char humiditee[30];
             char coordx[30];
             char coordy[30];
+            printf(" ok3 ");
             int c=getc(fentree);
+            printf("%c",c);
             int i=0;
-
             while(c!=EOF){
+                i=0;
+                memset(station,0,10);
+                memset(humiditee,0,30);
+                memset(coordx,0,30);
+                memset(coordy,0,30);
+                printf("%s",station);
+                printf("%s",humiditee);
+                printf("%s",coordx);
+                printf("%s",coordy);
+                printf(" ok4 ");
                 while((c!='\n')||(c!=';')){
                     station[i]=c;
                     i++;
-                };
+                }
+                printf("%s",station);
                 i=0;
-                while((c!='\n')||(c!=';')){
-                };
-                while((c!='\n')||(c!=';')){
-                };
-                while((c!='\n')||(c!=';')){
-                };
-                while((c!='\n')||(c!=';')){
-                };
-                while((c!='\n')||(c!=';')){
-                };
-                while((c!='\n')||(c!=';')){
-                    humidité[i]=c;
+                while((c!='\n')||(c!=';')){//date1
+                }
+                while((c!='\n')||(c!=';')){//date2
+                }
+                while((c!='\n')||(c!=';')){//pression
+                }
+                while((c!='\n')||(c!=';')){//angle vent
+                }
+                while((c!='\n')||(c!=';')){//vitesse vent
+                }
+                while((c!='\n')||(c!=';')){//humidité
+                    humiditee[i]=c;
                     i++;
-                };
+                }
+                printf("%s",humiditee);
                 i=0;
-                while((c!='\n')||(c!=';')){
-                };
-                while((c!='\n')||(c!=';')){
-                };
-                while((c!='\n')||(c!=';')){
-                };
-                while((c!='\n')||(c!=';')){
+                while((c!='\n')||(c!=';')){//pression station
+                }
+                while((c!='\n')||(c!=';')){//variation de pression
+                }
+                while((c!='\n')||(c!=';')){//précipitation
+                }
+                while((c!='\n')||(c!=';')){//coordx
                     coordx[i]=c;
                     i++;
-                };
+                }
+                printf("%s",coordx);
                 i=0;
-                while((c!='\n')||(c!=';')){
+                while((c!='\n')||(c!=';')){//coordy
                     coordy[i]=c;
                     i++;
-                };
+                }
+                printf("%s",coordy);
+                while((c!='\n')||(c!=';')){//temperature
+                }
+                while((c!='\n')||(c!=';')){//temperature min
+                }
+                while((c!='\n')||(c!=';')){//temperaturemax
+                }
+                while((c!='\n')||(c!=';')){//altitude
+                }
+                while((c!='\n')||(c!=';')){//commune
+                }
+
+                //insertion en fonction de l'humidité
+                pArbre=insertionAVLH(pArbre,atoi(station),2000,2000,atof(humiditee),2000,2000,2000,atof(coordx),atof(coordy),h);
 
 
             }
+            //on dresse une liste des stations, avec leur humidité max et leurs coordonnées
+            Chainon listestation[100];
+            int* nmbstation=malloc(sizeof(int));
+            *nmbstation=0;
+            parcoursPrefixeH(pArbre,listestation,nmbstation);
+            Chainon* pArbre2;
+            *h=0;
+            for(int k=0;k<*nmbstation;k++){
+                pArbre2=insertionAVLH(pArbre2,listestation[k].station,listestation[k].temperature,listestation[k].pression,listestation[k].humidite,listestation[k].forcevent,listestation[k].anglevent,listestation[k].altitude,listestation[k].coordx,listestation[k].coordy,h);
+            }
+            rewind(fsortie);
 
-            /*On regarde si  */
-
-
+            parcoursInfixeH(pArbre2,fsortie);
 
 
 
         }
-        else if((argv[5]=='--abl')){
+        else if((argv[5]=="--abl")){
 
         }
-        else if(argv[5]=='--tab'){
+        else if(argv[5]=="--tab"){
 
-        };
+        }
 
 
 
         
 
 
-    };
+    }
 
 
 
