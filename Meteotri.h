@@ -5,14 +5,22 @@
 //Pour gerer l'arbre
 typedef struct chainon{
     int station;
-    float temperature;
-    float pression;
-    float humidite;
-    float anglevent;
-    float forcevent;
-    float altitude;
-    float coordx;
-    float coordy;
+    int date;
+    int heure;
+    double pressionmer;
+    double anglevent;
+    double forcevent;
+    int humidite;
+    double pression;
+    double varpression;
+    double precipitation;
+    double coordx;
+    double coordy;
+    double temperature;
+    double temperaturemin;
+    double temperaturemax;
+    double altitude;
+    int commune;
     int equilibre;
     struct chainon* fd;
     struct chainon* fg;
@@ -32,14 +40,14 @@ typedef struct {
 }Fifo;
 
 
-Chainon* creerArbre(int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory);
+Chainon* creerArbre(int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun);
 int estVide(Chainon* pA);
 int estFeuille(Chainon* pAr);
 //int element(Chainon* pAr);
 int existeFilsGauche(Chainon* pA);
 int existeFilsDroit(Chainon* pA);
-void ajouterFilsGauche(Chainon* pAr,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory);
-void ajouterFilsDroit(Chainon* pAr,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory);
+void ajouterFilsGauche(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun);
+void ajouterFilsDroit(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun);
 //void traiter(Chainon* pA);
 //void parcoursPrefixe(Chainon* pAr);
 //void parcoursPostfixe(Chainon* pAr);
@@ -51,7 +59,7 @@ void ajouterFilsDroit(Chainon* pAr,int statio,float temperatur,float pressio,flo
 //ChainonFile* defilerDyn(Fifo* Fil);
 //void AfficherFile(Fifo* Filou);
 //void parcoursLargeur(Chainon* pAr);
-Chainon* modifierRacine(Chainon* a,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory);
+Chainon* modifierRacine(Chainon* a,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun);
 void supprimerFilsDroit(Chainon* pAr);
 void supprimerFilsGauche(Chainon* pAr);
 int nmbfeuille(Chainon* pAr);
@@ -75,10 +83,14 @@ Chainon* equilibrerAVL(Chainon* pAr);
 
 ////////////H
 
-void parcoursPrefixeH(Chainon* pAr,Chainon* listestatio,int* nmbstation);
-void traiterH(Chainon* pAr,Chainon* listestatio,int* nmbstation);
-Chainon* iteinsertABRH(Chainon* pAr,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory);
-Chainon* insertionAVLH(Chainon* pAr,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory,int* h);
-void parcoursInfixeH(Chainon* pAr,FILE* fsorti);
-void traiterH2(Chainon* pAr,FILE* fsorti);
-///////////
+//void parcoursPrefixeH(Chainon* pAr,Chainon* listestatio,int* nmbstation);
+//void traiterH(Chainon* pAr,Chainon* listestatio,int* nmbstation);
+//Chainon* iteinsertABRH(Chainon* pAr,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory);
+Chainon* insertionAVLH(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h);
+void parcoursInfixeH(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio);
+void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio);
+
+///////////H
+//Chainon* insertionAVLH(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h);
+//void parcoursInfixeH(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio);
+//void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio);

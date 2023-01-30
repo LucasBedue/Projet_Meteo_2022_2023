@@ -1,10 +1,18 @@
 #include "Meteotri.h"
 
-Chainon* creerArbre(int statio,float temperatur,float pressio,float humidit,float angleven,float forceven,float altitud,float coorx,float coory){
+Chainon* creerArbre(int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun){
 
     Chainon* pA=malloc(sizeof(Chainon));
     pA->station=statio;
+    pA->date=dat;
+    pA->heure=heur;
+    pA->pressionmer=pressionme;
+    pA->varpression=varpressio;
+    pA->precipitation=precipitatio;
     pA->temperature=temperatur;
+    pA->temperaturemin=temperaturmin;
+    pA->temperaturemax=temperaturmax;
+    pA->commune=commun;
     pA->pression=pressio;
     pA->humidite=humidit;
     pA->forcevent=forceven;
@@ -92,31 +100,31 @@ int existeFilsDroit(Chainon* pA){
     
 }
 
-void ajouterFilsGauche(Chainon* pAr,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory){
+void ajouterFilsGauche(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun){
     if(estVide(pAr)==1){
-        pAr=creerArbre(statio,temperatur,pressio,humidit,forceven,angleven,altitud,coorx,coory);
+        pAr=creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
     }
     else{
         if(pAr->fg!=NULL){
             printf("On ne peut pas créer de noeud ici!\n");
         }
         else{
-            pAr->fg=creerArbre(statio,temperatur,pressio,humidit,forceven,angleven,altitud,coorx,coory);
+            pAr->fg=creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
         };
     };
 
 }
 
-void ajouterFilsDroit(Chainon* pAr,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory){
+void ajouterFilsDroit(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun){
     if(estVide(pAr)==1){
-        pAr=creerArbre(statio,temperatur,pressio,humidit,forceven,angleven,altitud,coorx,coory);
+        pAr=creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
     }
     else{
         if(pAr->fd!=NULL){
             printf("On ne peut pas créer de noeud ici!\n");
         }
         else{
-            pAr->fd=creerArbre(statio,temperatur,pressio,humidit,forceven,angleven,altitud,coorx,coory);
+            pAr->fd=creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
         };
     };
 
@@ -271,17 +279,25 @@ void parcoursLargeur(Chainon* pAr){
 */
 ////////////////////////////////////////////////////////////////////////////////////////
 
-Chainon* modifierRacine(Chainon* a,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory){
+Chainon* modifierRacine(Chainon* a,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun){
     if(estVide(a)==0){
-        a->station=statio;
-        a->temperature=temperatur;
-        a->pression=pressio;
-        a->humidite=humidit;
-        a->forcevent=forceven;
-        a->anglevent=angleven;
-        a->altitude=altitud;
-        a->coordx=coorx;
-        a->coordy=coory;
+    a->station=statio;
+    a->date=dat;
+    a->heure=heur;
+    a->pressionmer=pressionme;
+    a->varpression=varpressio;
+    a->precipitation=precipitatio;
+    a->temperature=temperatur;
+    a->temperaturemin=temperaturmin;
+    a->temperaturemax=temperaturmax;
+    a->commune=commun;
+    a->pression=pressio;
+    a->humidite=humidit;
+    a->forcevent=forceven;
+    a->anglevent=angleven;
+    a->altitude=altitud;
+    a->coordx=coorx;
+    a->coordy=coory;
         return a;
     }
     else{
@@ -588,8 +604,37 @@ return pAr;
 
 
 }
+
+
 */
 Chainon* equilibrerAVL(Chainon* pAr){
+
+    if(pAr!=NULL){
+        if(pAr->equilibre>=2){
+            if(pAr->fd->equilibre>=0){
+                return rotationGauche(pAr);
+            }
+            else{
+                return doubleRotationGauche(pAr);
+            }
+        }
+        else if(pAr->equilibre<=-2){
+            if(pAr->fg->equilibre<=0){
+                return rotationDroite(pAr);
+            }
+            else{
+                return doubleRotationDroit(pAr);
+            }
+
+        }
+        return pAr;
+    }
+
+return pAr;
+
+/*
+if(pAr!=NULL){
+
 
     if(pAr->equilibre>=2){
         if(pAr->fd->equilibre>=0){
@@ -597,20 +642,22 @@ Chainon* equilibrerAVL(Chainon* pAr){
         }
         else{
             return doubleRotationGauche(pAr);
-        };
+        }
 
     }
-    else if(pAr->equilibre<=-2){
+    if(pAr->equilibre<=-2){
         if(pAr->fg->equilibre<=0){
             return rotationDroite(pAr);
         }
         else{
             return doubleRotationDroit(pAr);
-        };
-    };
+        }
+    }
+    return pAr;
+}
     return pAr;
 
-
+*/
 }
 
 /*
@@ -680,90 +727,60 @@ Chainon* suppressionAVL(Chainon* pAr,int e,int* h){//a changer
 
 }
 */
-void traiterH2(Chainon* pAr,FILE* fsorti){
-    char str1[10];
-    char str2[30];
-    char str3[30];
-    char str4[30];
-    int err=0;
-    int p=0;
-    err=sprintf(str1,"%d",pAr->station);
-    err=sprintf(str2,"%f",pAr->humidite);
-    err=sprintf(str3,"%f",pAr->coordx);
-    err=sprintf(str4,"%f",pAr->coordy);
-    while(str1[p]!='\0'){
-        if(fputc(str1[p],fsorti)==str1[p]){
-            p++;
+
+
+
+void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
+    //printf("%d %d %lf %lf\n",pAr->station,pAr->humidite,pAr->coordx,pAr->coordy);
+    //fprintf(fsorti,"%d %d %lf %lf\n",pAr->station,pAr->humidite,pAr->coordx,pAr->coordy);
+    int bool=0;
+    if(pAr!=NULL){
+        if((*nmbstatio)==0){
+            tabu[0]=(*pAr);
+            (*nmbstatio)++;
+            
         }
-            else{
-                printf("Erreur dans l'écriture de fsortie");
-                exit(3);
-                };
-    }
-    if(fputc(' ',fsorti)==' '){}
-    else{
-        printf("Erreur dans l'écriture de fsortie");
-        exit(3);
-    };
-    p=0;
-    while(str2[p]!='\0'){
-        if(fputc(str2[p],fsorti)==str2[p]){
-            p++;
+        else{
+            
+            if(bool==0){
+                for(int u=0;u<(*nmbstatio);u++){
+                    if(bool==0){
+                        if((tabu[u].station)==(pAr->station)){
+
+                        bool=1;
+                        if((tabu[u].humidite)<(pAr->humidite)){
+                            
+                            tabu[u]=(*pAr);
+
+                        }
+                        else{bool=1;}
+                    }
+                    }
+                } 
+            }
+            if(bool==0){
+                tabu[(*nmbstatio)]=(*pAr);
+                (*nmbstatio)++;
+            }
         }
-            else{
-                printf("Erreur dans l'écriture de fsortie");
-                exit(3);
-                };
+
+        
     }
-    if(fputc(' ',fsorti)==' '){}
-    else{
-        printf("Erreur dans l'écriture de fsortie");
-        exit(3);
-    };
-    p=0;
-    while(str3[p]!='\0'){
-        if(fputc(str3[p],fsorti)==str3[p]){
-            p++;
-        }
-            else{
-                printf("Erreur dans l'écriture de fsortie");
-                exit(3);
-                };
-    }
-    if(fputc(' ',fsorti)==' '){}
-    else{
-        printf("Erreur dans l'écriture de fsortie");
-        exit(3);
-    };
-    p=0;
-    while(str4[p]!='\0'){
-        if(fputc(str4[p],fsorti)==str4[p]){
-            p++;
-        }
-            else{
-                printf("Erreur dans l'écriture de fsortie");
-                exit(3);
-                };
-    }
-    if(fputc('\n',fsorti)=='\n'){}
-    else{
-        printf("Erreur dans l'écriture de fsortie");
-        exit(3);
-    };
-    p=0;
+    
 }
 
-void parcoursInfixeH(Chainon* pAr,FILE* fsorti){
+
+void parcoursInfixeH(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
 if(pAr!=NULL){
         
-        parcoursInfixeH(pAr->fd,fsorti);
-        parcoursInfixeH(pAr->fg,fsorti);
-        traiterH2(pAr,fsorti);
+        parcoursInfixeH(pAr->fd,fsorti,tabu,nmbstatio);
+        parcoursInfixeH(pAr->fg,fsorti,tabu,nmbstatio);
+        traiterH2(pAr,fsorti,tabu,nmbstatio);
     }
 
 
 }
-
+/*
 void parcoursPrefixeH(Chainon* pAr,Chainon* listestatio,int* nmbstation){
 if(pAr!=NULL){
         traiterH(pAr,listestatio,nmbstation);
@@ -856,24 +873,23 @@ Chainon* tmp=pAr;
 
 }
 
+*/
 
-Chainon* insertionAVLH(Chainon* pAr,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory,int* h){
+
+Chainon* insertionAVLH(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
 
 if(pAr==NULL){
     *h=1;
-    return creerArbre(statio,temperatur,pressio,humidit,forceven,angleven,altitud,coorx,coory);
+    return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
 }
 else if(humidit<pAr->humidite){
-    pAr->fg=insertionAVLH(pAr->fg,statio,temperatur,pressio,humidit,forceven,angleven,altitud,coorx,coory,h);
+    pAr->fg=insertionAVLH(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
     *h=-(*h);
 }
-else if(humidit>pAr->humidite){
-    pAr->fd=insertionAVLH(pAr->fd,statio,temperatur,pressio,humidit,forceven,angleven,altitud,coorx,coory,h);
+else if(humidit>=pAr->humidite){
+    pAr->fd=insertionAVLH(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
 }
-else{
-    *h=0;
-    return pAr;
-};
+
 
 if(*h!=0){
     pAr->equilibre=pAr->equilibre+(*h);

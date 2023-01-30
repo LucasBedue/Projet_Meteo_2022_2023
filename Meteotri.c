@@ -25,7 +25,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
     int* h=malloc(sizeof(int));//sert à l'équilirage
     Chainon* pArbre=NULL;
 
-    printf("%s",argv[4]);
 
     if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatat1")==0){
         
@@ -61,100 +60,72 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
     }
     else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatam")==0){
         rewind(fentree);
-        printf("%s",argv[5]);
-        printf("ok1");
+        
         if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
-            printf(" ok2 ");
-            char station[10];
-            char humiditee[30];
-            char coordx[30];
-            char coordy[30];
-            printf(" ok3 ");
+            
+            int f=0;
+            char carac[17][30];
             int c=getc(fentree);
-            printf("%c",c);
             int i=0;
+            f=0;
+
             while(c!=EOF){
-                i=0;
-                memset(station,0,10);
-                memset(humiditee,0,30);
-                memset(coordx,0,30);
-                memset(coordy,0,30);
-                printf("%s",station);
-                printf("%s",humiditee);
-                printf("%s",coordx);
-                printf("%s",coordy);
-                printf(" ok4 ");
-                while((c!='\n')||(c!=';')){
-                    station[i]=c;
-                    i++;
-                }
-                printf("%s",station);
-                i=0;
-                while((c!='\n')||(c!=';')){//date1
-                }
-                while((c!='\n')||(c!=';')){//date2
-                }
-                while((c!='\n')||(c!=';')){//pression
-                }
-                while((c!='\n')||(c!=';')){//angle vent
-                }
-                while((c!='\n')||(c!=';')){//vitesse vent
-                }
-                while((c!='\n')||(c!=';')){//humidité
-                    humiditee[i]=c;
-                    i++;
-                }
-                printf("%s",humiditee);
-                i=0;
-                while((c!='\n')||(c!=';')){//pression station
-                }
-                while((c!='\n')||(c!=';')){//variation de pression
-                }
-                while((c!='\n')||(c!=';')){//précipitation
-                }
-                while((c!='\n')||(c!=';')){//coordx
-                    coordx[i]=c;
-                    i++;
-                }
-                printf("%s",coordx);
-                i=0;
-                while((c!='\n')||(c!=';')){//coordy
-                    coordy[i]=c;
-                    i++;
-                }
-                printf("%s",coordy);
-                while((c!='\n')||(c!=';')){//temperature
-                }
-                while((c!='\n')||(c!=';')){//temperature min
-                }
-                while((c!='\n')||(c!=';')){//temperaturemax
-                }
-                while((c!='\n')||(c!=';')){//altitude
-                }
-                while((c!='\n')||(c!=';')){//commune
-                }
 
-                //insertion en fonction de l'humidité
-                pArbre=insertionAVLH(pArbre,atoi(station),2000,2000,atof(humiditee),2000,2000,2000,atof(coordx),atof(coordy),h);
+                if((c!='\n')&&(c!=';')&&(c!=EOF)){
+                    if((c=='-')||(c==':')){
+                        f++;
+                        c=getc(fentree);
+                    }
+                    else{
+                        carac[i][f]=c;
+                    f++;
+                    c=getc(fentree);
+                    }
+                    
+                }
+                else if(c==';'){
+                    i++;
+                    f=0;
+                    c=getc(fentree);
+                }
+                else if(c=='\n'){
+                    i=0;
+                    f=0;
+                    //Chainon* pArbre=creerArbre(atoi(carac[1]),atoi(carac[2]),atoi(carac[3]),atof(carac[4]),atof(carac[5]),atof(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atof(carac[16]),atoi(carac[17]));
+                    //printf("%d %d %d %f %f %f %f %f %f %f %f %f %f %f %f %f %d",pArbre->station,pArbre->date,pArbre->heure,pArbre->pressionmer,pArbre->anglevent,pArbre->forcevent,pArbre->humidite,pArbre->pression,pArbre->varpression,pArbre->precipitation,pArbre->coordx,pArbre->coordy,pArbre->temperature,pArbre->temperaturemin,pArbre->temperaturemax,pArbre->altitude,pArbre->commune);
+                    pArbre=insertionAVLH(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+                    
+                    //free(pArbre);
+                    for(int k=0;k<17;k++){
+                        bzero(carac[k],30);
+                    }
+                    c=getc(fentree);
 
+                }
+                else if(c==EOF){
+                    pArbre=insertionAVLH(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+
+                }
+                
+                
 
             }
-            //on dresse une liste des stations, avec leur humidité max et leurs coordonnées
-            Chainon listestation[100];
+            
+
+            Chainon tab[100];
             int* nmbstation=malloc(sizeof(int));
-            *nmbstation=0;
-            parcoursPrefixeH(pArbre,listestation,nmbstation);
-            Chainon* pArbre2;
-            *h=0;
-            for(int k=0;k<*nmbstation;k++){
-                pArbre2=insertionAVLH(pArbre2,listestation[k].station,listestation[k].temperature,listestation[k].pression,listestation[k].humidite,listestation[k].forcevent,listestation[k].anglevent,listestation[k].altitude,listestation[k].coordx,listestation[k].coordy,h);
+            (*nmbstation)=0;
+            parcoursInfixeH(pArbre,fsortie,tab,nmbstation);
+            printf("%d",(*nmbstation));
+            for(int k=0;k<(*nmbstation);k++){
+                printf("%d %d %lf %lf\n",tab[k].station,tab[k].humidite,tab[k].coordx,tab[k].coordy);
+                fprintf(fsortie,"%d %d %lf %lf\n",tab[k].station,tab[k].humidite,tab[k].coordx,tab[k].coordy);
             }
-            rewind(fsortie);
+            free(nmbstation);
 
-            parcoursInfixeH(pArbre2,fsortie);
+            
 
-
-
+            
         }
         else if((argv[5]=="--abl")){
 
