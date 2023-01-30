@@ -8,9 +8,11 @@ Meteotrifct.o: Meteotrifct.c Meteotri.h
 
 execmeteotri: Meteotri.o Meteotrifct.o
 	gcc Meteotri.o Meteotrifct.o -o execmeteotri
+	chmod 777 ./Meteo.sh
 
 Meteotmpfiles:
 	mkdir -p ./Meteotmpfilesfolder
+
 	
 clean:
 	rm -f *.o

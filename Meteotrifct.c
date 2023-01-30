@@ -731,8 +731,7 @@ Chainon* suppressionAVL(Chainon* pAr,int e,int* h){//a changer
 
 
 void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
-    //printf("%d %d %lf %lf\n",pAr->station,pAr->humidite,pAr->coordx,pAr->coordy);
-    //fprintf(fsorti,"%d %d %lf %lf\n",pAr->station,pAr->humidite,pAr->coordx,pAr->coordy);
+    
     int bool=0;
     if(pAr!=NULL){
         if((*nmbstatio)==0){
@@ -908,7 +907,86 @@ return pAr;
 
 }
 
+////////////////////////////////////
+Chainon* insertionAVLAlt(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
+if(pAr==NULL){
+    *h=1;
+    return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+}
+else if(altitud<pAr->humidite){
+pAr->fg=insertionAVLAlt(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+    *h=-(*h);
+}
+else if(altitud>=pAr->humidite){
+    pAr->fd=insertionAVLAlt(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+}
 
+
+if(*h!=0){
+    pAr->equilibre=pAr->equilibre+(*h);
+    pAr=equilibrerAVL(pAr);
+    if(pAr->equilibre==0){
+        *h=0;
+    }
+    else{
+        *h=1;
+    };
+};
+
+return pAr;
+
+
+}
+
+
+void parcoursInfixeAlt(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
+if(pAr!=NULL){
+        
+        parcoursInfixeAlt(pAr->fd,fsorti,tabu,nmbstatio);
+        parcoursInfixeAlt(pAr->fg,fsorti,tabu,nmbstatio);
+        traiterAlt2(pAr,fsorti,tabu,nmbstatio);
+    }
+}
+
+
+
+void traiterAlt2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
+
+    int bool=0;
+    if(pAr!=NULL){
+        if((*nmbstatio)==0){
+            tabu[0]=(*pAr);
+            (*nmbstatio)++;
+            
+        }
+        else{
+            
+            if(bool==0){
+                for(int u=0;u<(*nmbstatio);u++){
+                    if(bool==0){
+                        if((tabu[u].station)==(pAr->station)){
+
+                        bool=1;
+                        if((tabu[u].altitude)<=(pAr->altitude)){
+                            
+                            tabu[u]=(*pAr);
+
+                        }
+                        else{bool=1;}
+                    }
+                    }
+                } 
+            }
+            if(bool==0){
+                tabu[(*nmbstatio)]=(*pAr);
+                (*nmbstatio)++;
+            }
+        }
+
+        
+    }
+    
+}
 
 
 

@@ -81,7 +81,7 @@ Chainon* equilibrerAVL(Chainon* pAr);
 //Chainon* suppMinAVL(Chainon* pAr,int* h,int* pe);
 //Chainon* suppressionAVL(Chainon* pAr,int e,int* h);
 
-////////////H
+////////////Humidite
 
 //void parcoursPrefixeH(Chainon* pAr,Chainon* listestatio,int* nmbstation);
 //void traiterH(Chainon* pAr,Chainon* listestatio,int* nmbstation);
@@ -90,7 +90,9 @@ Chainon* insertionAVLH(Chainon* pAr,int statio,int dat,int heur,double pressionm
 void parcoursInfixeH(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio);
 void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio);
 
-///////////H
-//Chainon* insertionAVLH(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h);
-//void parcoursInfixeH(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio);
-//void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio);
+///////////Altitude
+Chainon* insertionAVLAlt(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h);
+void parcoursInfixeAlt(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio);
+void traiterAlt2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio);
+
+
