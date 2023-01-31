@@ -27,8 +27,90 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
 
     if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatat1")==0){
-        
+        /*
+        rewind(fentree);
+        if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
+            
+            int f=0;
+            char carac[17][30];
+            int c=getc(fentree);
+            int i=0;
+            f=0;
 
+            while(c!=EOF){
+
+                if((c!='\n')&&(c!=';')&&(c!=EOF)){
+                    if((c=='-')||(c==':')){
+                        f++;
+                        c=getc(fentree);
+                    }
+                    else{
+                        carac[i][f]=c;
+                    f++;
+                    c=getc(fentree);
+                    }
+                    
+                }
+                else if(c==';'){
+                    i++;
+                    f=0;
+                    c=getc(fentree);
+                }
+                else if(c=='\n'){
+                    i=0;
+                    f=0;
+                    
+                    pArbre=insertionAVLT1(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+                    
+                    
+                    for(int k=0;k<17;k++){
+                        bzero(carac[k],30);
+                    }
+                    c=getc(fentree);
+
+                }
+                else if(c==EOF){
+                    pArbre=insertionAVLT1(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+
+                }
+                
+            }
+
+
+            Chainon tab[100];
+            double tempmoyen[100]={0};
+            double tempmax[100]={0};
+            double tempmin[100]={0};
+            int nmbstationpourlatemp[100]={0};
+            int* nmbstation=malloc(sizeof(int));
+            (*nmbstation)=0;
+            
+
+            parcoursInfixeT1(pArbre,fsortie,tab,tempmoyen,tempmax,tempmin,nmbstationpourlatemp,nmbstation);
+
+
+            int h=0;
+
+            for(h=0;h<(*nmbstation);h++){
+                tempmoyen[h]=(tempmoyen[h])/(nmbstationpourlatemp[h]);
+            }
+            h=0;
+            for(h=0;h<(*nmbstation);h++){
+               fprintf(fsortie,"%d %lf %lf %lf %lf\n",tab[h].station,anglemoyenx[h],anglemoyeny[h],vitessemoyenx[h],vitessemoyeny[h]);
+            }
+            free(nmbstation);
+
+            
+
+            
+        }
+        else if((argv[5]=="--abl")){
+
+        }
+        else if(argv[5]=="--tab"){
+
+        }
+    */
     }
     else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatat2")==0){
         
@@ -51,7 +133,102 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
     }
     else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddataw")==0){
-        
+        rewind(fentree);
+        if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
+            
+            int f=0;
+            char carac[17][30];
+            int c=getc(fentree);
+            int i=0;
+            f=0;
+
+            while(c!=EOF){
+
+                if((c!='\n')&&(c!=';')&&(c!=EOF)){
+                    if((c=='-')||(c==':')){
+                        f++;
+                        c=getc(fentree);
+                    }
+                    else{
+                        carac[i][f]=c;
+                    f++;
+                    c=getc(fentree);
+                    }
+                    
+                }
+                else if(c==';'){
+                    i++;
+                    f=0;
+                    c=getc(fentree);
+                }
+                else if(c=='\n'){
+                    i=0;
+                    f=0;
+                    
+                    pArbre=insertionAVLV(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+                    
+                    
+                    for(int k=0;k<17;k++){
+                        bzero(carac[k],30);
+                    }
+                    c=getc(fentree);
+
+                }
+                else if(c==EOF){
+                    pArbre=insertionAVLV(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+
+                }
+            
+            }
+
+
+            Chainon tab[100];
+            double vitessemoyenx[100]={0};
+            double vitessemoyeny[100]={0};
+            double anglemoyenx[100]={0};
+            double anglemoyeny[100]={0};
+            int nmbstationpourlevent[100]={0};
+            int* nmbstation=malloc(sizeof(int));
+            (*nmbstation)=0;
+            
+
+            parcoursInfixeV(pArbre,fsortie,tab,vitessemoyenx,vitessemoyeny,anglemoyenx,anglemoyeny,nmbstationpourlevent,nmbstation);
+
+
+            int h=0;
+
+            for(h=0;h<(*nmbstation);h++){
+                anglemoyenx[h]=cos((anglemoyenx[h])/(nmbstationpourlevent[h]));
+            }
+            h=0;
+            for(h=0;h<(*nmbstation);h++){
+                anglemoyeny[h]=sin((anglemoyeny[h])/(nmbstationpourlevent[h]));
+            }
+            h=0;
+            for(h=0;h<(*nmbstation);h++){
+                vitessemoyenx[h]=cos((anglemoyenx[h])/(nmbstationpourlevent[h]))*(vitessemoyenx[h]/(nmbstationpourlevent[h]));
+            }
+            h=0;
+            for(h=0;h<(*nmbstation);h++){
+                vitessemoyeny[h]=sin((anglemoyeny[h])/(nmbstationpourlevent[h]))*(vitessemoyeny[h]/(nmbstationpourlevent[h]));
+            }
+            h=0;
+            for(h=0;h<(*nmbstation);h++){
+                
+               fprintf(fsortie,"%d %lf %lf %lf %lf %lf %lf\n",tab[h].station,anglemoyenx[h],anglemoyeny[h],vitessemoyenx[h],vitessemoyeny[h],tab[h].coordx,tab[h].coordy);
+            }
+            free(nmbstation);
+
+            
+
+            
+        }
+        else if((argv[5]=="--abl")){
+
+        }
+        else if(argv[5]=="--tab"){
+
+        }
 
     }
     else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatah")==0){//Tri de hauteur

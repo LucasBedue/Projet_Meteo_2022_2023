@@ -7,7 +7,7 @@ Meteotrifct.o: Meteotrifct.c Meteotri.h
 	gcc -c Meteotrifct.c -o Meteotrifct.o
 
 execmeteotri: Meteotri.o Meteotrifct.o
-	gcc Meteotri.o Meteotrifct.o -o execmeteotri
+	gcc Meteotri.o Meteotrifct.o -o execmeteotri -lm
 	chmod 777 ./Meteo.sh
 
 Meteotmpfiles:

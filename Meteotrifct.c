@@ -1065,8 +1065,174 @@ void traiterAlt2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
 }
 
 
+////////////////////////////////////////
+Chainon* insertionAVLV(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
+if(pAr==NULL){
+    *h=1;
+    return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+}
+else if(statio<pAr->station){
+pAr->fg=insertionAVLV(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+    *h=-(*h);
+}
+else if(statio>=pAr->station){
+    pAr->fd=insertionAVLV(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+}
 
 
+if(*h!=0){
+    pAr->equilibre=pAr->equilibre+(*h);
+    pAr=equilibrerAVL(pAr);
+    if(pAr->equilibre==0){
+        *h=0;
+    }
+    else{
+        *h=1;
+    };
+};
+
+return pAr;
+
+}
+
+
+
+void parcoursInfixeV(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,double* vitessemoyey,double* anglemoyex,double* anglemoyey,int* nmbstationpourleven,int* nmbstatio){
+if(pAr!=NULL){
+        
+        parcoursInfixeV(pAr->fg,fsorti,tabu,vitessemoyex,vitessemoyey,anglemoyex,anglemoyey,nmbstationpourleven,nmbstatio);
+        parcoursInfixeV(pAr->fd,fsorti,tabu,vitessemoyex,vitessemoyey,anglemoyex,anglemoyey,nmbstationpourleven,nmbstatio);
+        traiterV2(pAr,fsorti,tabu,vitessemoyex,vitessemoyey,anglemoyex,anglemoyey,nmbstationpourleven,nmbstatio);
+    }
+
+}
+
+
+
+void traiterV2(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,double* vitessemoyey,double* anglemoyex,double* anglemoyey,int* nmbstationpourleven,int* nmbstatio){
+
+    int bool=0;
+    if(pAr!=NULL){
+        if((*nmbstatio)==0){
+            tabu[0]=(*pAr);
+            (*nmbstatio)++;
+            
+        }
+        else{
+            
+            if(bool==0){
+                for(int u=0;u<(*nmbstatio);u++){
+                    if(bool==0){
+                        if((tabu[u].station)==(pAr->station)){
+                            bool=1;
+                            tabu[u].station=pAr->station;
+                            tabu[u].date=pAr->date;
+                            tabu[u].heure=pAr->heure;
+                            tabu[u].pressionmer=pAr->pressionmer;
+                            tabu[u].anglevent=pAr->anglevent;
+                            tabu[u].forcevent=pAr->forcevent;
+                            tabu[u].humidite=pAr->humidite;
+                            tabu[u].varpression=pAr->varpression;
+                            tabu[u].pression=pAr->pression;
+                            tabu[u].precipitation=pAr->precipitation;
+                            tabu[u].coordx=pAr->coordx;
+                            tabu[u].coordy=pAr->coordy;
+                            tabu[u].temperature=pAr->temperature;
+                            tabu[u].temperaturemin=pAr->temperaturemin;
+                            tabu[u].temperaturemax=pAr->temperaturemax;
+                            tabu[u].altitude=pAr->altitude;
+                            tabu[u].commune=pAr->commune;
+                            tabu[u].equilibre=0;
+                            tabu[u].fd=NULL;
+                            tabu[u].fg=NULL;
+
+                            vitessemoyex[u]=vitessemoyex[u]+(pAr->forcevent);
+                            vitessemoyey[u]=vitessemoyey[u]+(pAr->forcevent);
+                            anglemoyex[u]=anglemoyex[u]+(pAr->anglevent);
+                            anglemoyey[u]=anglemoyey[u]+(pAr->anglevent);
+                            nmbstationpourleven[u]++;
+                        }
+                        
+                    }
+                    }
+                } 
+            }
+            if(bool==0){
+                tabu[(*nmbstatio)].station=pAr->station;
+                            tabu[(*nmbstatio)].date=pAr->date;
+                            tabu[(*nmbstatio)].heure=pAr->heure;
+                            tabu[(*nmbstatio)].pressionmer=pAr->pressionmer;
+                            tabu[(*nmbstatio)].anglevent=pAr->anglevent;
+                            tabu[(*nmbstatio)].forcevent=pAr->forcevent;
+                            tabu[(*nmbstatio)].humidite=pAr->humidite;
+                            tabu[(*nmbstatio)].varpression=pAr->varpression;
+                            tabu[(*nmbstatio)].pression=pAr->pression;
+                            tabu[(*nmbstatio)].precipitation=pAr->precipitation;
+                            tabu[(*nmbstatio)].coordx=pAr->coordx;
+                            tabu[(*nmbstatio)].coordy=pAr->coordy;
+                            tabu[(*nmbstatio)].temperature=pAr->temperature;
+                            tabu[(*nmbstatio)].temperaturemin=pAr->temperaturemin;
+                            tabu[(*nmbstatio)].temperaturemax=pAr->temperaturemax;
+                            tabu[(*nmbstatio)].altitude=pAr->altitude;
+                            tabu[(*nmbstatio)].commune=pAr->commune;
+                            tabu[(*nmbstatio)].equilibre=0;
+                            tabu[(*nmbstatio)].fd=NULL;
+                            tabu[(*nmbstatio)].fg=NULL;
+
+                            vitessemoyex[(*nmbstatio)]=vitessemoyex[(*nmbstatio)]+(pAr->forcevent);
+                            vitessemoyey[(*nmbstatio)]=vitessemoyey[(*nmbstatio)]+(pAr->forcevent);
+                            anglemoyex[(*nmbstatio)]=anglemoyex[(*nmbstatio)]+(pAr->anglevent);
+                            anglemoyey[(*nmbstatio)]=anglemoyey[(*nmbstatio)]+(pAr->anglevent);
+                            nmbstationpourleven[(*nmbstatio)]++;
+                (*nmbstatio)++;
+            }
+        }
+
+        
+    }
+    
+
+//////////////////////////////
+/*
+Chainon* insertionAVLT1(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
+if(pAr==NULL){
+    *h=1;
+    return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+}
+else if(statio<pAr->station){
+pAr->fg=insertionAVLT1(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+    *h=-(*h);
+}
+else if(statio>=pAr->station){
+    pAr->fd=insertionAVLT1(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+}
+
+
+if(*h!=0){
+    pAr->equilibre=pAr->equilibre+(*h);
+    pAr=equilibrerAVL(pAr);
+    if(pAr->equilibre==0){
+        *h=0;
+    }
+    else{
+        *h=1;
+    };
+};
+
+return pAr;
+
+
+}
+void parcoursInfixeT1(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,double* vitessemoyey,double* anglemoyex,double* anglemoyey,int* nmbstationpourleven,int* nmbstatio){
+
+
+}
+void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,double* vitessemoyey,double* anglemoyex,double* anglemoyey,int* nmbstationpourleven,int* nmbstatio){
+
+
+
+}
+*/
 
 
 
