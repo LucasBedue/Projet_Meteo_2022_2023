@@ -749,7 +749,26 @@ void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
                         bool=1;
                         if((tabu[u].humidite)<(pAr->humidite)){
                             
-                            tabu[u]=(*pAr);
+                            tabu[u].station=pAr->station;
+                            tabu[u].date=pAr->date;
+                            tabu[u].heure=pAr->heure;
+                            tabu[u].pressionmer=pAr->pressionmer;
+                            tabu[u].anglevent=pAr->anglevent;
+                            tabu[u].forcevent=pAr->forcevent;
+                            tabu[u].humidite=pAr->humidite;
+                            tabu[u].varpression=pAr->varpression;
+                            tabu[u].pression=pAr->pression;
+                            tabu[u].precipitation=pAr->precipitation;
+                            tabu[u].coordx=pAr->coordx;
+                            tabu[u].coordy=pAr->coordy;
+                            tabu[u].temperature=pAr->temperature;
+                            tabu[u].temperaturemin=pAr->temperaturemin;
+                            tabu[u].temperaturemax=pAr->temperaturemax;
+                            tabu[u].altitude=pAr->altitude;
+                            tabu[u].commune=pAr->commune;
+                            tabu[u].equilibre=0;
+                            tabu[u].fd=NULL;
+                            tabu[u].fg=NULL;
 
                         }
                         else{bool=1;}
@@ -758,7 +777,26 @@ void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
                 } 
             }
             if(bool==0){
-                tabu[(*nmbstatio)]=(*pAr);
+                tabu[(*nmbstatio)].station=pAr->station;
+                tabu[(*nmbstatio)].date=pAr->date;
+                tabu[(*nmbstatio)].heure=pAr->heure;
+                tabu[(*nmbstatio)].pressionmer=pAr->pressionmer;
+                tabu[(*nmbstatio)].anglevent=pAr->anglevent;
+                tabu[(*nmbstatio)].forcevent=pAr->forcevent;
+                tabu[(*nmbstatio)].humidite=pAr->humidite;
+                tabu[(*nmbstatio)].varpression=pAr->varpression;
+                tabu[(*nmbstatio)].pression=pAr->pression;
+                tabu[(*nmbstatio)].precipitation=pAr->precipitation;
+                tabu[(*nmbstatio)].coordx=pAr->coordx;
+                tabu[(*nmbstatio)].coordy=pAr->coordy;
+                tabu[(*nmbstatio)].temperature=pAr->temperature;
+                tabu[(*nmbstatio)].temperaturemin=pAr->temperaturemin;
+                tabu[(*nmbstatio)].temperaturemax=pAr->temperaturemax;
+                tabu[(*nmbstatio)].altitude=pAr->altitude;
+                tabu[(*nmbstatio)].commune=pAr->commune;
+                tabu[(*nmbstatio)].equilibre=0;
+                tabu[(*nmbstatio)].fd=NULL;
+                tabu[(*nmbstatio)].fg=NULL;
                 (*nmbstatio)++;
             }
         }
@@ -913,11 +951,11 @@ if(pAr==NULL){
     *h=1;
     return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
 }
-else if(altitud<pAr->humidite){
+else if(altitud<pAr->altitude){
 pAr->fg=insertionAVLAlt(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
     *h=-(*h);
 }
-else if(altitud>=pAr->humidite){
+else if(altitud>=pAr->altitude){
     pAr->fd=insertionAVLAlt(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
 }
 
@@ -967,9 +1005,28 @@ void traiterAlt2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
                         if((tabu[u].station)==(pAr->station)){
 
                         bool=1;
-                        if((tabu[u].altitude)<=(pAr->altitude)){
+                        if((tabu[u].altitude)<(pAr->altitude)){
                             
-                            tabu[u]=(*pAr);
+                            tabu[u].station=pAr->station;
+                            tabu[u].date=pAr->date;
+                            tabu[u].heure=pAr->heure;
+                            tabu[u].pressionmer=pAr->pressionmer;
+                            tabu[u].anglevent=pAr->anglevent;
+                            tabu[u].forcevent=pAr->forcevent;
+                            tabu[u].humidite=pAr->humidite;
+                            tabu[u].varpression=pAr->varpression;
+                            tabu[u].pression=pAr->pression;
+                            tabu[u].precipitation=pAr->precipitation;
+                            tabu[u].coordx=pAr->coordx;
+                            tabu[u].coordy=pAr->coordy;
+                            tabu[u].temperature=pAr->temperature;
+                            tabu[u].temperaturemin=pAr->temperaturemin;
+                            tabu[u].temperaturemax=pAr->temperaturemax;
+                            tabu[u].altitude=pAr->altitude;
+                            tabu[u].commune=pAr->commune;
+                            tabu[u].equilibre=0;
+                            tabu[u].fd=NULL;
+                            tabu[u].fg=NULL;
 
                         }
                         else{bool=1;}
@@ -978,7 +1035,26 @@ void traiterAlt2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
                 } 
             }
             if(bool==0){
-                tabu[(*nmbstatio)]=(*pAr);
+                tabu[(*nmbstatio)].station=pAr->station;
+                tabu[(*nmbstatio)].date=pAr->date;
+                tabu[(*nmbstatio)].heure=pAr->heure;
+                tabu[(*nmbstatio)].pressionmer=pAr->pressionmer;
+                tabu[(*nmbstatio)].anglevent=pAr->anglevent;
+                tabu[(*nmbstatio)].forcevent=pAr->forcevent;
+                tabu[(*nmbstatio)].humidite=pAr->humidite;
+                tabu[(*nmbstatio)].varpression=pAr->varpression;
+                tabu[(*nmbstatio)].pression=pAr->pression;
+                tabu[(*nmbstatio)].precipitation=pAr->precipitation;
+                tabu[(*nmbstatio)].coordx=pAr->coordx;
+                tabu[(*nmbstatio)].coordy=pAr->coordy;
+                tabu[(*nmbstatio)].temperature=pAr->temperature;
+                tabu[(*nmbstatio)].temperaturemin=pAr->temperaturemin;
+                tabu[(*nmbstatio)].temperaturemax=pAr->temperaturemax;
+                tabu[(*nmbstatio)].altitude=pAr->altitude;
+                tabu[(*nmbstatio)].commune=pAr->commune;
+                tabu[(*nmbstatio)].equilibre=0;
+                tabu[(*nmbstatio)].fd=NULL;
+                tabu[(*nmbstatio)].fg=NULL;
                 (*nmbstatio)++;
             }
         }

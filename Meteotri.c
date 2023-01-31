@@ -111,7 +111,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             int* nmbstation=malloc(sizeof(int));
             (*nmbstation)=0;
             parcoursInfixeAlt(pArbre,fsortie,tab,nmbstation);
-            Chainon* pArbre2=NULL;
             
             for(int k=0;k<(*nmbstation);k++){
                 
