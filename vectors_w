@@ -12,4 +12,7 @@ set zrange [ * : * ] noreverse writeback
 set cbrange [ * : * ] noreverse writeback
 set rrange [ * : * ] noreverse writeback
 
-plot './Meteotmpfilesfolder/ordereddataw' using 1:2:3:4 with vectors head filled lt 2
+set xlabel "Longitude"
+set ylabel "Latitude"
+
+plot './Meteotmpfilesfolder/ordereddataw' using 2:1:($4*10):($3*10) with vectors head filled lt 2 title "direction vent"
