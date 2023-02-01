@@ -96,7 +96,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             }
             o=0;
             for(o=0;o<(*nmbstation);o++){
-               fprintf(fsortie,"%d %d %lf %lf %lf\n",((o)*5),tab[o].station,tempmoyen[o],tempmax[o],tempmin[o]);
+               fprintf(fsortie,"%d %d %lf %lf %lf\n",((o)*50),tab[o].station,tempmoyen[o],tempmax[o],tempmin[o]);
             }
             free(nmbstation);
 
@@ -190,7 +190,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             }
             o=0;
             for(o=0;o<(*nmbstation);o++){
-               fprintf(fsortie,"%d %d %lf %lf %lf\n",(o+1),tab[o].station,pressmoyen[o],pressmax[o],pressmin[o]);
+               fprintf(fsortie,"%d %d %lf %lf %lf\n",((o+1)*50),tab[o].station,pressmoyen[o],pressmax[o],pressmin[o]);
             }
             free(nmbstation);
 

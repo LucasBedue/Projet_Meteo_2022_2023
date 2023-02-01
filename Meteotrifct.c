@@ -1503,7 +1503,7 @@ void traiterP12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* pressmoy,double*
                             if((pAr->pression)>=pressmax[u]){
                                 pressmax[u]=pAr->pression;
                             }
-                            if((pAr->pression)<=pressmin[u]){
+                            if(((pAr->pression)<=pressmin[u])&&(pAr->pression!=0.0)){
                                 pressmin[u]=pAr->pression;
                             }
                             
@@ -1537,15 +1537,10 @@ void traiterP12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* pressmoy,double*
                 tabu[(*nmbstatio)].fg=NULL;
                 
 
-                pressmoy[(*nmbstatio)]=pressmoy[(*nmbstatio)]+(pAr->pression);       
-                pressmax[(*nmbstatio)]=pAr->pression;       
-                pressmin[(*nmbstatio)]=pAr->pression;
-                if(pressmax[(*nmbstatio)]<=pAr->pression){
-                    pressmax[(*nmbstatio)]=pAr->pression;
-                }
-                if(pressmin[(*nmbstatio)]>=pAr->pression){
-                    pressmin[(*nmbstatio)]=pAr->pression;
-                }
+                pressmoy[(*nmbstatio)]=(pAr->pression);       
+                pressmax[(*nmbstatio)]=(pAr->pression);       
+                pressmin[(*nmbstatio)]=(pAr->pression);
+                
                 nmbstationpourlapress[(*nmbstatio)]++;
                 (*nmbstatio)++;
             }

@@ -411,7 +411,7 @@ if [ ! "$donneew" = ' ' ] ; then
         #make clean
         exit 38
     else
-        #gnuplot -p -c vectors_w
+        gnuplot -p -c vectors_w
         #rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
 fi
