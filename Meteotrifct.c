@@ -993,7 +993,26 @@ void traiterAlt2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
     int bool=0;
     if(pAr!=NULL){
         if((*nmbstatio)==0){
-            tabu[0]=(*pAr);
+            tabu[0].station=pAr->station;
+                            tabu[0].date=pAr->date;
+                            tabu[0].heure=pAr->heure;
+                            tabu[0].pressionmer=pAr->pressionmer;
+                            tabu[0].anglevent=pAr->anglevent;
+                            tabu[0].forcevent=pAr->forcevent;
+                            tabu[0].humidite=pAr->humidite;
+                            tabu[0].varpression=pAr->varpression;
+                            tabu[0].pression=pAr->pression;
+                            tabu[0].precipitation=pAr->precipitation;
+                            tabu[0].coordx=pAr->coordx;
+                            tabu[0].coordy=pAr->coordy;
+                            tabu[0].temperature=pAr->temperature;
+                            tabu[0].temperaturemin=pAr->temperaturemin;
+                            tabu[0].temperaturemax=pAr->temperaturemax;
+                            tabu[0].altitude=pAr->altitude;
+                            tabu[0].commune=pAr->commune;
+                            tabu[0].equilibre=0;
+                            tabu[0].fd=NULL;
+                            tabu[0].fg=NULL;
             (*nmbstatio)++;
             
         }
@@ -1114,7 +1133,29 @@ void traiterV2(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,doub
     int bool=0;
     if(pAr!=NULL){
         if((*nmbstatio)==0){
-            tabu[0]=(*pAr);
+            tabu[0].station=pAr->station;
+                            tabu[0].date=pAr->date;
+                            tabu[0].heure=pAr->heure;
+                            tabu[0].pressionmer=pAr->pressionmer;
+                            tabu[0].anglevent=pAr->anglevent;
+                            tabu[0].forcevent=pAr->forcevent;
+                            tabu[0].humidite=pAr->humidite;
+                            tabu[0].varpression=pAr->varpression;
+                            tabu[0].pression=pAr->pression;
+                            tabu[0].precipitation=pAr->precipitation;
+                            tabu[0].coordx=pAr->coordx;
+                            tabu[0].coordy=pAr->coordy;
+                            tabu[0].temperature=pAr->temperature;
+                            tabu[0].temperaturemin=pAr->temperaturemin;
+                            tabu[0].temperaturemax=pAr->temperaturemax;
+                            tabu[0].altitude=pAr->altitude;
+                            tabu[0].commune=pAr->commune;
+                            tabu[0].equilibre=0;
+                            tabu[0].fd=NULL;
+                            tabu[0].fg=NULL;
+                            nmbstationpourleven[0]++;
+                            vitessemoyex[0]=(cos(pAr->anglevent))*(pAr->forcevent);
+                            vitessemoyey[0]=(sin(pAr->anglevent))*(pAr->forcevent);
             (*nmbstatio)++;
             
         }
@@ -1146,10 +1187,8 @@ void traiterV2(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,doub
                             tabu[u].fd=NULL;
                             tabu[u].fg=NULL;
 
-                            vitessemoyex[u]=vitessemoyex[u]+(pAr->forcevent);
-                            vitessemoyey[u]=vitessemoyey[u]+(pAr->forcevent);
-                            anglemoyex[u]=anglemoyex[u]+(pAr->anglevent);
-                            anglemoyey[u]=anglemoyey[u]+(pAr->anglevent);
+                            vitessemoyex[u]=(vitessemoyex[u]+(cos(pAr->anglevent))*(pAr->forcevent));
+                            vitessemoyey[u]=(vitessemoyey[u]+(sin(pAr->anglevent))*(pAr->forcevent));
                             nmbstationpourleven[u]++;
                         }
                         
@@ -1179,10 +1218,8 @@ void traiterV2(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,doub
                             tabu[(*nmbstatio)].fd=NULL;
                             tabu[(*nmbstatio)].fg=NULL;
 
-                            vitessemoyex[(*nmbstatio)]=vitessemoyex[(*nmbstatio)]+(pAr->forcevent);
-                            vitessemoyey[(*nmbstatio)]=vitessemoyey[(*nmbstatio)]+(pAr->forcevent);
-                            anglemoyex[(*nmbstatio)]=anglemoyex[(*nmbstatio)]+(pAr->anglevent);
-                            anglemoyey[(*nmbstatio)]=anglemoyey[(*nmbstatio)]+(pAr->anglevent);
+                            vitessemoyex[(*nmbstatio)]=cos(pAr->anglevent)*(pAr->forcevent);
+                            vitessemoyey[(*nmbstatio)]=sin(pAr->anglevent)*(pAr->forcevent);
                             nmbstationpourleven[(*nmbstatio)]++;
                 (*nmbstatio)++;
             }
