@@ -270,7 +270,7 @@ for qu in $* ; do
 
 done
 
-if [ "$donneet1" = ' ' ] && [ "$donneep1" = ' ' ] && [ "$donneew" = ' ' ] && [ "$donneeh" = ' ' ] && [ "$donneem" = ' ' ] ; then
+if [ "$donneet1" = ' ' ] && [ "$donneet2" = ' ' ] && [ "$donneet3" = ' ' ] && [ "$donneep1" = ' ' ] && [ "$donneep2" = ' ' ] && [ "$donneep3" = ' ' ] && [ "$donneew" = ' ' ] && [ "$donneeh" = ' ' ] && [ "$donneem" = ' ' ] ; then
     echo 'You need to enter an argument about the type of data you want to analyse'
     exit 36
 fi
