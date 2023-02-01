@@ -27,7 +27,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
 
     if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatat1")==0){
-        /*
+        
         rewind(fentree);
         if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
             
@@ -96,7 +96,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             }
             h=0;
             for(h=0;h<(*nmbstation);h++){
-               fprintf(fsortie,"%d %lf %lf %lf %lf\n",tab[h].station,anglemoyenx[h],anglemoyeny[h],vitessemoyenx[h],vitessemoyeny[h]);
+               fprintf(fsortie,"%d %lf %lf %lf\n",tab[h].station,tempmoyen[h],tempmax[h],tempmin[h]);
             }
             free(nmbstation);
 
@@ -110,7 +110,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
         else if(argv[5]=="--tab"){
 
         }
-    */
+    
     }
     else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatat2")==0){
         
