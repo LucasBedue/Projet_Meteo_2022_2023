@@ -40,7 +40,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             while(c!=EOF){
 
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
-                    if((c=='-')||(c==':')){
+                    if(c==':'){
                         f++;
                         c=getc(fentree);
                     }
@@ -145,7 +145,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             while(c!=EOF){
 
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
-                    if((c=='-')||(c==':')){
+                    if(c==':'){
                         f++;
                         c=getc(fentree);
                     }
@@ -200,22 +200,22 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             for(o=0;o<(*nmbstation);o++){
                 anglemoyenx[o]=cos((anglemoyenx[o])/(nmbstationpourlevent[o]));
             }
-            h=0;
-            for(h=0;h<(*nmbstation);h++){
-                anglemoyeny[h]=sin((anglemoyeny[h])/(nmbstationpourlevent[h]));
+            o=0;
+            for(o=0;o<(*nmbstation);o++){
+                anglemoyeny[o]=sin((anglemoyeny[o])/(nmbstationpourlevent[o]));
             }
-            h=0;
-            for(h=0;h<(*nmbstation);h++){
-                vitessemoyenx[h]=cos((anglemoyenx[h])/(nmbstationpourlevent[h]))*(vitessemoyenx[h]/(nmbstationpourlevent[h]));
+            o=0;
+            for(o=0;o<(*nmbstation);o++){
+                vitessemoyenx[o]=cos((anglemoyenx[o])/(nmbstationpourlevent[o]))*(vitessemoyenx[o]/(nmbstationpourlevent[o]));
             }
-            h=0;
-            for(h=0;h<(*nmbstation);h++){
-                vitessemoyeny[h]=sin((anglemoyeny[h])/(nmbstationpourlevent[h]))*(vitessemoyeny[h]/(nmbstationpourlevent[h]));
+            o=0;
+            for(o=0;o<(*nmbstation);o++){
+                vitessemoyeny[o]=sin((anglemoyeny[o])/(nmbstationpourlevent[o]))*(vitessemoyeny[o]/(nmbstationpourlevent[o]));
             }
-            h=0;
-            for(h=0;h<(*nmbstation);h++){
+            o=0;
+            for(o=0;o<(*nmbstation);o++){
                 
-               fprintf(fsortie,"%d %lf %lf %lf %lf %lf %lf\n",tab[h].station,anglemoyenx[h],anglemoyeny[h],vitessemoyenx[h],vitessemoyeny[h],tab[h].coordx,tab[h].coordy);
+               fprintf(fsortie,"%d %lf %lf %lf %lf %lf %lf\n",tab[o].station,anglemoyenx[o],anglemoyeny[o],vitessemoyenx[o],vitessemoyeny[o],tab[o].coordx,tab[o].coordy);
             }
             free(nmbstation);
 
@@ -245,7 +245,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             while(c!=EOF){
 
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
-                    if((c=='-')||(c==':')){
+                    if(c==':'){
                         f++;
                         c=getc(fentree);
                     }

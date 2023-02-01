@@ -349,7 +349,12 @@ if [ ! "$donneet1" = ' ' ] ; then
         echo "There was an error during the process of the sorting "
         #make clean
         exit 38
+    
+    else
+        gnuplot -p -c barre_erreurt1
+        #rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
+    
 fi
 
 if [ ! "$donneet2" = ' ' ] ; then
@@ -415,6 +420,9 @@ if [ ! "$donneeh" = ' ' ] ; then
         echo "There was an error during the process of the sorting "
         #make clean
         exit 38
+    else
+        gnuplot -p -c interpolee_alt
+        #rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
 fi
 
@@ -426,6 +434,9 @@ if [ ! "$donneem" = ' ' ] ; then
         echo "There was an error during the process of the sorting "
         #make clean
         exit 38
+    else
+        gnuplot -p -c interpolee_m
+        #rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
 
 
