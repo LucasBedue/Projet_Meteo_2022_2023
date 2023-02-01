@@ -410,6 +410,9 @@ if [ ! "$donneew" = ' ' ] ; then
         echo "There was an error during the process of the sorting "
         #make clean
         exit 38
+    else
+        #gnuplot -p -c vectors_w
+        #rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
 fi
 

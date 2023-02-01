@@ -108,3 +108,9 @@ Chainon* insertionAVLT1(Chainon* pAr,int statio,int dat,int heur,double pression
 void parcoursInfixeT1(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* temmax,double* temmin,int* nmbstationpourletem,int* nmbstatio);
 void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* temmax,double* temmin,int* nmbstationpourletem,int* nmbstatio);
 
+/////////Pressionp1
+
+Chainon* insertionAVLP1(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h);
+void parcoursInfixeP1(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* pressmoy,double* pressmax,double* pressmin,int* nmbstationpourlapress,int* nmbstatio);
+void traiterP12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* pressmoy,double* pressmax,double* pressmin,int* nmbstationpourlapress,int* nmbstatio);
+
