@@ -1264,14 +1264,9 @@ void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* 
                             tabu[0].fg=NULL;
                             tempmoy[0]=(pAr->temperature);
                             nmbstationpourletem[0]++;
-                temmax[0]=pAr->temperaturemax;       
-                temmin[0]=pAr->temperaturemin;
-                if(temmax[0]<=pAr->temperature){
-                    temmax[0]=pAr->temperature;
-                }
-                if(temmin[0]>=pAr->temperature){
-                    temmin[0]=pAr->temperature;
-                }
+                temmax[0]=pAr->temperature;       
+                temmin[0]=pAr->temperature;
+                
             (*nmbstatio)++;
             
         }
@@ -1304,11 +1299,11 @@ void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* 
                             tabu[u].fg=NULL;
 
                             tempmoy[u]=tempmoy[u]+(pAr->temperature);
-                            if(pAr->temperaturemax<=temmax[u]){
-                                temmax[u]=pAr->temperaturemax;
+                            if((pAr->temperature)>=temmax[u]){
+                                temmax[u]=pAr->temperature;
                             }
-                            if(pAr->temperaturemin>=temmin[u]){
-                                temmin[u]=pAr->temperaturemin;
+                            if((pAr->temperature)<=temmin[u]){
+                                temmin[u]=pAr->temperature;
                             }
                             
                             nmbstationpourletem[u]++;
@@ -1342,8 +1337,8 @@ void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* 
                 (*nmbstatio)++;
 
                 tempmoy[(*nmbstatio)]=tempmoy[(*nmbstatio)]+(pAr->temperature);       
-                temmax[(*nmbstatio)]=pAr->temperaturemax;       
-                temmin[(*nmbstatio)]=pAr->temperaturemin;
+                temmax[(*nmbstatio)]=pAr->temperature;       
+                temmin[(*nmbstatio)]=pAr->temperature;
                 if(temmax[(*nmbstatio)]<=pAr->temperature){
                     temmax[(*nmbstatio)]=pAr->temperature;
                 }

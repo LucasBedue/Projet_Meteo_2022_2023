@@ -89,14 +89,14 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             parcoursInfixeT1(pArbre,fsortie,tab,tempmoyen,tempmax,tempmin,nmbstationpourlatemp,nmbstation);
 
 
-            int h=0;
+            int o=0;
 
-            for(h=0;h<(*nmbstation);h++){
-                tempmoyen[h]=(tempmoyen[h])/(nmbstationpourlatemp[h]);
+            for(o=0;o<(*nmbstation);o++){
+                tempmoyen[o]=(tempmoyen[o])/(nmbstationpourlatemp[o]);
             }
-            h=0;
-            for(h=0;h<(*nmbstation);h++){
-               fprintf(fsortie,"%d %lf %lf %lf\n",tab[h].station,tempmoyen[h],tempmax[h],tempmin[h]);
+            o=0;
+            for(o=0;o<(*nmbstation);o++){
+               fprintf(fsortie,"%d %d %lf %lf %lf\n",(o+1),tab[o].station,tempmoyen[o],tempmax[o],tempmin[o]);
             }
             free(nmbstation);
 
@@ -195,10 +195,10 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             parcoursInfixeV(pArbre,fsortie,tab,vitessemoyenx,vitessemoyeny,anglemoyenx,anglemoyeny,nmbstationpourlevent,nmbstation);
 
 
-            int h=0;
+            int o=0;
 
-            for(h=0;h<(*nmbstation);h++){
-                anglemoyenx[h]=cos((anglemoyenx[h])/(nmbstationpourlevent[h]));
+            for(o=0;o<(*nmbstation);o++){
+                anglemoyenx[o]=cos((anglemoyenx[o])/(nmbstationpourlevent[o]));
             }
             h=0;
             for(h=0;h<(*nmbstation);h++){
