@@ -13,22 +13,10 @@ Arguments and script options [DATA TYPE]:
 
 -m:			maximum moisture for each station. 
 
--p<mode>		atmospheric pressure 
+-p1,-p2		atmospheric pressure 
 
-1:		produces at the output the minimum, maximum and average pressures per station in ascending order of station number 
-
-2:		average pressures by date/time, sorted in chronological order. 
-
-3: 
-
--t<mode>		temperature	 
-
-1:		produces at the output the minimum, maximum and average temperatures per station in ascending order of station number 
-
-2:		average temperatures by date/time, sorted in chronological order. 
-
-3: 
-
+-t1,t2		temperature	 
+ 
 -w:			produces the average wind direction and speed for each station. 
 
 Arguments and script options [DATES]: 
@@ -38,8 +26,6 @@ Arguments and script options [DATES]:
 Arguments and script options [SORT]: 
 
 --avl:			sorting performed using an AVL type structure. This is the default sort if no sort type is selected 
-
---abr: 
 
 Arguments and script options [FILE]: 
 
@@ -60,4 +46,6 @@ Arguments and script options [LOCATION]:
 -Q:			Antarctica 
   
 For example the parameter -h which makes a graph with the height of the stations and -m for the max moisture
-with the command : ./Meteo.sh -f name_file -h -m
+with the command: ./Meteo.sh -f name_file -h -m
+
+For all parameters and and their detailed explanation refer to --help with the command: ./Meteo.sh --help
