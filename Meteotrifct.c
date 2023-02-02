@@ -734,6 +734,10 @@ void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
     
     int bool=0;
     if(pAr!=NULL){
+        if(pAr->humidite==0.0){
+
+        }
+        else{
         if((*nmbstatio)==0){
             tabu[0]=(*pAr);
             (*nmbstatio)++;
@@ -803,7 +807,7 @@ void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
 
         
     }
-    
+    }
 }
 
 
@@ -1132,6 +1136,8 @@ void traiterV2(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,doub
 
     int bool=0;
     if(pAr!=NULL){
+        if(pAr->anglevent==400){}
+        else{
         if((*nmbstatio)==0){
             tabu[0].station=pAr->station;
                             tabu[0].date=pAr->date;
@@ -1166,6 +1172,7 @@ void traiterV2(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,doub
                     if(bool==0){
                         if((tabu[u].station)==(pAr->station)){
                             bool=1;
+                            
                             tabu[u].station=pAr->station;
                             tabu[u].date=pAr->date;
                             tabu[u].heure=pAr->heure;
@@ -1187,8 +1194,8 @@ void traiterV2(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,doub
                             tabu[u].fd=NULL;
                             tabu[u].fg=NULL;
 
-                            vitessemoyex[u]=(vitessemoyex[u]+(cos(pAr->anglevent))*(pAr->forcevent));
-                            vitessemoyey[u]=(vitessemoyey[u]+(sin(pAr->anglevent))*(pAr->forcevent));
+                            vitessemoyex[u]=(vitessemoyex[u]+((cos(pAr->anglevent))*(pAr->forcevent)));
+                            vitessemoyey[u]=(vitessemoyey[u]+((sin(pAr->anglevent))*(pAr->forcevent)));
                             nmbstationpourleven[u]++;
                         }
                         
@@ -1218,14 +1225,14 @@ void traiterV2(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,doub
                             tabu[(*nmbstatio)].fd=NULL;
                             tabu[(*nmbstatio)].fg=NULL;
 
-                            vitessemoyex[(*nmbstatio)]=cos(pAr->anglevent)*(pAr->forcevent);
-                            vitessemoyey[(*nmbstatio)]=sin(pAr->anglevent)*(pAr->forcevent);
+                            vitessemoyex[(*nmbstatio)]=(cos(pAr->anglevent)*(pAr->forcevent));
+                            vitessemoyey[(*nmbstatio)]=(sin(pAr->anglevent)*(pAr->forcevent));
                             nmbstationpourleven[(*nmbstatio)]++;
                 (*nmbstatio)++;
             }
         }
 
-        
+    }
     }
     
 
@@ -1278,7 +1285,10 @@ void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* 
 
     int bool=0;
     if(pAr!=NULL){
+        if(pAr->temperature==2000){}
+        else{
         if((*nmbstatio)==0){
+            
             tabu[0].station=pAr->station;
                             tabu[0].date=pAr->date;
                             tabu[0].heure=pAr->heure;
@@ -1303,6 +1313,7 @@ void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* 
                             nmbstationpourletem[0]++;
                 temmax[0]=pAr->temperature;       
                 temmin[0]=pAr->temperature;
+
                 
             (*nmbstatio)++;
             
@@ -1312,6 +1323,7 @@ void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* 
             if(bool==0){
                 for(int u=0;u<(*nmbstatio);u++){
                     if(bool==0){
+                        
                         if((tabu[u].station)==(pAr->station)){
                             bool=1;
                             tabu[u].station=pAr->station;
@@ -1347,10 +1359,12 @@ void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* 
 
                         
                     }
+                        
                     }
                 } 
             }
             if(bool==0){
+                
                 tabu[(*nmbstatio)].station=pAr->station;
                 tabu[(*nmbstatio)].date=pAr->date;
                 tabu[(*nmbstatio)].heure=pAr->heure;
@@ -1384,10 +1398,12 @@ void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* 
                 }
                 nmbstationpourletem[(*nmbstatio)]++;
                 (*nmbstatio)++;
+                
             }
         }
 
         
+    }
     }
     
 
@@ -1442,7 +1458,12 @@ void traiterP12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* pressmoy,double*
 
     int bool=0;
     if(pAr!=NULL){
+        if(pAr->pression==0.0){
+
+        }
+        else{
         if((*nmbstatio)==0){
+
             tabu[0].station=pAr->station;
                             tabu[0].date=pAr->date;
                             tabu[0].heure=pAr->heure;
@@ -1548,14 +1569,115 @@ void traiterP12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* pressmoy,double*
 
         
     }
-    
+    }
 
 
 }
 
 
+/////////////////////////////////////////////:
+
+Chainon* insertionAVLT2(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
+if(pAr==NULL){
+    *h=1;
+    return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+}
+else if(statio<pAr->station){
+pAr->fg=insertionAVLT2(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+    *h=-(*h);
+}
+else if(statio>=pAr->station){
+    pAr->fd=insertionAVLT2(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+}
 
 
+if(*h!=0){
+    pAr->equilibre=pAr->equilibre+(*h);
+    pAr=equilibrerAVL(pAr);
+    if(pAr->equilibre==0){
+        *h=0;
+    }
+    else{
+        *h=1;
+    };
+};
+
+return pAr;
+
+
+
+
+}
+
+
+void parcoursInfixeT2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[500],int* nmbdat){
+    if(pAr!=NULL){
+        
+        parcoursInfixeT2(pAr->fg,tabdat,tabheur,tmpmoye,nmbstationmaxheur,nmbstationmaxjou,nmbdat);
+        parcoursInfixeT2(pAr->fd,tabdat,tabheur,tmpmoye,nmbstationmaxheur,nmbstationmaxjou,nmbdat);
+        traiterT22(pAr,tabdat,tabheur,tmpmoye,nmbstationmaxheur,nmbstationmaxjou,nmbdat);
+    }
+
+
+}
+
+
+void traiterT22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[500],int* nmbdat){
+
+    int bool1=0;
+    int u=0;
+    int x=0;
+    if(pAr!=NULL){
+        if(pAr->temperature!=2000){
+            if((*nmbdat)==0){
+                tabdat[0]=pAr->date;
+                tabheur[0][0]=pAr->heure;
+                tmpmoye[0][0]=pAr->temperature;
+                nmbstationmaxheur[0][0]++;
+                nmbstationmaxjou[0]++;
+                (*nmbdat)++;
+            }
+            else{
+                
+                for(u=0;u<(*nmbdat);u++){
+                    if(bool1==1){}
+                    else{
+                    if(pAr->date==tabdat[u]){
+                        for(x=0;x<24;x++){
+                            if(pAr->heure==x){
+                                nmbstationmaxheur[u][x]++;
+                                nmbstationmaxjou[u]++;
+                                tmpmoye[u][x]=tmpmoye[u][x]+pAr->temperature;
+                                bool1=1;
+
+                            }
+                        }
+                    }
+                }
+                }
+                if(bool1==0){
+                    tabdat[(*nmbdat)]=pAr->date;
+                    tabheur[(*nmbdat)][0]=pAr->heure;
+                    tmpmoye[(*nmbdat)][0]=pAr->temperature;
+                    nmbstationmaxheur[(*nmbdat)][0]++;
+                    nmbstationmaxjou[(*nmbdat)]++;
+                    (*nmbdat)++;
+                }
+                
+
+            }
+        
+        
+
+
+
+
+
+        }   
+        else{}
+    }
+
+}
 
 
 

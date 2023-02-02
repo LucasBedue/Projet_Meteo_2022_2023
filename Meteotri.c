@@ -41,7 +41,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
                     if(c==':'){
-                        f++;
                         c=getc(fentree);
                     }
                     else{
@@ -60,6 +59,12 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
                     i=0;
                     f=0;
                     
+                    if(carac[12][0]=='\0'){
+                        carac[12][0]='2';
+                        carac[12][1]='0';
+                        carac[12][2]='0';
+                        carac[12][3]='0';
+                    }
                     pArbre=insertionAVLT1(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
                     
                     
@@ -123,19 +128,17 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
             int i=0;
             f=0;
 
+
+
+
             while(c!=EOF){
 
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
-                    if(c==':'){
-                        f++;
+                    if((c=='+')||(c==':')||((c=='-')&&(i==1))){
                         c=getc(fentree);
                     }
-                    else if((c=='-')&&(i==1)){
-                        f++;
+                    else if((i==2)&&(f>1)&&(f<10)){
                         c=getc(fentree);
-                    }
-                    else if(c=='+'){
-
                     }
                     else{
                         carac[i][f]=c;
@@ -154,7 +157,8 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
                     i=0;
                     f=0;
                     
-                    pArbre=insertionAVLT1(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+
+                    pArbre=insertionAVLT2(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
                     
                     
                     for(int k=0;k<17;k++){
@@ -164,24 +168,38 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 }
                 else if(c==EOF){
-                    pArbre=insertionAVLT1(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+                    pArbre=insertionAVLT2(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
 
                 }
                 
             }
 
-
-            Chainon tab[100];
-            double tempmoyen[100]={0};
-            double tempmax[100]={0};
-            double tempmin[100]={0};
-            int nmbstationpourlatemp[100]={0};
-            int* nmbstation=malloc(sizeof(int));
-            (*nmbstation)=0;
             
-            printf("%d %d\n",pArbre->date,pArbre->heure);
+            int* nmbdate=malloc(sizeof(int));//contient le nombre de jour différents max
+            *nmbdate=0;
+            int tabdate[5000]={0};//contient les dates
+            int tabheure[5000][24]={0};//contient les heures par dates
+            double tmpmoyen[5000][24]={0};//contient la somme des temperature
+            short nmbstationmaxheure[5000][24]={0};//contient le nombre de mesure pour cette heure max
+            int nmbstationmaxjour[500]={0};//contient le nombre de mesure pour cette date max
+            
+            parcoursInfixeT2(pArbre,tabdate,tabheure,tmpmoyen,nmbstationmaxheure,nmbstationmaxjour,nmbdate);
 
-            free(nmbstation);
+            for(int o=0;o<(*nmbdate);o++){
+                if((nmbstationmaxjour[o])==0){}
+                else{
+                    
+                for(int g=0;g<nmbstationmaxheure[o][nmbstationmaxjour[o]];g++){
+                    
+                    
+                        fprintf(fsortie,"%d %d %lf",tabdate[o],tabheure[o][g],(tmpmoyen[o][g]/(nmbstationmaxheure[o][g])));
+                    
+                }
+            }
+            }
+            
+            free(nmbdate);
+            
 
             
 
@@ -215,7 +233,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
                     if(c==':'){
-                        f++;
                         c=getc(fentree);
                     }
                     else{
@@ -244,7 +261,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 }
                 else if(c==EOF){
-                    pArbre=insertionAVLP1(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
 
                 }
                 
@@ -299,7 +315,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
         rewind(fentree);
         if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
             int f=0;
-            char carac[17][30];
+            char carac[17][30]={'\0'};
             int c=getc(fentree);
             int i=0;
             f=0;
@@ -308,7 +324,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
                     if(c==':'){
-                        f++;
                         c=getc(fentree);
                     }
                     else{
@@ -327,6 +342,12 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
                     i=0;
                     f=0;
                     
+                    if((carac[4][0]=='\0')||(carac[5][0]=='\0')){
+                        bzero(carac[4],30);
+                        carac[4][0]='4';
+                        carac[4][1]='0';
+                        carac[4][2]='0';
+                    }
                     pArbre=insertionAVLV(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
                     
                     
@@ -337,7 +358,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 }
                 else if(c==EOF){
-                    pArbre=insertionAVLV(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+                    
 
                 }
             
@@ -401,7 +422,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
                     if(c==':'){
-                        f++;
                         c=getc(fentree);
                     }
                     else{
@@ -430,7 +450,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 }
                 else if(c==EOF){
-                    pArbre=insertionAVLAlt(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
 
                 }
                 
@@ -477,7 +496,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
                     if(c==':'){
-                        f++;
                         c=getc(fentree);
                     }
                     else{
@@ -506,7 +524,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 }
                 else if(c==EOF){
-                    pArbre=insertionAVLH(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
 
                 }
                 
