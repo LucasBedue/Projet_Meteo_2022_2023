@@ -6,8 +6,10 @@ set dgrid3d 500,500
 set view map scale 1
 set tics out
 set tics nomirror
+set xlabel "Longitude"
 set xrange [ * : * ] noreverse writeback noextend
 set x2range [ * : * ] noreverse writeback
+set ylabel "Latitude"
 set yrange [ * : * ] noreverse writeback noextend
 set y2range [ * : * ] noreverse writeback
 set zrange [ * : * ] noreverse writeback
@@ -16,7 +18,7 @@ set rrange [ * : * ] noreverse writeback
 set tmargin  4
 
 ## palette humidité
-set palette rgb 21,22,23
+set palette rgb 33,13,10
 set colorbox vertical origin screen 0.9, 0.2 size screen 0.05, 0.6 front  noinvert bdefault
 NO_ANIMATION = 1
 ## Last datafile plotted: "ordereddatam"

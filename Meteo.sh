@@ -14,7 +14,59 @@ fi
 #regarde si il y a un --help au début
 for qu in `echo "$*" | cut -d ' ' -f 1` ; do
     if [ ${qu} = '--help' ] ; then
-        echo 'liste commande et parametre' #penser a ecrire ici!
+        echo 'Usage: ./Meteo.sh [OPTION]… -f name_file
+
+Arguments and script options [DATA TYPE]:
+
+    -h:			height for each station.
+
+    -m:			maximum moisture for each station.
+
+    -p<mode>	atmospheric pressure
+
+        1:		produces at the output the minimum, maximum and average pressures per station in ascending order of station number
+
+        2:		average pressures by date/time, sorted in chronological order.
+
+        3:
+
+    -t<mode>	temperature
+
+        1:		produces at the output the minimum, maximum and average temperatures per station in ascending order of station number
+
+        2:		average temperatures by date/time, sorted in chronological order.
+
+        3:
+
+    -w:			produces the average wind direction and speed for each station.
+
+Arguments and script options [DATES]:
+
+    -date min max:	the output data is in the date range [min...max] included. The format of the dates is a string of type YYYY-MM-DD (year-month-day).
+
+Arguments and script options [SORT]:
+
+    --avl:              sorting performed using an AVL type structure. This is the default sort if no sort type is selected
+
+    --abr:
+
+Arguments and script options [FILE]:
+
+    -f name_file:     input file. This option is mandatory
+
+Arguments and script options [LOCATION]:
+
+    -F:			Metropolitan France + Corsica
+
+    -G:			French Guyana
+
+    -S:			Saint-Pierre and Miquelon
+
+    -A:			Antilles
+
+    -O:			Indian Ocean
+
+    -Q:			Antarctica '
         exit 2
     fi
 

@@ -104,7 +104,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
             
         }
-        else if((argv[5]=="--abl")){
+        else if((argv[5]=="--abr")){
 
         }
         else if(argv[5]=="--tab"){
@@ -187,7 +187,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
             
         }
-        else if((argv[5]=="--abl")){
+        else if((argv[5]=="--abr")){
 
         }
         else if(argv[5]=="--tab"){
@@ -278,7 +278,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
             
         }
-        else if((argv[5]=="--abl")){
+        else if((argv[5]=="--abr")){
 
         }
         else if(argv[5]=="--tab"){
@@ -378,7 +378,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
             
         }
-        else if((argv[5]=="--abl")){
+        else if((argv[5]=="--abr")){
 
         }
         else if(argv[5]=="--tab"){
@@ -454,7 +454,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
             
         }
-        else if((argv[5]=="--abl")){
+        else if((argv[5]=="--abr")){
 
         }
         else if(argv[5]=="--tab"){
@@ -530,7 +530,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
             
         }
-        else if((argv[5]=="--abl")){
+        else if((argv[5]=="--abr")){
 
         }
         else if(argv[5]=="--tab"){
