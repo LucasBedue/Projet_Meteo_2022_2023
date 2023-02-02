@@ -28,15 +28,11 @@ Arguments and script options [DATA TYPE]:
 
         2:		average pressures by date/time, sorted in chronological order.
 
-        3:
-
     -t<mode>	temperature
 
         1:		produces at the output the minimum, maximum and average temperatures per station in ascending order of station number
 
         2:		average temperatures by date/time, sorted in chronological order.
-
-        3:
 
     -w:			produces the average wind direction and speed for each station.
 
@@ -47,8 +43,6 @@ Arguments and script options [DATES]:
 Arguments and script options [SORT]:
 
     --avl:              sorting performed using an AVL type structure. This is the default sort if no sort type is selected
-
-    --abr:
 
 Arguments and script options [FILE]:
 
@@ -360,32 +354,32 @@ else
     cat "$namefile" | sed '1d' | tr 'T' ';' > ./Meteotmpfilesfolder/firstfile
 fi
 
+#cat ./Meteotmpfilesfolder/firstfile | awk -F";" '{sub(",",";",$11);print}' OFS=";" > ./Meteotmpfilesfolder/secondfile
+
+
+case $region in
+' ')
 cat ./Meteotmpfilesfolder/firstfile | awk -F";" '{sub(",",";",$11);print}' OFS=";" > ./Meteotmpfilesfolder/secondfile
-
-
-#case $region in
-#' ')
-#mv ./Meteotmpfilesfolder/firstfile ./Meteotmpfilesfolder/secondfile
-#;;
-#'-F')
-#cat ./Meteotmpfilesfolder/firstfile | awk -F ';' -vlatitudemin='42' -vlatitudemax='51' -vlongitudemin='-5' -vlongitudemax='9' '{if()}'
-#;;
-#'-G')
-#cat ./Meteotmpfilesfolder/firstfile
-#;;
-#'-S')
-#cat ./Meteotmpfilesfolder/firstfile
-#;;
-#'-A')
-#cat ./Meteotmpfilesfolder/firstfile
-#;;
-#'-O')
-#cat ./Meteotmpfilesfolder/firstfile
-#;;
-#'-Q')
-#cat ./Meteotmpfilesfolder/firstfile
-#;;
-#esac
+;;
+'-F')
+cat ./Meteotmpfilesfolder/firstfile | awk -F ';' '{if($1 >= 7005 && $1 <= 7790) print $0}' | awk -F";" '{sub(",",";",$11);print}' OFS=";" > ./Meteotmpfilesfolder/secondfile
+;;
+'-G')
+cat ./Meteotmpfilesfolder/firstfile | awk -F ';' '{if($1 >= 81401 && $1 <= 81415) print $0}' | awk -F";" '{sub(",",";",$11);print}' OFS=";" > ./Meteotmpfilesfolder/secondfile
+;;
+'-S')
+cat ./Meteotmpfilesfolder/firstfile | awk -F ';' '{if($1 == 71805) print $0}' | awk -F";" '{sub(",",";",$11);print}' OFS=";" > ./Meteotmpfilesfolder/secondfile
+;;
+'-A')
+cat ./Meteotmpfilesfolder/firstfile | awk -F ';' '{if($1 >= 78890 && $1 <= 78925) print $0}' | awk -F";" '{sub(",",";",$11);print}' OFS=";"> ./Meteotmpfilesfolder/secondfile
+;;
+'-O')
+cat ./Meteotmpfilesfolder/firstfile | awk -F ';' '{if($1 >= 61968 && $1 <= 67005) print $0}'| awk -F";" '{sub(",",";",$11);print}' OFS=";"> ./Meteotmpfilesfolder/secondfile
+;;
+'-Q')
+cat ./Meteotmpfilesfolder/firstfile | awk -F ';' '{if($1 == 89642) print $0}'| awk -F";" '{sub(",",";",$11);print}' OFS=";"> ./Meteotmpfilesfolder/secondfile
+;;
+esac
 
 #faire le filtre par département
 
