@@ -404,7 +404,7 @@ if [ ! "$donneet2" = ' ' ] ; then
         exit 38
     else
         gnuplot -p -c ligne_simplet2
-        rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddatat2
     fi
 fi
 
@@ -427,7 +427,7 @@ if [ ! "$donneep1" = ' ' ] ; then
         exit 38
     else
         gnuplot -p -c barre_erreurp1
-        rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddatap1
     fi
 fi
 
@@ -439,7 +439,7 @@ if [ ! "$donneep2" = ' ' ] ; then
         exit 38
     else
         gnuplot -p -c ligne_simplep2
-        rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddatap2
     fi
 fi
 
@@ -461,7 +461,7 @@ if [ ! "$donneew" = ' ' ] ; then
         exit 38
     else
         gnuplot -p -c vectors_w
-        rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddataw
     fi
 fi
 
@@ -473,7 +473,7 @@ if [ ! "$donneeh" = ' ' ] ; then
         exit 38
     else
         gnuplot -p -c interpolee_alt
-        rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddatah
     fi
 fi
 
@@ -485,7 +485,7 @@ if [ ! "$donneem" = ' ' ] ; then
         exit 38
     else
         gnuplot -p -c interpolee_m
-        rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddatam
     fi
 fi
 

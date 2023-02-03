@@ -1,5 +1,6 @@
 #include "Meteotri.h"
 
+//Créer un chainon.
 Chainon* creerArbre(int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun){
 
     Chainon* pA=malloc(sizeof(Chainon));
@@ -28,7 +29,7 @@ Chainon* creerArbre(int statio,int dat,int heur,double pressionme,double angleve
 }
 
 
-
+//Verifie si le chainon est vide.
 int estVide(Chainon* pA){
     if (pA==NULL){
         printf("L'arbre est vide!\n");
@@ -42,7 +43,7 @@ int estVide(Chainon* pA){
 
 
 
-
+//vérifie si le chainon est une feuille.
 int estFeuille(Chainon* pAr){
     if(estVide(pAr)==1){
         return(0);
@@ -56,17 +57,7 @@ int estFeuille(Chainon* pAr){
 }
 
 
-/*
-int element(Chainon* pAr){
-    if(estVide(pAr)==1){
-        return(0);
-    }
-    else{
-        return (pAr->val);
-    };
-}
-*/
-
+//Vérifie si il y a un fils gauche.
 int existeFilsGauche(Chainon* pA){
     if(estVide(pA)==1){
         return(0);
@@ -82,7 +73,7 @@ int existeFilsGauche(Chainon* pA){
 
 }
 
-
+//Vérifie si il y a un fils droit.
 int existeFilsDroit(Chainon* pA){
     if(estVide(pA)==1){
         return(0);
@@ -100,6 +91,7 @@ int existeFilsDroit(Chainon* pA){
     
 }
 
+//Ajoute un fils gauche.
 void ajouterFilsGauche(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun){
     if(estVide(pAr)==1){
         pAr=creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
@@ -115,6 +107,7 @@ void ajouterFilsGauche(Chainon* pAr,int statio,int dat,int heur,double pressionm
 
 }
 
+//Ajoute un fils droit.
 void ajouterFilsDroit(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun){
     if(estVide(pAr)==1){
         pAr=creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
@@ -129,156 +122,8 @@ void ajouterFilsDroit(Chainon* pAr,int statio,int dat,int heur,double pressionme
     };
 
 }
-/*
-void traiter(Chainon* pA){//a changer
-    printf("%d equi= %d\n",element(pA),pA->equilibre);
-}
 
-
-void parcoursPrefixe(Chainon* pAr){
-    if(pAr!=NULL){
-        traiter(pAr);
-        parcoursPrefixe(pAr->fg);
-        parcoursPrefixe(pAr->fd);
-    }
-}
-
-void parcoursPostfixe(Chainon* pAr){
-    if(pAr!=NULL){
-        parcoursPostfixe(pAr->fg);
-        parcoursPostfixe(pAr->fd);
-        traiter(pAr);
-    }
-}
-
-void parcoursInfixe(Chainon* pAr){
-    if(pAr!=NULL){
-        parcoursInfixe(pAr->fg);
-        traiter(pAr);
-        parcoursInfixe(pAr->fd);
-    }
-}
-*/
-
-//////////////////////////////////////////////////////////////////////////////////////////
-/*
-int Verifil(Fifo* filou){
-    if(filou==NULL){
-        return (-1);
-    }
-    else if((filou->pHead==NULL && filou->pTail!=NULL)||(filou->pHead!=NULL && filou->pTail==NULL)){
-        return (-2);
-    }
-    else if(filou->pTail!=NULL){
-     if(filou->pTail->suivant!=NULL){
-        return (-3);
-    }else{return -1;};
-    }
-}
-
-Fifo* CreerFile(){
-    Fifo* pFile = malloc(sizeof(Fifo));
-    if(pFile==NULL){
-    exit(89);
-}
-pFile->pHead = NULL;
-pFile->pTail = NULL;
-return pFile;
-
-}
-
-ChainonFile* creerChainon(Chainon* Ar){
-    ChainonFile* pChainon = malloc(sizeof(ChainonFile));
-    if(pChainon==NULL){
-        exit(10);
-    }
-    pChainon->arbre=Ar;
-    pChainon->suivant=NULL;
-    return pChainon;
-}
-
-
-int enfilerDyn(Fifo* Fil,Chainon* Ar){
-    int q=0;
-    q=Verifil(Fil);
-    if(q>=-1){
-            ChainonFile* nouveau = creerChainon(Ar);
-            nouveau->arbre=Ar;
-            if(Fil->pTail==NULL){
-                Fil->pTail=nouveau;
-                Fil->pHead=nouveau;
-            }
-            else{
-                Fil->pTail->suivant=nouveau;
-                Fil->pTail=nouveau;
-            };
-    }
-return q;
-
-}
-
-ChainonFile* defilerDyn(Fifo* Fil){
-    if(Verifil(Fil)>=-1){
-        if((Fil->pTail==Fil->pHead) && (Fil->pTail!=NULL)){
-            ChainonFile* areti=Fil->pHead;
-            Fil->pHead=NULL;
-            Fil->pTail=NULL;
-            areti->suivant=NULL;
-            return areti;
-        }
-        else{
-        ChainonFile* aretu=Fil->pHead;
-        Fil->pHead=Fil->pHead->suivant;
-        aretu->suivant=NULL;
-        
-        return aretu;
-        };
-    }
-    else{
-        exit(5);
-    };
-}
-
-void AfficherFile(Fifo* Filou){
-     if(Filou==NULL){
-       exit(3);
-    }
-    ChainonFile* cursed=Filou->pHead;
-
-    while (cursed!=NULL){
-        printf("%d-",cursed->arbre->val);
-        cursed=cursed->suivant;
-    }
-    printf("\n");
-
-}
-*/
-/*
-void parcoursLargeur(Chainon* pAr){
-    if(pAr!=NULL){
-        int err=0;
-        Fifo* ffile=CreerFile();
-        ChainonFile* noeud=NULL;
-        err=enfilerDyn(ffile,pAr);
-        if (err<-1){exit(6);};
-        while((ffile->pHead!=NULL) && (ffile->pTail!=NULL)){
-            noeud=defilerDyn(ffile);
-            traiter(noeud->arbre);
-            if(existeFilsGauche(noeud->arbre)==1){
-                err=enfilerDyn(ffile,noeud->arbre->fg);};
-                if (err<-1){exit(7);};
-            if(existeFilsDroit(noeud->arbre)==1){
-                err=enfilerDyn(ffile,noeud->arbre->fd);};
-                if (err<-1){exit(8);};
-        };
-
-    };
-    
-
-}
-*/
-////////////////////////////////////////////////////////////////////////////////////////
-
+//On modifie la racine de l'arbre.
 Chainon* modifierRacine(Chainon* a,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun){
     if(estVide(a)==0){
     a->station=statio;
@@ -307,7 +152,7 @@ Chainon* modifierRacine(Chainon* a,int statio,int dat,int heur,double pressionme
 }
 
 
-
+//On supprime le fils droit.
 void supprimerFilsDroit(Chainon* pAr){
     if(pAr==NULL){}
     else{
@@ -321,8 +166,7 @@ if(pAr->fd!=NULL){
     
 }
 
-
-
+//On supprime le fils gauche
 void supprimerFilsGauche(Chainon* pAr){
     if(pAr==NULL){}
     else{
@@ -335,7 +179,8 @@ if(pAr->fg!=NULL){
     }
     
 }
-//////////////////////////////////////////////////////////////////////////////
+
+//On compte le nombre de feuille.
 int nmbfeuille(Chainon* pAr){
 
     if(pAr!=NULL){
@@ -351,6 +196,7 @@ int nmbfeuille(Chainon* pAr){
 
 }
 
+//On compte la taille de l'arbre.
 void tailleArbre(Chainon* pAr,int* valu){
 if(pAr!=NULL){
         if((existeFilsGauche(pAr)==1)||(existeFilsDroit(pAr)==1)){
@@ -371,6 +217,7 @@ if(pAr!=NULL){
     };
 }
 
+//On compte la hauteur de l'arbre.
 void hauteurarbre(Chainon* pAr,int* hautmax,int hautactu){
 if(pAr!=NULL){
     if((*hautmax)==-1){(*hautmax)=0;};
@@ -391,143 +238,19 @@ else{};
 
 }
 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-
-/*
-Chainon* recinsertABR(Chainon* pAr,int e,int statio,float temperatur,float pressio,float humidit,float ven,float altitud,float coorx,float coory){
-    //a changer
-    if(pAr==NULL){
-        return creerArbre(e,statio,temperatur,pressio,humidit,ven,altitud,coorx,coory);
-    }
-    else if(e<pAr->val){
-        pAr->fg=recinsertABR(pAr->fg,e,statio,temperatur,pressio,humidit,ven,altitud,coorx,coory);
-    }
-    else if(e>pAr->val){
-        pAr->fd=recinsertABR(pAr->fd,e,statio,temperatur,pressio,humidit,ven,altitud,coorx,coory);
-    }
-    return pAr;
-
-}
-
-Chainon* iteinsertABR(Chainon* pAr,int e,int statio,float temperatur,float pressio,float humidit,float ven,float altitud,float coorx,float coory){
-    // a changer
-    Chainon* tmp=pAr;
-    while(tmp!=NULL){
-        if((e<tmp->val)&&(tmp->fg!=NULL)){
-            tmp=tmp->fg;
-
-        }
-        else if((e>tmp->val)&&(tmp->fd!=NULL)){
-            tmp=tmp->fd;
-
-        }
-        else if((e<tmp->val)&&(tmp->fg==NULL)){
-                tmp->fg=creerArbre(e,statio,temperatur,pressio,humidit,ven,altitud,coorx,coory;
-                return pAr;
-        }
-        else if((e>tmp->val)&&(tmp->fd==NULL)){
-                tmp->fd=creerArbre(e,statio,temperatur,pressio,humidit,ven,altitud,coorx,coory);
-                return pAr;
-        }
-        else {
-            return pAr;
-        };
-    };
-    tmp=creerArbre(e,statio,temperatur,pressio,humidit,ven,altitud,coorx,coory);
-    return pAr;
-
-}
-
-Chainon* suppMax(Chainon* pAr,int* pe){//a changer
-if(existeFilsDroit(pAr)==1){
-    pAr->fd=suppMax(pAr->fd,pe);
-}
-else{
-    Chainon* tmp=pAr;
-    *pe=pAr->val;
-    pAr=pAr->fg;
-    free(tmp);
-};
-return pAr;
-
-}
-
-
-
-
-
-Chainon* suppression(Chainon* pAr,int e){//a changer
-if(pAr==NULL){
-    return pAr;
-}
-else if(e>pAr->val){
-    pAr->fd=suppression(pAr->fd,e);
-}
-else if(e<pAr->val){
-    pAr->fg=suppression(pAr->fg,e);
-}
-else if(existeFilsGauche(pAr)==0){
-    Chainon* tmp=pAr;
-    pAr=pAr->fd;
-    free(tmp);
-}
-else{
-    pAr->fg=suppMax(pAr->fg,&(pAr->val));
-};
-return pAr;
-
-
-}
-
-*/
-/*
-int verifABR(Chainon* pAr,int *pPrev){// a changer
-    int* tmp=pPrev;
-    if(pAr!=NULL){
-        if(verifABR(pAr->fg,pPrev)==0){
-            return 0;
-        };
-        if(pPrev!=NULL){
-            if(pAr->val<=*pPrev){
-                return 0;
-            };
-        }
-        else{
-            pPrev=malloc(sizeof(int));
-            if(pPrev==NULL){
-                exit (2);
-                }
-        };
-        *pPrev=pAr->val;
-
-        if(verifABR(pAr->fd,pPrev)==0){
-            if(tmp==NULL){free(pPrev);}
-            return 0;
-        };
-
-
-    };
-    if(tmp==NULL){free(pPrev);}
-    return 1;
-
-}
-*/
-/////////////////////////////////////////////////////////////
-
+//Retourne le maximum de deux nombres.
 int max(int a,int b){
     if(a>b){return a;}
     else{return b;};
 }
 
+//Retourne le minimum de deux nombres.
 int min(int a,int b){
     if(a<b){return a;}
     else{return b;};
 }
 
-
+//Rotation gauche d'un avl.
 Chainon* rotationGauche(Chainon* pAr){
     Chainon* pivot=pAr->fd;
     pAr->fd=pivot->fg;
@@ -541,6 +264,7 @@ Chainon* rotationGauche(Chainon* pAr){
 
 }
 
+//Rotation droite d'un avl.
 Chainon* rotationDroite(Chainon* pAr){
 
     Chainon* pivot=pAr->fg;
@@ -554,6 +278,7 @@ Chainon* rotationDroite(Chainon* pAr){
     return pAr;  
 }
 
+//Double rotation gauche d'un avl.
 Chainon* doubleRotationGauche(Chainon* pAr){
     
     pAr->fd=rotationDroite(pAr->fd);
@@ -562,6 +287,7 @@ Chainon* doubleRotationGauche(Chainon* pAr){
     return pAr;
 }
 
+//Double rotation droite d'un avl.
 Chainon* doubleRotationDroit(Chainon* pAr){
     
     pAr->fg=rotationGauche(pAr->fg);
@@ -570,43 +296,7 @@ Chainon* doubleRotationDroit(Chainon* pAr){
     return pAr;
 }
 
-/*
-Chainon* insertionAVL(Chainon* pAr,int e,int* h){//a changer
-
-if(pAr==NULL){
-    *h=1;
-    return creerArbre(e);
-}
-else if(e<pAr->val){
-    pAr->fg=insertionAVL(pAr->fg,e,h);
-    *h=-(*h);
-}
-else if(e>pAr->val){
-    pAr->fd=insertionAVL(pAr->fd,e,h);
-}
-else{
-    *h=0;
-    return pAr;
-};
-
-if(*h!=0){
-    pAr->equilibre=pAr->equilibre+(*h);
-    pAr=equilibrerAVL(pAr);
-    if(pAr->equilibre==0){
-        *h=0;
-    }
-    else{
-        *h=1;
-    };
-};
-
-return pAr;
-
-
-}
-
-
-*/
+//Equilibre un AVL en appellant rotation gauche et droite.
 Chainon* equilibrerAVL(Chainon* pAr){
 
     if(pAr!=NULL){
@@ -632,104 +322,10 @@ Chainon* equilibrerAVL(Chainon* pAr){
 
 return pAr;
 
-/*
-if(pAr!=NULL){
-
-
-    if(pAr->equilibre>=2){
-        if(pAr->fd->equilibre>=0){
-            return rotationGauche(pAr);
-        }
-        else{
-            return doubleRotationGauche(pAr);
-        }
-
-    }
-    if(pAr->equilibre<=-2){
-        if(pAr->fg->equilibre<=0){
-            return rotationDroite(pAr);
-        }
-        else{
-            return doubleRotationDroit(pAr);
-        }
-    }
-    return pAr;
-}
-    return pAr;
-
-*/
 }
 
-/*
-Chainon* suppMinAVL(Chainon* pAr,int* h,int* pe){//a changer
-
-    if(pAr->fg==NULL){
-        *pe=pAr->val;
-        *h=-1;
-        Chainon* tmp=pAr;
-        pAr=pAr->fd;
-        free(tmp);
-        return pAr;
-    }
-    else{
-        pAr->fg=suppMinAVL(pAr->fg,h,pe);
-        *h=-(*h);
-    };
-    if(*h!=0){
-        pAr->equilibre=(pAr->equilibre+(*h));
-        if(pAr->equilibre==0){
-            *h=-1;
-        }
-        else{
-            *h=0;
-        };
-    }
-    return pAr;
-
-}
-
-*/
-/*
-Chainon* suppressionAVL(Chainon* pAr,int e,int* h){//a changer
-
-    if(pAr==NULL){
-        *h=1;
-        return pAr;
-    }
-    else if(e>pAr->val){
-        pAr->fd=suppressionAVL(pAr->fd,e,h);
-    }
-    else if(e<pAr->val){
-        pAr->fg=suppressionAVL(pAr->fg,e,h);
-        *h=-(*h);
-    }
-    else if(existeFilsDroit(pAr)==1){
-        pAr->fd=suppMinAVL(pAr->fd,h,&(pAr->val));
-    }
-    else{
-        Chainon* tmp=pAr;
-        pAr=pAr->fg;
-        free(tmp);
-        *h=-1;
-        return pAr;
-    };
-    
-    if(*h!=0){
-        pAr->equilibre=(pAr->equilibre)+(*h);
-        if(pAr->equilibre==0){
-            *h=1;
-        }
-        else{
-            *h=0;
-        };
-    };
-    return pAr;
-
-}
-*/
-
-
-
+///////////////////////////////////////////////////////////////////////////////////Tri -m
+//On regarde le chainon actuel et on enregistre ces valeurs au bons endroits si il est lisible.
 void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
     
     int bool=0;
@@ -810,7 +406,7 @@ void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
     }
 }
 
-
+//Parcours l'arbre et appelle le programme de traitement pour enregistrer les valeurs.
 void parcoursInfixeH(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
 if(pAr!=NULL){
         
@@ -821,102 +417,8 @@ if(pAr!=NULL){
 
 
 }
-/*
-void parcoursPrefixeH(Chainon* pAr,Chainon* listestatio,int* nmbstation){
-if(pAr!=NULL){
-        traiterH(pAr,listestatio,nmbstation);
-        parcoursPrefixeH(pAr->fg,listestatio,nmbstation);
-        parcoursPrefixeH(pAr->fd,listestatio,nmbstation);
-    }
 
-}
-
-void traiterH(Chainon* pAr,Chainon* listestatio,int* nmbstation){
-    if(pAr!=NULL){
-        if(*nmbstation==0){
-            listestatio[*nmbstation].station=pAr->station;
-            listestatio[*nmbstation].temperature=pAr->temperature;
-            listestatio[*nmbstation].pression=pAr->pression;
-            listestatio[*nmbstation].humidite=pAr->humidite;
-            listestatio[*nmbstation].anglevent=pAr->anglevent;
-            listestatio[*nmbstation].forcevent=pAr->forcevent;
-            listestatio[*nmbstation].coordx=pAr->coordx;
-            listestatio[*nmbstation].coordy=pAr->coordy;
-            listestatio[*nmbstation].fd=NULL;
-            listestatio[*nmbstation].fg=NULL;
-            *nmbstation++;
-
-        }
-        else{
-            int bool=0;
-            for(int q=0;q<*nmbstation;q++){
-                if(pAr->station==listestatio[q].station){
-                    if(pAr->humidite>listestatio[q].humidite){
-                        listestatio[q].station=pAr->station;
-                        listestatio[q].temperature=pAr->temperature;
-                        listestatio[q].pression=pAr->pression;
-                        listestatio[q].humidite=pAr->humidite;
-                        listestatio[q].anglevent=pAr->anglevent;
-                        listestatio[q].forcevent=pAr->forcevent;
-                        listestatio[q].coordx=pAr->coordx;
-                        listestatio[q].coordy=pAr->coordy;
-                        listestatio[q].fd=NULL;
-                        listestatio[q].fg=NULL;
-                        bool=1;
-                    };
-                };
-            };
-            if(bool==0){
-                listestatio[*nmbstation].station=pAr->station;
-                listestatio[*nmbstation].temperature=pAr->temperature;
-                listestatio[*nmbstation].pression=pAr->pression;
-                listestatio[*nmbstation].humidite=pAr->humidite;
-                listestatio[*nmbstation].anglevent=pAr->anglevent;
-                listestatio[*nmbstation].forcevent=pAr->forcevent;
-                listestatio[*nmbstation].coordx=pAr->coordx;
-                listestatio[*nmbstation].coordy=pAr->coordy;
-                listestatio[*nmbstation].fd=NULL;
-                listestatio[*nmbstation].fg=NULL;
-                *nmbstation++;
-            };
-        };
-    };
-    
-}
-
-Chainon* iteinsertABRH(Chainon* pAr,int statio,float temperatur,float pressio,float humidit,float forceven,float angleven,float altitud,float coorx,float coory){
-Chainon* tmp=pAr;
-    while(tmp!=NULL){
-        if((humidit<tmp->humidite)&&(tmp->fg!=NULL)){
-            tmp=tmp->fg;
-
-        }
-        else if((humidit>tmp->humidite)&&(tmp->fd!=NULL)){
-            tmp=tmp->fd;
-
-        }
-        else if((humidit<tmp->humidite)&&(tmp->fg==NULL)){
-                tmp->fg=creerArbre(statio,temperatur,pressio,humidit,forceven,angleven,altitud,coorx,coory);
-                return pAr;
-        }
-        else if((humidit>tmp->humidite)&&(tmp->fd==NULL)){
-                tmp->fd=creerArbre(statio,temperatur,pressio,humidit,forceven,angleven,altitud,coorx,coory);
-                return pAr;
-        }
-        else {
-            return pAr;
-        };
-    };
-    tmp=creerArbre(statio,temperatur,pressio,humidit,forceven,angleven,altitud,coorx,coory);
-    return pAr;
-
-
-
-}
-
-*/
-
-
+//Insertion AVL selon l'humidité.
 Chainon* insertionAVLH(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
 
 if(pAr==NULL){
@@ -949,7 +451,8 @@ return pAr;
 
 }
 
-////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////Tri -h
+//Insertion AVL selon l'altitude.
 Chainon* insertionAVLAlt(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
 if(pAr==NULL){
     *h=1;
@@ -980,7 +483,7 @@ return pAr;
 
 }
 
-
+//Parcours l'arbre et appelle le programme de traitement pour enregistrer les valeurs.
 void parcoursInfixeAlt(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
 if(pAr!=NULL){
         
@@ -991,7 +494,7 @@ if(pAr!=NULL){
 }
 
 
-
+//On regarde le chainon actuel et on enregistre ces valeurs au bons endroits si il est lisible.
 void traiterAlt2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
 
     int bool=0;
@@ -1088,7 +591,8 @@ void traiterAlt2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
 }
 
 
-////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////Tri -w
+//Insertion AVL selon la station.
 Chainon* insertionAVLV(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
 if(pAr==NULL){
     *h=1;
@@ -1119,7 +623,7 @@ return pAr;
 }
 
 
-
+//Parcours l'arbre et appelle le programme de traitement pour enregistrer les valeurs.
 void parcoursInfixeV(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,double* vitessemoyey,double* anglemoyex,double* anglemoyey,int* nmbstationpourleven,int* nmbstatio){
 if(pAr!=NULL){
         
@@ -1131,7 +635,7 @@ if(pAr!=NULL){
 }
 
 
-
+//On regarde le chainon actuel et on enregistre ces valeurs au bons endroits si il est lisible.
 void traiterV2(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,double* vitessemoyey,double* anglemoyex,double* anglemoyey,int* nmbstationpourleven,int* nmbstatio){
 
     int bool=0;
@@ -1236,8 +740,8 @@ void traiterV2(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* vitessemoyex,doub
     }
     
 
-//////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////////Tri -t1
+//Insertion AVL selon la station.
 Chainon* insertionAVLT1(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
 if(pAr==NULL){
     *h=1;
@@ -1268,7 +772,7 @@ return pAr;
 
 }
 
-
+//Parcours l'arbre et appelle le programme de traitement pour enregistrer les valeurs.
 void parcoursInfixeT1(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* temmax,double* temmin,int* nmbstationpourletem,int* nmbstatio){
 if(pAr!=NULL){
         
@@ -1280,7 +784,7 @@ if(pAr!=NULL){
 
 }
 
-
+//On regarde le chainon actuel et on enregistre ces valeurs au bons endroits si il est lisible.
 void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* temmax,double* temmin,int* nmbstationpourletem,int* nmbstatio){
 
     int bool=0;
@@ -1410,8 +914,8 @@ void traiterT12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* tempmoy,double* 
 
 }
 
-///////////////////////////::
-
+///////////////////////////////////////////////////////////////////////////////////Tri -p1
+//Insertion AVL selon la station.
 Chainon* insertionAVLP1(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
 if(pAr==NULL){
     *h=1;
@@ -1443,7 +947,7 @@ return pAr;
 
 }
 
-
+//Parcours l'arbre et appelle le programme de traitement pour enregistrer les valeurs.
 void parcoursInfixeP1(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* pressmoy,double* pressmax,double* pressmin,int* nmbstationpourlapress,int* nmbstatio){
 if(pAr!=NULL){
         
@@ -1454,6 +958,7 @@ if(pAr!=NULL){
 
 }
 
+//On regarde le chainon actuel et on enregistre ces valeurs au bons endroits si il est lisible.
 void traiterP12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* pressmoy,double* pressmax,double* pressmin,int* nmbstationpourlapress,int* nmbstatio){
 
     int bool=0;
@@ -1575,8 +1080,8 @@ void traiterP12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* pressmoy,double*
 }
 
 
-/////////////////////////////////////////////:
-
+///////////////////////////////////////////////////////////////////////////////////Tri -t2
+//Insertion AVL selon la date.
 Chainon* insertionAVLT2(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
 if(pAr==NULL){
     *h=1;
@@ -1609,7 +1114,7 @@ return pAr;
 
 }
 
-
+//Parcours l'arbre et appelle le programme de traitement pour enregistrer les valeurs.
 void parcoursInfixeT2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
     if(pAr!=NULL){
         
@@ -1621,7 +1126,7 @@ void parcoursInfixeT2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double
 
 }
 
-
+//On regarde le chainon actuel et on enregistre ces valeurs au bons endroits si il est lisible.
 void traiterT22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
 
     int bool1=0;
@@ -1679,8 +1184,8 @@ void traiterT22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmo
 
 }
 
-///////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////////Tri -p2
+//Insertion AVL selon la date.
 Chainon* insertionAVLP2(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
 if(pAr==NULL){
     *h=1;
@@ -1712,19 +1217,17 @@ return pAr;
 
 }
 
+//Parcours l'arbre et appelle le programme de traitement pour enregistrer les valeurs.
 void parcoursInfixeP2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double pressmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
   if(pAr!=NULL){
-        
         parcoursInfixeP2(pAr->fg,tabdat,tabheur,pressmoye,nmbstationmaxheur,nmbstationmaxjou,nmbdat);
         parcoursInfixeP2(pAr->fd,tabdat,tabheur,pressmoye,nmbstationmaxheur,nmbstationmaxjou,nmbdat);
         traiterP22(pAr,tabdat,tabheur,pressmoye,nmbstationmaxheur,nmbstationmaxjou,nmbdat);
     }
 
-
-
-
 }
 
+//On regarde le chainon actuel et on enregistre ces valeurs au bons endroits si il est lisible.
 void traiterP22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double pressmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
 
     int bool1=0;
@@ -1766,16 +1269,7 @@ void traiterP22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double press
                     nmbstationmaxjou[(*nmbdat)]++;
                     (*nmbdat)++;
                 }
-                
-
             }
-        
-        
-
-
-
-
-
         }   
         else{}
     }
@@ -1785,51 +1279,5 @@ void traiterP22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double press
 }
 
 
-/////////////////////
-Chainon* insertionAVLT3(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
-if(pAr==NULL){
-    *h=1;
-    return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
-}
-else if(dat<pAr->date){
-pAr->fg=insertionAVLT3(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
-    *h=-(*h);
-}
-else if(dat>=pAr->date){
-    pAr->fd=insertionAVLT3(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
-}
-
-
-
-if(*h!=0){
-    pAr->equilibre=pAr->equilibre+(*h);
-    pAr=equilibrerAVL(pAr);
-    if(pAr->equilibre==0){
-        *h=0;
-    }
-    else{
-        *h=1;
-    };
-};
-
-return pAr;
-
-
-
-
-}
-
-void parcoursInfixeT3(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
-
-
-
-}
-
-void traiterT32(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
-
-
-
-
-}
-
+///////////////////////////////////////////////////////////////////////////////////
 

@@ -249,6 +249,7 @@ int main(int argc,char **argv){
                 
             }
 
+            //On stocke les pression et le nombre de mesures pour pouvoir en faire la moyenne.
             Chainon tab[100];
             double pressmoyen[100]={0};
             double pressmax[100]={0};
@@ -257,12 +258,11 @@ int main(int argc,char **argv){
             int* nmbstation=malloc(sizeof(int));
             (*nmbstation)=0;
             
-
+            //Le parcours enregistre tout dans les tableaux.
             parcoursInfixeP1(pArbre,fsortie,tab,pressmoyen,pressmax,pressmin,nmbstationpourlapress,nmbstation);
 
-
+            //On affiche.
             int o=0;
-
             for(o=0;o<(*nmbstation);o++){
                 pressmoyen[o]=(pressmoyen[o])/(nmbstationpourlapress[o]);
             }
@@ -271,10 +271,6 @@ int main(int argc,char **argv){
                fprintf(fsortie,"%d %d %lf %lf %lf\n",((o+1)*50),tab[o].station,pressmoyen[o],pressmax[o],pressmin[o]);
             }
             free(nmbstation);
-
-            
-
-            
         }
         else if((argv[5]=="--abr")){//Indisponible.
 
@@ -285,20 +281,14 @@ int main(int argc,char **argv){
     
 
     }
-    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatap2")==0){
-           
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatap2")==0){//C'est le tri p2
         rewind(fentree);
         if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
-            
             int f=0;
             char carac[17][30];
             int c=getc(fentree);
             int i=0;
             f=0;
-
-
-
-
             while(c!=EOF){
 
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
@@ -324,29 +314,25 @@ int main(int argc,char **argv){
                 else if(c=='\n'){
                     i=0;
                     f=0;
-                    
-
                     pArbre=insertionAVLP2(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
-                    
-                    
                     for(int k=0;k<17;k++){
                         bzero(carac[k],30);
                     }
                     c=getc(fentree);
-
                 }
                 else if(c==EOF){}
                 
             }
 
-            
-            int* nmbdate=malloc(sizeof(int));//nb jour max
+            //On initialise des tableaux.
+            int* nmbdate=malloc(sizeof(int));//Nombre de jour max
             *nmbdate=0;
-            int tabdate[5000]={0};//contient les dates
-            int tabheure[5000][24]={0};//contient les heures par dates
-            double pressmoyen[5000][24]={0};//contient la somme des temperature
-            short nmbstationmaxheure[5000][24]={0};//nb mesures/heure  du jour fixé max
-            int nmbstationmaxjour[5000]={0};//nb mesures/jour max
+            int tabdate[5000]={0};//Contient les dates
+            int tabheure[5000][24]={0};//Contient les heures
+            double pressmoyen[5000][24]={0};//Contient la somme des temperature. On la divisera par nmbstationmaxheure plus tard.
+            short nmbstationmaxheure[5000][24]={0};//Nombre de mesure par heure.
+            int nmbstationmaxjour[5000]={0};//Nombre de mesure par jour
+            //Ces variables servent à l'affichage
             char datepart1[5];
             char datepart2[3];
             char datepart3[3];
@@ -356,8 +342,10 @@ int main(int argc,char **argv){
             bzero(datepart3,3);
             bzero(datentier,8);
 
+            //On enregistre le valeurs.
             parcoursInfixeP2(pArbre,tabdate,tabheure,pressmoyen,nmbstationmaxheure,nmbstationmaxjour,nmbdate);
 
+            //On les affiches
             for(int o=0;o<(*nmbdate);o++){
                 if((nmbstationmaxjour[o])==0){}
                 else{
@@ -374,29 +362,22 @@ int main(int argc,char **argv){
                         datepart2[1]=datentier[5];
                         datepart3[0]=datentier[6];
                         datepart3[1]=datentier[7];
-
-
                         fprintf(fsortie,"%s-%s-%s %d %lf\n",datepart1,datepart2,datepart3,g,(pressmoyen[o][g]/(nmbstationmaxheure[o][g])));
                         
                     }
                 }
             }
-            }
-            
-            free(nmbdate);
-            
-
-            
-
+        }
+        free(nmbdate);
     }
-            else if((argv[5]=="--abr")){//Indisponible.
+        else if((argv[5]=="--abr")){//Indisponible.
 
         }
         else if(argv[5]=="--tab"){//Indisponible.
 
         }
     }
-    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatap3")==0){
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatap3")==0){//C'est le tri p3 (indisponible).
         rewind(fentree);
         if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){//Indisponible.
 
@@ -409,7 +390,7 @@ int main(int argc,char **argv){
         }
 
     }
-    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddataw")==0){
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddataw")==0){//C'est le tri w.
         rewind(fentree);
         if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
             int f=0;
@@ -417,9 +398,7 @@ int main(int argc,char **argv){
             int c=getc(fentree);
             int i=0;
             f=0;
-
             while(c!=EOF){
-
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
                     if(c==':'){
                         c=getc(fentree);
@@ -429,7 +408,6 @@ int main(int argc,char **argv){
                     f++;
                     c=getc(fentree);
                     }
-                    
                 }
                 else if(c==';'){
                     i++;
@@ -439,7 +417,6 @@ int main(int argc,char **argv){
                 else if(c=='\n'){
                     i=0;
                     f=0;
-                    
                     if((carac[4][0]=='\0')||(carac[5][0]=='\0')){
                         bzero(carac[4],30);
                         carac[4][0]='4';
@@ -447,22 +424,15 @@ int main(int argc,char **argv){
                         carac[4][2]='0';
                     }
                     pArbre=insertionAVLV(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
-                    
-                    
                     for(int k=0;k<17;k++){
                         bzero(carac[k],30);
                     }
                     c=getc(fentree);
-
                 }
                 else if(c==EOF){
-                    
-
                 }
-            
             }
-
-
+            //On enregistre la sommes des moyennes d'angle et de vitesse de vent dedans.
             Chainon tab[100];
             double vitessemoyenx[100]={0};
             double vitessemoyeny[100]={0};
@@ -472,13 +442,11 @@ int main(int argc,char **argv){
             int* nmbstation=malloc(sizeof(int));
             (*nmbstation)=0;
             
-
+            //On parcourt pour stocker les valeurs.
             parcoursInfixeV(pArbre,fsortie,tab,vitessemoyenx,vitessemoyeny,anglemoyenx,anglemoyeny,nmbstationpourlevent,nmbstation);
 
-
+            //On fait la moyenne des vitesse et on affiche.
             int o=0;
-
-            
             for(o=0;o<(*nmbstation);o++){
                 vitessemoyenx[o]=(vitessemoyenx[o])/(nmbstationpourlevent[o]);
             }
@@ -488,14 +456,9 @@ int main(int argc,char **argv){
             }
             o=0;
             for(o=0;o<(*nmbstation);o++){
-                
                fprintf(fsortie,"%lf %lf %lf %lf\n",tab[o].coordx,tab[o].coordy,vitessemoyenx[o],vitessemoyeny[o]);
             }
             free(nmbstation);
-
-            
-
-            
         }
         else if((argv[5]=="--abr")){//Indisponible.
 
@@ -503,11 +466,9 @@ int main(int argc,char **argv){
         else if(argv[5]=="--tab"){//Indisponible.
 
         }
-
     }
-    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatah")==0){//Tri de hauteur
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatah")==0){//C'est le tri h.
         rewind(fentree);
-        
         if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
             
             int f=0;
@@ -524,10 +485,9 @@ int main(int argc,char **argv){
                     }
                     else{
                         carac[i][f]=c;
-                    f++;
-                    c=getc(fentree);
+                        f++;
+                        c=getc(fentree);
                     }
-                    
                 }
                 else if(c==';'){
                     i++;
@@ -537,39 +497,28 @@ int main(int argc,char **argv){
                 else if(c=='\n'){
                     i=0;
                     f=0;
-                    
                     pArbre=insertionAVLAlt(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
-                    
-                    
                     for(int k=0;k<17;k++){
                         bzero(carac[k],30);
                     }
                     c=getc(fentree);
-
                 }
                 else if(c==EOF){
-
                 }
-                
-                
-
             }
-            
 
+            //On retient le nombre de station et leurs altitude. Ces stations sont enregistrés dans tab[].
             Chainon tab[100];
             int* nmbstation=malloc(sizeof(int));
             (*nmbstation)=0;
+            //On parcoure l'arbre pour enregistrer les valeurs d'altitude des stations, le numéro des station ainsi que leurs coordonnées.
             parcoursInfixeAlt(pArbre,fsortie,tab,nmbstation);
-            
+
+            //On affiche.
             for(int k=0;k<(*nmbstation);k++){
-                
                fprintf(fsortie,"%d %lf %lf %lf\n",tab[k].station,tab[k].altitude,tab[k].coordx,tab[k].coordy);
             }
             free(nmbstation);
-
-            
-
-            
         }
         else if((argv[5]=="--abr")){//Indisponible.
 
@@ -579,29 +528,24 @@ int main(int argc,char **argv){
         }
 
     }
-    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatam")==0){//Tri d'humidité
+    else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatam")==0){//C'est le tri -m.
         rewind(fentree);
-        
         if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
-            
             int f=0;
             char carac[17][30];
             int c=getc(fentree);
             int i=0;
             f=0;
-
             while(c!=EOF){
-
                 if((c!='\n')&&(c!=';')&&(c!=EOF)){
                     if(c==':'){
                         c=getc(fentree);
                     }
                     else{
                         carac[i][f]=c;
-                    f++;
-                    c=getc(fentree);
+                        f++;
+                        c=getc(fentree);
                     }
-                    
                 }
                 else if(c==';'){
                     i++;
@@ -611,39 +555,27 @@ int main(int argc,char **argv){
                 else if(c=='\n'){
                     i=0;
                     f=0;
-                    
                     pArbre=insertionAVLH(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
-                    
-                    
                     for(int k=0;k<17;k++){
                         bzero(carac[k],30);
                     }
                     c=getc(fentree);
-
                 }
                 else if(c==EOF){
-
                 }
-                
-                
-
             }
-            
 
+            //On enregitre les numéros de stations, leur humidité et leurs coordonnées.
             Chainon tab[100];
             int* nmbstation=malloc(sizeof(int));
             (*nmbstation)=0;
             parcoursInfixeH(pArbre,fsortie,tab,nmbstation);
             
+            //On affiche.
             for(int k=0;k<(*nmbstation);k++){
-                
                 fprintf(fsortie,"%d %d %lf %lf\n",tab[k].station,tab[k].humidite,tab[k].coordx,tab[k].coordy);
             }
             free(nmbstation);
-
-            
-
-            
         }
         else if((argv[5]=="--abr")){//Indisponible.
 
@@ -666,7 +598,4 @@ int main(int argc,char **argv){
     };
 
     return 0;
-
-
-
 }
