@@ -335,7 +335,27 @@ void traiterH2(Chainon* pAr,FILE* fsorti,Chainon* tabu,int* nmbstatio){
         }
         else{
         if((*nmbstatio)==0){
-            tabu[0]=(*pAr);
+            
+                            tabu[0].station=pAr->station;
+                            tabu[0].date=pAr->date;
+                            tabu[0].heure=pAr->heure;
+                            tabu[0].pressionmer=pAr->pressionmer;
+                            tabu[0].anglevent=pAr->anglevent;
+                            tabu[0].forcevent=pAr->forcevent;
+                            tabu[0].humidite=pAr->humidite;
+                            tabu[0].varpression=pAr->varpression;
+                            tabu[0].pression=pAr->pression;
+                            tabu[0].precipitation=pAr->precipitation;
+                            tabu[0].coordx=pAr->coordx;
+                            tabu[0].coordy=pAr->coordy;
+                            tabu[0].temperature=pAr->temperature;
+                            tabu[0].temperaturemin=pAr->temperaturemin;
+                            tabu[0].temperaturemax=pAr->temperaturemax;
+                            tabu[0].altitude=pAr->altitude;
+                            tabu[0].commune=pAr->commune;
+                            tabu[0].equilibre=0;
+                            tabu[0].fd=NULL;
+                            tabu[0].fg=NULL;
             (*nmbstatio)++;
             
         }
@@ -447,13 +467,49 @@ if(*h!=0){
 
 return pAr;
 
+}
 
+//Insertion ABR selon l'humiditée.
+Chainon* insertionABRH(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun){
+
+if(pAr==NULL){
+    return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+    
+}
+else if(humidit<pAr->humidite){
+    if(statio!=pAr->station){
+        pAr->fg=insertionABRH(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+    }
+    else{
+        return pAr;
+    }
+}
+else if(humidit>pAr->humidite){
+    if(statio!=pAr->station){
+        pAr->fd=insertionABRH(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+    }
+    else{
+        pAr->humidite=humidit;
+        return pAr;
+    }
+}
+else{
+    if(statio<pAr->station){
+        pAr->fd=insertionABRH(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+    }
+    else{
+        pAr->fg=insertionABRH(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+    }
+}
+
+return pAr;
 
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////////Tri -h
 //Insertion AVL selon l'altitude.
-Chainon* insertionAVLAlt(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
+Chainon* insertionAVLAlt(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int *h){
 if(pAr==NULL){
     *h=1;
     return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
@@ -479,6 +535,39 @@ if(*h!=0){
 };
 
 return pAr;
+
+
+}
+
+Chainon* insertionABRAlt(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun){
+
+if(pAr==NULL){
+    return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+    
+}
+if(statio==pAr->station){
+    return pAr;
+}
+else if(altitud<pAr->altitude){
+    if(statio!=pAr->station){
+        pAr->fg=insertionABRAlt(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+    }
+    else{
+        return pAr;
+    }
+}
+else if(altitud>=pAr->altitude){
+    if(statio!=pAr->station){
+        pAr->fd=insertionABRAlt(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+    }
+    else{
+        pAr->altitude=altitud;
+        return pAr;
+    }
+}
+
+return pAr;
+
 
 
 }

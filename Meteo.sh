@@ -485,12 +485,12 @@ if [ ! "$donneem" = ' ' ] ; then
         exit 38
     else
         gnuplot -p -c interpolee_m
-        rm -f ./Meteotmpfilesfolder/ordereddatam
+        #rm -f ./Meteotmpfilesfolder/ordereddatam
     fi
 fi
 
 echo 'The programm is finished.'
-make clean
+#make clean
 
 
 
