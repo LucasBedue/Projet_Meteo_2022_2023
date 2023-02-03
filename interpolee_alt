@@ -22,4 +22,4 @@ set palette rgb 33,13,10
 set colorbox vertical origin screen 0.9, 0.2 size screen 0.05, 0.6 front  noinvert bdefault
 NO_ANIMATION = 1
 ## Last datafile plotted: "./Meteotmpfilesfolder/oredereddatah"
-splot './Meteotmpfilesfolder/ordereddatah' using 4:3:2 with pm3d title "Altitude (m)"
+splot './Meteotmpfilesfolder/ordereddatah' using 4:3:2 with pm3d
