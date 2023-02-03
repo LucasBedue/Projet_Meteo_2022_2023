@@ -13,7 +13,7 @@ fi
 
 #We search a '--help' argument.
 #Return the manual if yes, an error if not.
-for qu in `echo "$*" | cut -d ' ' -f 1` ; do
+for qu in $* ; do
     if [ ${qu} = '--help' ] ; then
         echo 'Usage: ./Meteo.sh [OPTION]… -f name_file
 
@@ -44,6 +44,8 @@ Arguments and script options [DATES]:
 Arguments and script options [SORT]:
 
     --avl:              sorting performed using an AVL type structure. This is the default sort if no sort type is selected
+
+    --abr:              sorting performed using an ABR type structure. only for -m and -h
 
 Arguments and script options [FILE]:
 
@@ -144,7 +146,7 @@ for qu in $* ; do
             echo 'Write a day between 1 and 31'
             exit 10
         fi
-        if [ `echo "$date2" | cut -c 6-7` = 2 ] || [ `echo "$date2" | cut -c 6-7` = 4 ] || [ `echo "$date2" | cut -c 6-7` = 6 ] || [ `echo "$date2" | cut -c 6-7` = 8 ] || [ `echo "$date2" | cut -c 6-7` = 10 ] || [ `echo "$date2" | cut -c 6-7` = 12 ] && [ `echo "$date2" | cut -c -4` -gt 30 ] ; then
+        if [ `echo "$date2" | cut -c 6-7` = 2 ] || [ `echo "$date2" | cut -c 6-7` = 4 ] || [ `echo "$date2" | cut -c 6-7` = 6 ] || [ `echo "$date2" | cut -c 6-7` = 8 ] || [ `echo "$date2" | cut -c 6-7` = 10 ] || [ `echo "$date2" | cut -c 6-7` = 12 ] && [ `echo "$date2" | cut -c 9-10` -gt 30 ] ; then
             echo 'No more than 30 days for these mounths!'
             exit 11
         fi
@@ -202,7 +204,7 @@ for qu in $* ; do
             echo 'Write a day between 1 and 31'
             exit 21
         fi
-        if [ `echo "$date1" | cut -c 6-7` = 2 ] || [ `echo "$date1" | cut -c 6-7` = 4 ] || [ `echo "$date1" | cut -c 6-7` = 6 ] || [ `echo "$date1" | cut -c 6-7` = 8 ] || [ `echo "$date1" | cut -c 6-7` = 10 ] || [ `echo "$date1" | cut -c 6-7` = 12 ] && [ `echo "$date1" | cut -c -4` -gt 30 ] ; then
+        if [ `echo "$date1" | cut -c 6-7` = 2 ] || [ `echo "$date1" | cut -c 6-7` = 4 ] || [ `echo "$date1" | cut -c 6-7` = 6 ] || [ `echo "$date1" | cut -c 6-7` = 8 ] || [ `echo "$date1" | cut -c 6-7` = 10 ] || [ `echo "$date1" | cut -c 6-7` = 12 ] && [ `echo "$date1" | cut -c 9-10` -gt 30 ] ; then
             echo 'No more than 30 days for these mounths!'
             exit 22
         fi
