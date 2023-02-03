@@ -1582,11 +1582,11 @@ if(pAr==NULL){
     *h=1;
     return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
 }
-else if(statio<pAr->station){
+else if(dat<pAr->date){
 pAr->fg=insertionAVLT2(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
     *h=-(*h);
 }
-else if(statio>=pAr->station){
+else if(dat>=pAr->date){
     pAr->fd=insertionAVLT2(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
 }
 
@@ -1610,7 +1610,7 @@ return pAr;
 }
 
 
-void parcoursInfixeT2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[500],int* nmbdat){
+void parcoursInfixeT2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
     if(pAr!=NULL){
         
         parcoursInfixeT2(pAr->fg,tabdat,tabheur,tmpmoye,nmbstationmaxheur,nmbstationmaxjou,nmbdat);
@@ -1622,7 +1622,7 @@ void parcoursInfixeT2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double
 }
 
 
-void traiterT22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[500],int* nmbdat){
+void traiterT22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
 
     int bool1=0;
     int u=0;
@@ -1679,7 +1679,110 @@ void traiterT22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmo
 
 }
 
+///////////////////////////
 
+Chainon* insertionAVLP2(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
+if(pAr==NULL){
+    *h=1;
+    return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+}
+else if(dat<pAr->date){
+pAr->fg=insertionAVLP2(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+    *h=-(*h);
+}
+else if(dat>=pAr->date){
+    pAr->fd=insertionAVLP2(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+}
+
+
+if(*h!=0){
+    pAr->equilibre=pAr->equilibre+(*h);
+    pAr=equilibrerAVL(pAr);
+    if(pAr->equilibre==0){
+        *h=0;
+    }
+    else{
+        *h=1;
+    };
+};
+
+return pAr;
+
+
+
+}
+
+void parcoursInfixeP2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double pressmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
+  if(pAr!=NULL){
+        
+        parcoursInfixeP2(pAr->fg,tabdat,tabheur,pressmoye,nmbstationmaxheur,nmbstationmaxjou,nmbdat);
+        parcoursInfixeP2(pAr->fd,tabdat,tabheur,pressmoye,nmbstationmaxheur,nmbstationmaxjou,nmbdat);
+        traiterP22(pAr,tabdat,tabheur,pressmoye,nmbstationmaxheur,nmbstationmaxjou,nmbdat);
+    }
+
+
+
+
+}
+
+void traiterP22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double pressmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
+
+    int bool1=0;
+    int u=0;
+    int x=0;
+    if(pAr!=NULL){
+        if(pAr->pression!=2000){
+            if((*nmbdat)==0){
+                tabdat[0]=pAr->date;
+                tabheur[0][pAr->heure]=pAr->heure;
+                pressmoye[0][pAr->heure]=pAr->pression;
+                nmbstationmaxheur[0][pAr->heure]++;
+                nmbstationmaxjou[0]++;
+                (*nmbdat)++;
+            }
+            else{
+                
+                for(u=0;u<(*nmbdat);u++){
+                    if(bool1==1){}
+                    else{
+                    if(pAr->date==tabdat[u]){
+                        for(x=0;x<24;x++){
+                            if(pAr->heure==x){
+                                nmbstationmaxheur[u][x]++;
+                                nmbstationmaxjou[u]++;
+                                pressmoye[u][x]=pressmoye[u][x]+pAr->pression;
+                                bool1=1;
+
+                            }
+                        }
+                    }
+                }
+                }
+                if(bool1==0){
+                    tabdat[(*nmbdat)]=pAr->date;
+                    tabheur[(*nmbdat)][pAr->heure]=pAr->heure;
+                    pressmoye[(*nmbdat)][pAr->heure]=pAr->pression;
+                    nmbstationmaxheur[(*nmbdat)][pAr->heure]++;
+                    nmbstationmaxjou[(*nmbdat)]++;
+                    (*nmbdat)++;
+                }
+                
+
+            }
+        
+        
+
+
+
+
+
+        }   
+        else{}
+    }
+
+
+
+}
 
 
 

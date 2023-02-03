@@ -116,5 +116,10 @@ void traiterP12(Chainon* pAr,FILE* fsorti,Chainon* tabu,double* pressmoy,double*
 
 //////////Températuret2
 Chainon* insertionAVLT2(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h);
-void parcoursInfixeT2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[500],int* nmbdat);
-void traiterT22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[500],int* nmbdat);
+void parcoursInfixeT2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat);
+void traiterT22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat);
+
+//////////Pressionp2
+Chainon* insertionAVLP2(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h);
+void parcoursInfixeP2(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double pressmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat);
+void traiterP22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double pressmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat);

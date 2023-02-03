@@ -168,39 +168,58 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
                 }
                 else if(c==EOF){
-                    pArbre=insertionAVLT2(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+                    
 
                 }
                 
             }
 
-            
-            int* nmbdate=malloc(sizeof(int));//contient le nombre de jour différents max
+           
+            int* nmbdate=malloc(sizeof(int));//nb jour max
             *nmbdate=0;
             int tabdate[5000]={0};//contient les dates
             int tabheure[5000][24]={0};//contient les heures par dates
-            double tmpmoyen[5000][24]={0};//contient la somme des temperature
-            short nmbstationmaxheure[5000][24]={0};//contient le nombre de mesure pour cette heure max
-            int nmbstationmaxjour[500]={0};//contient le nombre de mesure pour cette date max
-            
-            parcoursInfixeT2(pArbre,tabdate,tabheure,tmpmoyen,nmbstationmaxheure,nmbstationmaxjour,nmbdate);
+            double tempmoyen[5000][24]={0};//contient la somme des temperature
+            short nmbstationmaxheure[5000][24]={0};//nb mesures/heure  du jour fixé max
+            int nmbstationmaxjour[5000]={0};//nb mesures/jour max
+            char datepart1[5];
+            char datepart2[3];
+            char datepart3[3];
+            char datentier[8];
+            bzero(datepart1,5);
+            bzero(datepart2,3);
+            bzero(datepart3,3);
+            bzero(datentier,8);
+
+            parcoursInfixeT2(pArbre,tabdate,tabheure,tempmoyen,nmbstationmaxheure,nmbstationmaxjour,nmbdate);
 
             for(int o=0;o<(*nmbdate);o++){
                 if((nmbstationmaxjour[o])==0){}
                 else{
                     
-                for(int g=0;g<nmbstationmaxheure[o][nmbstationmaxjour[o]];g++){
-                    
-                    
-                        fprintf(fsortie,"%d %d %lf",tabdate[o],tabheure[o][g],(tmpmoyen[o][g]/(nmbstationmaxheure[o][g])));
-                    
+                for(int g=0;g<24;g++){
+                    if((tempmoyen[o][g]==0)&&(nmbstationmaxheure[o][g]==0)){}
+                    else{
+                        sprintf(datentier,"%d",tabdate[o]);
+                        datepart1[0]=datentier[0];
+                        datepart1[1]=datentier[1];
+                        datepart1[2]=datentier[2];
+                        datepart1[3]=datentier[3];
+                        datepart2[0]=datentier[4];
+                        datepart2[1]=datentier[5];
+                        datepart3[0]=datentier[6];
+                        datepart3[1]=datentier[7];
+
+
+                        fprintf(fsortie,"%s-%s-%s %d %lf\n",datepart1,datepart2,datepart3,g,(tempmoyen[o][g]/(nmbstationmaxheure[o][g])));
+                        
+                    }
                 }
             }
             }
             
             free(nmbdate);
             
-
             
 
             
@@ -304,8 +323,115 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
     }
     else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatap2")==0){
-        
+           
+        rewind(fentree);
+        if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
+            
+            int f=0;
+            char carac[17][30];
+            int c=getc(fentree);
+            int i=0;
+            f=0;
 
+
+
+
+            while(c!=EOF){
+
+                if((c!='\n')&&(c!=';')&&(c!=EOF)){
+                    if((c=='+')||(c==':')||((c=='-')&&(i==1))){
+                        c=getc(fentree);
+                    }
+                    else if((i==2)&&(f>1)&&(f<10)){
+                        c=getc(fentree);
+                    }
+                    else{
+                        carac[i][f]=c;
+                    f++;
+                    c=getc(fentree);
+                    }
+                    
+                }
+                else if(c==';'){
+                    i++;
+                    f=0;
+                    c=getc(fentree);
+                    
+                }
+                else if(c=='\n'){
+                    i=0;
+                    f=0;
+                    
+
+                    pArbre=insertionAVLP2(pArbre,atoi(carac[0]),atoi(carac[1]),atoi(carac[2]),atof(carac[3]),atof(carac[4]),atof(carac[5]),atoi(carac[6]),atof(carac[7]),atof(carac[8]),atof(carac[9]),atof(carac[10]),atof(carac[11]),atof(carac[12]),atof(carac[13]),atof(carac[14]),atof(carac[15]),atoi(carac[16]),h);
+                    
+                    
+                    for(int k=0;k<17;k++){
+                        bzero(carac[k],30);
+                    }
+                    c=getc(fentree);
+
+                }
+                else if(c==EOF){}
+                
+            }
+
+            
+            int* nmbdate=malloc(sizeof(int));//nb jour max
+            *nmbdate=0;
+            int tabdate[5000]={0};//contient les dates
+            int tabheure[5000][24]={0};//contient les heures par dates
+            double pressmoyen[5000][24]={0};//contient la somme des temperature
+            short nmbstationmaxheure[5000][24]={0};//nb mesures/heure  du jour fixé max
+            int nmbstationmaxjour[5000]={0};//nb mesures/jour max
+            char datepart1[5];
+            char datepart2[3];
+            char datepart3[3];
+            char datentier[8];
+            bzero(datepart1,5);
+            bzero(datepart2,3);
+            bzero(datepart3,3);
+            bzero(datentier,8);
+
+            parcoursInfixeP2(pArbre,tabdate,tabheure,pressmoyen,nmbstationmaxheure,nmbstationmaxjour,nmbdate);
+
+            for(int o=0;o<(*nmbdate);o++){
+                if((nmbstationmaxjour[o])==0){}
+                else{
+                    
+                for(int g=0;g<24;g++){
+                    if((pressmoyen[o][g]==0)&&(nmbstationmaxheure[o][g]==0)){}
+                    else{
+                        sprintf(datentier,"%d",tabdate[o]);
+                        datepart1[0]=datentier[0];
+                        datepart1[1]=datentier[1];
+                        datepart1[2]=datentier[2];
+                        datepart1[3]=datentier[3];
+                        datepart2[0]=datentier[4];
+                        datepart2[1]=datentier[5];
+                        datepart3[0]=datentier[6];
+                        datepart3[1]=datentier[7];
+
+
+                        fprintf(fsortie,"%s-%s-%s %d %lf\n",datepart1,datepart2,datepart3,g,(pressmoyen[o][g]/(nmbstationmaxheure[o][g])));
+                        
+                    }
+                }
+            }
+            }
+            
+            free(nmbdate);
+            
+
+            
+
+    }
+            else if((argv[5]=="--abr")){
+
+        }
+        else if(argv[5]=="--tab"){
+
+        }
     }
     else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatap3")==0){
         

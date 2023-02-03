@@ -381,7 +381,6 @@ cat ./Meteotmpfilesfolder/firstfile | awk -F ';' '{if($1 == 89642) print $0}'| a
 ;;
 esac
 
-#faire le filtre par département
 
 #Here, we filter the data by using precedent arguments.
 #We have : namefile - region - date1/date2 - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
@@ -409,6 +408,9 @@ if [ ! "$donneet2" = ' ' ] ; then
         echo "There was an error during the process of the sorting "
         #make clean
         exit 38
+    else
+        gnuplot -p -c ligne_simplet2
+        #rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
 fi
 
