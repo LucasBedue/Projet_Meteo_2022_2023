@@ -1,17 +1,18 @@
 #!/bin/bash
 
-#Programme regardant si les paramètres sont les bons, dicte au programme Meteocreationfichier.c
-#quoi faire et envoie les information a afficher via gnuplot.
-#On lit les parametres, on les retient, on regarde si ils sont correct et si oui, on fait le tri.
+#This is the programm that searche all usefull arguments(false arguments will be ignored).
+#Then, he will filter all usefull data.
+#Next, he will appeal every folding-programm needed, give to gnuplot all data and erase temporary files.
 
-#on vérifie qu'il y a au moins un argument
+#We search if there at least on argument. Return an error if not.
 if (( $# == 0 )) ; then
     echo 'You need arguments!'
     exit 1
 fi
 
 
-#regarde si il y a un --help au début
+#We search a '--help' argument.
+#Return the manual if yes, an error if not.
 for qu in `echo "$*" | cut -d ' ' -f 1` ; do
     if [ ${qu} = '--help' ] ; then
         echo 'Usage: ./Meteo.sh [OPTION]… -f name_file
@@ -68,14 +69,15 @@ done
 
 
 
-#we search the -f <file> argument
-bool1=0 #regarde si il y a le -f
-bool2=0 #regarde si il y a le nom de fichier après
+#We search the -f <file> argument.
+#Return an error if no, and retain it if yes.
+bool1=0 #Is there a '-f' sign somewhere?
+bool2=0 #Is there a readable file after?
 for qu in $* ; do 
     if [ $bool1 -eq 1 ] ; then
         if [ $bool2 -ne 1 ] ; then
             if [ -f ${qu} ] && [ -r ${qu} ] ; then
-                bool2=1 #the file exist and is readable
+                bool2=1 #The file exist and is readable
                 namefile="$qu"
             else
                 echo 'There is no readable file after the -f'
@@ -94,7 +96,8 @@ if [ $bool1 -ne 1 ] && [ $bool2 -ne 1 ] ; then
 fi
 
 
-#On regarde si il y a un parametre de région et le retient
+#We search a region argument.
+#If there is one, he keep it. If too much of these arguments are here, return an error.
 region=' '
 bool1=0
 for qu in $* ; do
@@ -111,12 +114,13 @@ for qu in $* ; do
 done
 
 
-#On regarde si il y a un parametre de date et le retient
+#We search a -d <date1> <date2> argument.
+#If not well writen, return a specified error.
 date1=' '
 date2=' '
-bool1=0 #regarde si il n'y a qu'un -d
-bool2=0 #regarde si ce qu'il y a après le -d est lisible
-bool3=0 #regarde si ce qu'il y a deux crans après le -d est lisible
+bool1=0 #Is there a -d argument?
+bool2=0 #Can we read what is next the -d argument?
+bool3=0 #Do the same, but one argument next.
 for qu in $* ; do
     if [ $bool2 -eq 1 ] ; then
         date2="$qu"
@@ -221,14 +225,15 @@ for qu in $* ; do
     fi
 done
 
-
+#If there is only one of the three arguments needed, return an error.
 if [ "$bool1" -ne "$bool2" ] || [ "$bool2" -ne "$bool3" ] || [ "$bool1" -ne "$bool3" ] ; then
     echo 'error on the date, it probably misses something'
     exit 25
 fi
 
 
-#On regarde si il y a un parametre de méthode de tri et le retient
+#We search the --avl, --abr or the --tab argument.
+#If they are too much of them, return an error.
 bool1=0
 argtri='_'
 for qu in $* ; do
@@ -244,8 +249,8 @@ for qu in $* ; do
 done
 
 
-#On regarde si il y a les paramêtre de tri, on tri tout en parcourant
-
+#We search the option arguments.
+#Return an error if none of them, or too much of them.
 donneet1=' '
 donneet2=' '
 donneet3=' '
@@ -316,26 +321,27 @@ for qu in $* ; do
 
 done
 
+#We verify the presence of at least one option argument.
 if [ "$donneet1" = ' ' ] && [ "$donneet2" = ' ' ] && [ "$donneet3" = ' ' ] && [ "$donneep1" = ' ' ] && [ "$donneep2" = ' ' ] && [ "$donneep3" = ' ' ] && [ "$donneew" = ' ' ] && [ "$donneeh" = ' ' ] && [ "$donneem" = ' ' ] ; then
     echo 'You need to enter an argument about the type of data you want to analyse'
     exit 36
 fi
 
+#Clean what is not needed.
 make clean
-
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the cleaning of the files."
     exit 38
 fi
 
+#Compile at your place.
 make
-
 if [ "$?" -ne 0 ] ; then
     echo "There was an error during the process of the Makefile. Maybe a data-sorting file is missing."
     exit 38
 fi
 
-
+#Create the folder needed for storing the temporary files.
 make Meteotmpfiles
 
 if [ "$?" -ne 0 ] ; then
@@ -343,20 +349,14 @@ if [ "$?" -ne 0 ] ; then
     exit 38
 fi
 
-#We do a file with all the value we can have
-#we filter by date, departement
-
-
-
+#We filter by date and create a 'firstfile'. If there is no date, just move it to 'firstdate'
 if [ ! "$date1" = ' ' ] && [ ! "$date2" = ' ' ] ; then
     cat "$namefile" | sed '1d' | tr 'T' ';' | awk -F ';' '{if($2>="'$date1'" && $2<"'$date2'")print $0;}' > ./Meteotmpfilesfolder/firstfile
 else
     cat "$namefile" | sed '1d' | tr 'T' ';' > ./Meteotmpfilesfolder/firstfile
 fi
 
-#cat ./Meteotmpfilesfolder/firstfile | awk -F";" '{sub(",",";",$11);print}' OFS=";" > ./Meteotmpfilesfolder/secondfile
-
-
+#We filter by region and create a 'secondfile'. If there is no region specified, just move it to 'secondfile'.
 case $region in
 ' ')
 cat ./Meteotmpfilesfolder/firstfile | awk -F";" '{sub(",",";",$11);print}' OFS=";" > ./Meteotmpfilesfolder/secondfile
@@ -382,54 +382,52 @@ cat ./Meteotmpfilesfolder/firstfile | awk -F ';' '{if($1 == 89642) print $0}'| a
 esac
 
 
-#Here, we filter the data by using precedent arguments.
-#We have : namefile - region - date1/date2 - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
+#Here, we filter the data by using precedent arguments stored.
+#At this stage is stored : namefile - region - date1/date2 - donneet1 - donneet2 - donneet3 - donneep1 - donneep2 - donneep3 - donneew - donneeh - donneem 
 if [ ! "$donneet1" = ' ' ] ; then
-    
-
-
-    #Then, we order the data by using precedent file.
     ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatat1' "$argtri" -nr
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
-        #make clean
+        make clean
         exit 38
-    
     else
         gnuplot -p -c barre_erreurt1
-        #rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
-    
 fi
 
 if [ ! "$donneet2" = ' ' ] ; then
     ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatat2' "$argtri" -nr
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
-        #make clean
+        make clean
         exit 38
     else
         gnuplot -p -c ligne_simplet2
-        #rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
 fi
 
-if [ ! "$donneet3" = ' ' ] ; then
-    touch ./Meteotmpfilesfolder/filtereddatat3
-    ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatat3' "$argtri" -nr
-    if [ "$?" -ne 0 ] ; then
-        echo "There was an error during the process of the sorting "
-        #make clean
-        exit 38
-    fi
-fi
+#Unreleased part.
+#if [ ! "$donneet3" = ' ' ] ; then
+#    touch ./Meteotmpfilesfolder/filtereddatat3
+#    ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatat3' "$argtri" -nr
+#    if [ "$?" -ne 0 ] ; then
+#        echo "There was an error during the process of the sorting "
+#        make clean
+#        exit 38
+#    fi
+#fi
 
 if [ ! "$donneep1" = ' ' ] ; then
     ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatap1' "$argtri" -nr
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
-        #make clean
+        make clean
         exit 38
+    else
+        gnuplot -p -c barre_erreurp1
+        rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
 fi
 
@@ -437,75 +435,62 @@ if [ ! "$donneep2" = ' ' ] ; then
     ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatap2' "$argtri" -nr
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
-        #make clean
+        make clean
         exit 38
+    else
+        gnuplot -p -c ligne_simplep2
+        rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
 fi
 
-if [ ! "$donneep3" = ' ' ] ; then
-    ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatap3' "$argtri" -nr
-    if [ "$?" -ne 0 ] ; then
-        echo "There was an error during the process of the sorting "
-        #make clean
-        exit 38
-    fi
-fi
+#Unreleased part.
+#if [ ! "$donneep3" = ' ' ] ; then
+#    ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatap3' "$argtri" -nr
+#    if [ "$?" -ne 0 ] ; then
+#        echo "There was an error during the process of the sorting "
+#        make clean
+#        exit 38
+#    fi
+#fi
 
 if [ ! "$donneew" = ' ' ] ; then
-    #angle et force du vent
     ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddataw' "$argtri" -r
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
-        #make clean
+        make clean
         exit 38
     else
         gnuplot -p -c vectors_w
-        #rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
 fi
 
 if [ ! "$donneeh" = ' ' ] ; then
-   
     ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatah' "$argtri" -r
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
-        #make clean
+        make clean
         exit 38
     else
         gnuplot -p -c interpolee_alt
-        #rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
 fi
 
 if [ ! "$donneem" = ' ' ] ; then
-    
-
     ./execmeteotri -f './Meteotmpfilesfolder/secondfile' -o './Meteotmpfilesfolder/ordereddatam' "$argtri" -r
     if [ "$?" -ne 0 ] ; then
         echo "There was an error during the process of the sorting "
-        #make clean
+        make clean
         exit 38
     else
         gnuplot -p -c interpolee_m
-        #rm -f ./Meteotmpfilesfolder/ordereddatat1
+        rm -f ./Meteotmpfilesfolder/ordereddatat1
     fi
-
-
-
-
 fi
 
-
-
-
-
-
-
-
-
-
-echo 'everything is fine!'
-#make clean
+echo 'The programm is finished.'
+make clean
 
 
 

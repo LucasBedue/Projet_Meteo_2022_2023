@@ -1785,7 +1785,51 @@ void traiterP22(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double press
 }
 
 
+/////////////////////
+Chainon* insertionAVLT3(Chainon* pAr,int statio,int dat,int heur,double pressionme,double angleven,double forceven,int humidit,double pressio,double varpressio,double precipitatio,double coorx,double coory,double temperatur,double temperaturmin,double temperaturmax,double altitud,int commun,int* h){
+if(pAr==NULL){
+    *h=1;
+    return creerArbre(statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun);
+}
+else if(dat<pAr->date){
+pAr->fg=insertionAVLT3(pAr->fg,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+    *h=-(*h);
+}
+else if(dat>=pAr->date){
+    pAr->fd=insertionAVLT3(pAr->fd,statio,dat,heur,pressionme,angleven,forceven,humidit,pressio,varpressio,precipitatio,coorx,coory,temperatur,temperaturmin,temperaturmax,altitud,commun,h);
+}
 
 
+
+if(*h!=0){
+    pAr->equilibre=pAr->equilibre+(*h);
+    pAr=equilibrerAVL(pAr);
+    if(pAr->equilibre==0){
+        *h=0;
+    }
+    else{
+        *h=1;
+    };
+};
+
+return pAr;
+
+
+
+
+}
+
+void parcoursInfixeT3(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
+
+
+
+}
+
+void traiterT32(Chainon* pAr,int tabdat[5000],int tabheur[5000][24],double tmpmoye[5000][24],short nmbstationmaxheur[5000][24],int nmbstationmaxjou[5000],int* nmbdat){
+
+
+
+
+}
 
 

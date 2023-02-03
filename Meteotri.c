@@ -1,8 +1,12 @@
 #include "Meteotri.h"
 
-/////////////////////////////////////////////////////////////////////
-int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Meteotmpfilesfolder/ordereddata--" "$argtri" -r*/
-    srand(0);
+/*
+Ce programme ouvre le fichier 'secondfile' et l'emplacement d'arrivé des données ordonnées.
+Il regarde les arguments, tri avec un avl,abr ou tableau, at imprime tout dans le fichier de la forme 'ordereddate--'.
+*/
+
+int main(int argc,char **argv){
+//On ouvre les fichiers d'entrées et de sorties.
     FILE* fentree=fopen(argv[2],"r");
     if(fentree==NULL){
         printf("Error with the file to open, the file to filter\n");
@@ -13,11 +17,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
         printf("Error with the file to create, the file filtered\n");
         exit (2);
     };
-
-
-
-
-
+    srand(0);
     int value=-1;//le nombre de noeud
     int* pvalue=&value;
     int hauteur=-1;//pour la hauteur de l'arbre
@@ -234,8 +234,17 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
 
     }
     else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatat3")==0){
+       
+        rewind(fentree);
+        if((strcmp(argv[5],"--avl")==0)||(strcmp(argv[5],"_")==0)){
 
+        }
+        else if((argv[5]=="--abr")){
 
+        }
+        else if(argv[5]=="--tab"){
+
+        }
     }
     else if(strcmp(argv[4], "./Meteotmpfilesfolder/ordereddatap1")==0){
            
@@ -679,23 +688,7 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
         else if(argv[5]=="--tab"){
 
         }
-
-
-
-        
-
-
     }
-
-
-
-
-
-
-
-
-
-
 
 
     int errfclose=fclose(fentree);
@@ -708,9 +701,6 @@ int main(int argc,char **argv){/*-f "./Meteotmpfilesfolder/secondfile" -o "./Met
         printf("Error with the closing of the fsortie file\n");
         exit (3);
     };
-
-
-    printf("On est passé dans le programme .c !\n");
 
     return 0;
 
